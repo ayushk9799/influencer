@@ -1,0 +1,75 @@
+
+body{
+    box-sizing: border-box;
+}
+#navbarcontainer
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 0.5px solid rgb(177, 177, 177);
+    padding:2px;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+#menu
+{
+    display: none;
+   
+}
+#navbardetails
+{
+    display: grid;
+    grid-template-columns: repeat(4,auto);
+    grid-column-gap:5px;
+    font-size: small;
+    /* border:1px solid red; */
+}
+.navDetailsClass
+{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    /* border:1px solid red; */
+    cursor: pointer;
+
+   
+}
+#login
+{
+    background-color: black;
+     color:white;
+     padding:5px;
+     border-radius: 4px;
+     /* width:max-content; */
+     font-size: 10px;
+
+}
+#signup
+{
+    background-color: black;
+     color:white;
+     padding:5px;
+     border-radius: 4px;
+     /* width:max-content; */
+     font-size: 10px;
+}
+
+.navDetailsClass:hover {
+    text-decoration: underline;
+}
+
+@media screen and (max-width:500px)
+{
+    #navbardetails
+    {
+        display:none;
+    }
+    #menu
+    {
+        display: flex;
+        justify-content:right;
+        align-items: center;
+
+
+    }
+}

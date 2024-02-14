@@ -1,0 +1,82 @@
+[
+  {
+    "user_id": "_y34_6720ZW",
+    "followers": 629741,
+    "posts": 507,
+    "field": ["knowledge", "tech", "gaming", "gaming"],
+    "gender": "Female",
+    "languages": ["Japanese", "English", "German", "Hindi"]
+  },
+  {
+    "user_id": "32bbT_",
+    "followers": 92561,
+    "posts": 1343,
+    "field": ["gaming", "tech"],
+    "gender": "Male",
+    "languages": ["Spanish", "Japanese"]
+  },
+  {
+    "user_id": "_91Kw2I__81R",
+    "followers": 950803,
+    "posts": 595,
+    "field": ["gaming", "sports", "science", "knowledge", "gaming"],
+    "gender": "Female",
+    "languages": ["German", "Spanish", "English"]
+  },
+  {
+    "user_id": "_Y__M",
+    "followers": 408426,
+    "posts": 1435,
+    "field": ["science", "dancing", "tech", "beauty"],
+    "gender": "Female",
+    "languages": ["Chinese", "Spanish"]
+  },
+  {
+    "user_id": "6EX3___S2_iT_",
+    "followers": 612038,
+    "posts": 547,
+    "field": ["science", "gaming", "lifestyle", "dancing", "gaming", "beauty"],
+    "gender": "Female",
+    "languages": ["French", "Chinese"]
+  },
+  {
+    "user_id": "8_C57_y_5",
+    "followers": 590297,
+    "posts": 724,
+    "field": ["tech", "science", "gaming"],
+    "gender": "Male",
+    "languages": ["French", "Chinese", "Spanish"]
+  },
+  {
+    "user_id": "LegB_f0_5",
+    "followers": 373931,
+    "posts": 604,
+    "field": ["dancing", "lifestyle", "tech"],
+    "gender": "Bigender",
+    "languages": ["German", "French"]
+  },
+  {
+    "user_id": "HK0mt_",
+    "followers": 429439,
+    "posts": 1447,
+    "field": ["sports", "lifestyle"],
+    "gender": "Male",
+    "languages": ["Spanish", "Japanese", "English"]
+  },
+  {
+    "user_id": "9_aK_",
+    "followers": 335596,
+    "posts": 671,
+    "field": ["knowledge", "gaming", "lifestyle"],
+    "gender": "Male",
+    "languages": ["Japanese", "English", "Spanish"]
+  },
+  {
+    "user_id": "_Y91_4_",
+    "followers": 537643,
+    "posts": 809,
+    "field": ["dancing", "lifestyle", "gaming"],
+    "gender": "Male",
+    "languages": ["English", "Japanese", "Hindi", "German"]
+  }
+]

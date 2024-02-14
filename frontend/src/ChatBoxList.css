@@ -1,0 +1,9 @@
+#chatboxlistcontainer
+{
+    
+     border:1px solid rgb(0, 0, 0); 
+     background-color: black;
+     color: white;
+     border-radius: 5px;
+     width:15%;
+}

@@ -1,0 +1,44 @@
+#home
+{
+    
+    display:flex;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: 800;
+}
+#homeContainer
+{
+    padding-top:40px;
+    
+
+}
+#subheading
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+@media screen and (max-width:665px) and (min-width:415px)
+{
+    #home
+    {
+        font-size: 20px;
+    }
+}
+@media screen and (max-width:415px) and (min-width:360px)
+{
+    #home
+    {
+        font-size: 17px;
+    }
+}
+
+@media screen and (max-width:360px)
+{
+    #home
+    {
+        font-size:15px;
+    }
+}

@@ -1,0 +1,41 @@
+.table-container
+{
+    overflow-x: auto;
+    display: flex;
+    border-radius: 5px;
+    box-sizing: border-box;
+
+}
+table{
+    width:100%;
+    border-collapse: collapse;
+    font-size: 10px;;
+    font-family: 'Inter';
+}
+table tr, table td,table th{
+    border:1px solid black;
+    text-align: center;
+    font-family: "Inter";
+}
+
+table th 
+{
+    color:white;
+    border:1px solid white;
+    background-color: black;
+}
+.array
+{
+    display:grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-row-gap: 1px;
+}
+.arrayelements
+{
+font-size: 8px;
+width:max-content;
+justify-self: center;
+background-color: rgb(204, 204, 204);
+padding:2px 5px;
+border-radius: 5px;
+}

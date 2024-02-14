@@ -1,0 +1,28 @@
+.MuiSlider-markLabel
+{
+    font-size: 8px;
+
+}
+.MuiSlider-root .MuiSlider-thumb
+{
+    width:10px;
+    height:10px;
+}
+.MuiSlider-root .MuiSlider-thumb::after{
+    width:10px;
+    height:10px;
+}
+.MuiSlider-root
+{
+    /* padding-left:2px;
+    padding-right:2px; */
+   box-sizing: border-box;
+}
+.MuiSlider-root
+{
+    color:black;
+}
+.MuiSlider-root .Mui-active
+{
+    color:black;
+}

@@ -1,0 +1,189 @@
+#searchFilter
+{
+    display: grid;
+    grid-template-columns: repeat(4,1fr) 20px ;
+    grid-column-gap:5px;
+}
+
+.dropbtn
+{
+    border:1px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    font-size: 10px;
+    padding:2px;
+    padding-left: 5px;
+    cursor:pointer;
+}
+#dropdownPlatform
+{
+    border:1px solid rgb(0, 0, 0);
+    margin-top:5px;
+    border-radius: 10px;
+    font-size: 10px;
+    background-color: white;
+}
+.dropPlatfromclass
+{
+    padding:2px;
+    padding-left: 5px;
+    display:flex;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 10px;
+    border-bottom: 0.5px solid grey;
+
+
+
+}
+.dropPlatfromclass:hover{
+    background-color: rgb(204, 204, 204);
+}
+.dropPlatfromclass:last-child
+{
+    border-bottom: 0px;
+}
+.fieldClass
+{
+    font-size: 8px;
+    display:flex;
+    justify-content: center;
+    width:max-content;
+    background-color: rgb(204, 204, 204);
+    padding:2px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 5px;
+    cursor:pointer;
+    margin-bottom: 2px;
+}
+.fieldClass:hover{
+    background-color: rgb(173, 172, 172);
+}
+
+#dropDownField
+{
+    border:1px solid black;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    border-radius: 10px;
+    margin-top: 5px;
+    padding: 3px;
+    padding-left:5px;
+    justify-items: center;
+}
+#countryContainer
+{
+    border:1px solid black;
+    margin-top:5px;
+    border-radius: 10px;
+    font-size: 10px;
+    overflow-y: hidden;
+}
+#outer
+{
+    height:70.4px;
+    overflow: auto;
+}
+.countryClass
+{
+    padding:2px;
+    padding-left: 5px;
+    font-size:10px;
+    display:flex;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 10px;
+    border-bottom: 0.5px solid grey;
+    
+}
+.countryClass:hover{
+    background-color: rgb(204, 204, 204);
+}
+::-webkit-scrollbar {
+    width: 2px;
+  }
+  
+  /* Track (background) of the scrollbar */
+ ::-webkit-scrollbar-track {
+    background: #bab9b9;
+  }
+  
+  /* Handle (thumb) of the scrollbar */
+ ::-webkit-scrollbar-thumb {
+    background: #000000;
+  }
+  
+  /* Handle on hover */
+ ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  #range{
+    border:1px solid black;
+    padding:5px;
+    overflow:hidden;
+    border-radius: 10px;
+    margin-top: 5px;
+
+  }
+  #maxandmin
+  {
+    display:flex;
+    justify-content: space-between;
+    font-size: 10px;
+    font-weight: 'bold';
+  }
+  #getData
+  {
+    /* width:18px;
+    height: 18px; */
+    cursor:pointer;
+    /* border:1px solid red; */
+  }
+  #getData:hover{
+    background-color: #cbc7c7;
+    border-radius: 2px;
+    
+  }
+  @media screen and (max-width:700px)
+  {
+    #searchFilter
+    {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        row-gap: 2px;
+        
+        
+    }
+    .dropdown,#getData
+    {
+        width:75%;
+        justify-self: center; 
+        align-self: center; 
+    justify-content: center;
+    margin-bottom: 5px;
+    }
+
+  .dropbtn
+  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25px;
+    border-radius: 20px;
+  }
+  
+  #getData div
+  {
+    display: flex;
+    justify-content: center;
+    background-color: black;
+    border-radius: 15px;
+    color:white;
+    padding:3px
+  }
+  #getData:hover{
+    text-decoration: underline;
+    border-radius: 15px;
+    background-color: black;
+  }
+  }
