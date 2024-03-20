@@ -1,8 +1,25 @@
 import express from 'express';
-import {makeRoom} from '../controller/chatcontroller.js'
+import ChatRooms from '../models/chatroom.js';
 const router=express.Router();
-router.post('/:id',makeRoom)
 
 
+router.get('/',async (req,res)=>
+{
+
+    try{
+        let associatedAccount=req.params.id;
+        let loggedinUSer=req.user._id;
+       const chatroom=await ChatRooms.findOne({participants:{$all:[associatedAccount,loggedinUSer]}})
+       res.status(200).json({chats:chatroom.messages});
+       
+    }
+    catch(error)
+    {
+        console.log(error);
+        res.status(400).send({error:error.message})
+    }
+   
+
+})
 
 export default router;

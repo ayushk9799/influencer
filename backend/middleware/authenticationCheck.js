@@ -18,7 +18,7 @@ export const authenticationCheck= async(req,res,next)=>
     }
     catch(error)
     {
-        return res.status(401).json({message:"please login"})
+        return res.status(401).json({message:"please login"});
 
     }
 }

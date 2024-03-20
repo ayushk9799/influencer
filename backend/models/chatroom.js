@@ -1,10 +1,6 @@
 import mongoose, { Mongoose } from "mongoose";
 const chatroom =new mongoose.Schema({
-   _id:
-   {
-      type:String,
-      required:true,
-   },
+ 
    participants:[{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',

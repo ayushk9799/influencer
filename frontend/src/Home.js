@@ -1,7 +1,8 @@
 import './Home.css'
 import { useState } from 'react';
 import {SearchFilter} from './SearchFilter.js'
-import {DataTable} from './DataTable.js'
+import {DataTable} from './DataTable.js';
+import {MockChatSystem} from './MockChatSystem.js'
 export const Home=()=>
 {
   
@@ -16,5 +17,7 @@ export const Home=()=>
     </div>
     <SearchFilter />
     <DataTable/>
+
+    <MockChatSystem/>
     </>
 }

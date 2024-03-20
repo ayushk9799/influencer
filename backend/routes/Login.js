@@ -5,7 +5,7 @@ const router = express.Router();
 import { OAuth2Client } from 'google-auth-library';
 const CLIENT_ID = '708505773923-9fuh2eqg0lr8sgl86p7dsuh2v0pjuslt.apps.googleusercontent.com';
 const CLIENT_SECRET = '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';
-const REDIRECT_URI = 'http://localhost:3000/auth/google/callback'; // Redirect URI registered with Google
+const REDIRECT_URI = 'http://localhost:3000/auth/google/callback'; 
 
 const oAuth2Client = new OAuth2Client(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
 
@@ -43,8 +43,8 @@ router.get('/google/callback', async (req, res) => {
    }
     else{
       newUser=new User({email:payload.email});
-      newUser.save();
-
+     await newUser.save();
+     
       jwtaccesstoken=await jwt.sign({_id:newUser._id},'influencerChataccess')
     }
     res.cookie('jwtaccesstoken',jwtaccesstoken,{maxAge:6*30*24*60*60*1000})

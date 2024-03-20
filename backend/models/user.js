@@ -12,6 +12,35 @@ const UserSchema=new Schema({
     type:Boolean,
     default:false
   },
+
+  followers:
+  {
+    type:Number,
+  
+  },
+  posts:{
+    type:Number,
+  },
+  profilepic:
+  {
+    type:String,
+  },
+  gallery:  // 
+  {
+    type:String,
+  },
+  field: {
+    type: String,
+    enum:['dancing'],
+    required: function() {
+      return this.contentCreator === true;
+    }
+  },
+  verfication:
+  {
+    type:Boolean,
+    default:false
+  },
   associatedAccounts:[
     {
     socialMedia:{
