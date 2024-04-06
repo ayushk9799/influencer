@@ -16,8 +16,16 @@ export const authenticationCheck= async(req,res,next)=>
              console.log("hello")
              console.log(d);
              req.user=await User.findOne({_id:d._id});
-             console.log(req.user);
+             if(req.user)
+             {
+                console.log(req.user);
              next();
+             }
+             else{
+                console.log('else part')
+                throw new Error("user not found")
+             }
+           
         }
         else{
             console.log("pleease login")
