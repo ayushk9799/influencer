@@ -12,20 +12,11 @@ const UserSchema=new Schema({
     type:Boolean,
     default:false
   },
-
-  followers:
-  {
-    type:Number,
-  
-  },
-  posts:{
-    type:Number,
-  },
   profilepic:
   {
     type:String,
   },
-  gallery:  // 
+  gallery:   
   {
     type:String,
   },
@@ -41,20 +32,24 @@ const UserSchema=new Schema({
     type:Boolean,
     default:false
   },
-  associatedAccounts:[
-    {
+  associatedAccounts:{
     socialMedia:{
         type:String,
         enum:['You Tube','Instagram'],
     },
     accountID:
     {
-        type:String,
-        
-    }
+        type:String, 
+    }, 
+    followers:
+    {
+      type:Number,
     
-
-}]
+    },
+    posts:{
+      type:Number,
+    },
+}
 
 })
 

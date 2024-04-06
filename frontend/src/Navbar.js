@@ -3,9 +3,11 @@ import './Navbar.css'
 import { useState } from 'react';
 import { HorizontalNav } from './HorizontalNav';
 
-export const Navbar=()=>
+export const Navbar=({details})=>
 {
-
+  
+     console.log(details)
+     
     const [menuButton,setMenuButton]=useState(false);
     const handleChange=()=>
     {
@@ -17,8 +19,16 @@ return <><div id="navbarcontainer">
     <div id="navbardetails">
     <div className='navDetailsClass' onClick={()=>navigate('/pricing')}>Pricing</div>
     <div className='navDetailsClass' onClick={()=>navigate('/how-to-use')}>How to use</div>
+
+    {details?.email ? (<div className='navDetailsClass' onClick={()=>navigate('/myAccount')} id="account">
+
+      <div id="accountDetails">
+             A
+        </div>
+    </div>):(
     <div className='navDetailsClass' onClick={()=>navigate('/login')} id="login">Login</div>
-    <div className='navDetailsClass' id="signup" onClick={()=>navigate('/signup')}>SignUp</div>
+    )}
+    {/* <div className='navDetailsClass' id="signup" onClick={()=>navigate('/signup')}>SignUp</div> */}
     </div>
     <div id="menu" onClick={handleChange}>
     <svg

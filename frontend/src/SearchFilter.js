@@ -97,6 +97,7 @@ const handleClickPlatform=(event)=>
     dropDownRef.current.style.display=dropDownRef.current.style.display==="block"?"none":"block"
 }
     return<>
+    <div id="searchFilterContainer">
     <div id="searchFilter">
 
     <div className="dropdown" onClick={handleClickPlatform}>
@@ -144,6 +145,7 @@ const handleClickPlatform=(event)=>
             </div>
             <div id="getData"  ref={searchRef} onClick={handleSearch}>{searchJsx}</div>
 
+    </div>
     </div>
    
     </>

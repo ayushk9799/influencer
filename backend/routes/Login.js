@@ -47,8 +47,7 @@ router.get('/google/callback', async (req, res) => {
      
       jwtaccesstoken=await jwt.sign({_id:newUser._id},'influencerChataccess')
     }
-    res.cookie('jwtaccesstoken',jwtaccesstoken,{maxAge:6*30*24*60*60*1000})
-    
-    res.redirect('http://localhost:3000/');
+    res.cookie('jwtaccesstoken',jwtaccesstoken,{maxAge:6*30*24*60*60*1000,})
+    res.redirect('http://localhost:3001/');
 });
 export default router;

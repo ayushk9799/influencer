@@ -8,33 +8,9 @@ export const Login=()=>
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState(null);
   
-//   function getCookie(name) {
-//     // Split the cookies into an array
-//     var cookies = document.cookie.split(';');
-    
-//     // Loop through each cookie
-//     for(var i = 0; i < cookies.length; i++) {
-//         var cookie = cookies[i].trim();
-        
-//         // Check if this cookie starts with the name we're looking for
-//         if(cookie.indexOf(name + '=') === 0) {
-//             // If so, return the value of the cookie
-//             return cookie.substring(name.length + 1);
-//         }
-//     }
-//     // If cookie is not found, return null
-//     return null;
-// }
 
   useEffect(() => {
 
-    //     const idtoken=getCookie('id_token');
-    //     console.log(idtoken)
-    // if (idtoken) {
-    //   const idTokenDecoded=jwtDecode(idtoken);
-    //    setUserEmail(idTokenDecoded.email);
-    //   setIsLoggedIn(true);
-    // }
   }, []);
 
   const handleSignIn = async () => {
@@ -50,13 +26,13 @@ export const Login=()=>
     // Redirect user to Google's authorization endpoint
     window.location.href = authorizationUrl.toString();
   };
-  const handleLogout = () => {
-    // Clear user's session/token from localStorage
-    localStorage.removeItem('id_token');
-    // Update state to reflect logged out status
-    setIsLoggedIn(false);
-    setUserEmail(null);
-  };
+  // const handleLogout = () => {
+  //   // Clear user's session/token from localStorage
+  //   localStorage.removeItem('id_token');
+  //   // Update state to reflect logged out status
+  //   setIsLoggedIn(false);
+  //   setUserEmail(null);
+  // };
   return (
     <div>
       {isLoggedIn ? (

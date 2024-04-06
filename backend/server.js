@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 import connectDatabase from './database.js';
 import ChatRouter from './routes/ChatRouter.js';
 import login from './routes/Login.js';
+import UserRouter from './routes/UserRouter.js';
 import cors from 'cors'
 import http from 'http';
 import { databaseChat } from './controller/databaseChat.js';
@@ -12,10 +13,12 @@ import { Server } from 'socket.io';
 import { authenticationCheck } from './middleware/authenticationCheck.js';
 import { authenticationCheckSocket } from './middleware/authenticationCheckSocket.js';
 import { User } from './models/user.js';
+import searchRouter from './routes/searchRouter.js'
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
     console.log(__dirname);
 const app=express();
+connectDatabase();
 app.use(cors());
 
 const server=http.createServer(app);
@@ -42,7 +45,12 @@ io.on('connection',async (socket)=>
         console.log("done");
         socket.on('message',async (data)=>
         {   
+          try{
             let receiverUser= await findUser(data.receiver);
+            if(!receiverUser)
+            {
+                throw new Error('User not found');
+            }
              let socketReceiver=listOnline.get(receiverUser._id)
             if(socketReceiver)
             {
@@ -60,8 +68,11 @@ io.on('connection',async (socket)=>
               await  databaseChat(loggedinUSer,receiverUser._id,data.content)
     
             }
-           
-            console.log(data.content)
+          }
+          catch(error)
+          {
+            console.log(error);
+          }
         })
     
     
@@ -78,19 +89,16 @@ io.on('connection',async (socket)=>
    
 
 })
-app.use(express.static(path.join(__dirname, '../frontend/build')));
+//app.use(express.static(path.join(__dirname, '../frontend/build')));
 app.use('/auth',login)
-connectDatabase();
-app.get('/hello',(req,res)=>
-{
-    res.json({hello:"hello"}).status(205);
-})
-app.get('/*',(req,res)=>
-{
-    res.sendFile(path.resolve(__dirname,"../frontend/build/index.html"));
-    console.log('hello get request');
-})
-app.get('/chats/:id',authenticationCheck,ChatRouter);
+ app.use('/getMyData',authenticationCheck,UserRouter)
+ app.use('/getinfluencers',searchRouter)
+// app.get('/*',(req,res)=>
+// {
+//     res.sendFile(path.resolve(__dirname,"../frontend/build/index.html"));
+//     console.log('hello get reqkuest');
+// })
+app.use('/chats/:id',authenticationCheck,ChatRouter);
 server.listen(3000,()=>
 {
     console.log('server running');

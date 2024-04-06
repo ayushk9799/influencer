@@ -1,7 +1,5 @@
 
-body{
-    box-sizing: border-box;
-}
+
 #navbarcontainer
 {
     display: grid;
@@ -10,20 +8,50 @@ body{
     padding:2px;
     margin-left: 2px;
     margin-right: 2px;
+    font-size: 20px;
+}
+#nameandlogo
+{
+    display: flex;
+    align-items: center;
 }
 #menu
 {
     display: none;
    
 }
+#accountDetails
+{
+    border-radius: 50%;
+    width:30px;
+    height:30px;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color:white;
+    background-color: rgb(139, 15, 139);
+    font-family: Arial,sans-serif;
+
+}
+#account
+{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
 #navbardetails
 {
     display: grid;
-    grid-template-columns: repeat(4,auto);
+    grid-template-columns: repeat(3,auto);
     grid-column-gap:5px;
-    font-size: small;
+    /* font-size: 20px; */
     /* border:1px solid red; */
 }
+/* #id
+{
+    display:
+} */
 .navDetailsClass
 {
     display:flex;
@@ -41,7 +69,6 @@ body{
      padding:5px;
      border-radius: 4px;
      /* width:max-content; */
-     font-size: 10px;
 
 }
 #signup
@@ -51,13 +78,15 @@ body{
      padding:5px;
      border-radius: 4px;
      /* width:max-content; */
-     font-size: 10px;
 }
 
 .navDetailsClass:hover {
     text-decoration: underline;
 }
-
+#account:hover
+{
+text-decoration: none;
+}
 @media screen and (max-width:500px)
 {
     #navbardetails
