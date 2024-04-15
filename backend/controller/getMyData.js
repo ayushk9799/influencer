@@ -4,13 +4,13 @@ const getMyData=async(req,res)=>{
     try{
         if(req.user)
         {
-            res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
-            res.setHeader('Access-Control-Allow-Credentials', 'true');
+           
            res.status(200).json({userDetails:req.user})
 
         }
         else{
-            res.status(401).json({message:"Unauthorized"});
+           
+            res.status(401).json({message:"Unauthorizedd"});
         }
     }
     catch(error)

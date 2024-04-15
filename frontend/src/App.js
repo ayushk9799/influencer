@@ -10,28 +10,26 @@ import {useState,useEffect} from 'react';
 function App() {
 const [details,setDetails]=useState({});
 
+const getData= async ()=>
+{
+  try{
+        const response=await fetch('http://localhost:3000/getMyData',{
+          credentials: "include",
+        });
+        const {userDetails}=await response.json();
+        setDetails({
+          ...details,
+          ...userDetails
+        })
 
+        }
+  catch(err)
+  {
+    console.log(err);
+  }
+}
 useEffect(()=>
 {
-  const getData= async ()=>
-  {
-    try{
-          const response=await fetch('http://localhost:3000/getMyData',{
-            credentials: "include",
-          });
-          const {userDetails}=await response.json();
-          setDetails({
-            ...details,
-            ...userDetails
-          })
-
-          }
-    catch(err)
-    {
-      console.log(err);
-    }
-  }
-
 getData();
 },[])
 

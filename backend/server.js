@@ -92,7 +92,7 @@ io.on('connection',async (socket)=>
 //app.use(express.static(path.join(__dirname, '../frontend/build')));
 app.use('/auth',login)
  app.use('/getMyData',authenticationCheck,UserRouter)
- app.use('/getinfluencers',searchRouter)
+ app.use('/getInfluencers',searchRouter);
 // app.get('/*',(req,res)=>
 // {
 //     res.sendFile(path.resolve(__dirname,"../frontend/build/index.html"));

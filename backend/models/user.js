@@ -16,18 +16,14 @@ const UserSchema=new Schema({
   {
     type:String,
   },
-  gallery:   
-  {
+  gallery: [ {
     type:String,
-  },
-  field: {
+  }]  
+ ,
+  field: [{
     type: String,
-    enum:['dancing'],
-    required: function() {
-      return this.contentCreator === true;
-    }
-  },
-  verfication:
+  }],
+  verification:
   {
     type:Boolean,
     default:false
