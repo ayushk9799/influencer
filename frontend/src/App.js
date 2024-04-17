@@ -32,7 +32,7 @@ useEffect(()=>
 {
 getData();
 },[])
-
+console.log(details)
   return <Router>
     <Navbar details={details}/>
        <Routes>
@@ -41,10 +41,10 @@ getData();
         <Route path='/pricing' Component={Pricing}></Route>
 
         {details.email ? (
-          <Route path="/myAccount" Component={Account}></Route>
+          <Route path="/myAccount" Component={Account} details={details}></Route>
         ):(<Route path='/login' Component={Login}></Route>
         )}
-        <Route path='/influencer/:userID' Component={ChatBox}></Route>
+        <Route path='/influencer/:userID' Component={ChatBox} details={details}></Route>
        </Routes>
   </Router>
    

@@ -9,6 +9,7 @@ export const DataTable=()=>
     const [data,setData]=useState([]);
 useEffect(()=>
 {
+  
      fetch('http://localhost:3000/getInfluencers/featured/platform/instagram')
      .then(res=>{
       return res.json();
@@ -18,10 +19,10 @@ useEffect(()=>
       setData(data.data)
      })
 },[])
-   const handleInfluncerChat=({user_id})=>
+   const handleInfluncerChat=(accountID)=>
    {
-    console.log(user_id)
-     navigate(`/influencer/${user_id}`)
+    console.log(accountID)
+     navigate(`/influencer/${accountID}`,{state:{account:accountID}})
    }
     return<>
    
@@ -40,7 +41,7 @@ useEffect(()=>
         </thead>
         <tbody>
           {data.map((item, index) => (
-            <tr key={index} onClick={()=>handleInfluncerChat(item)}>
+            <tr key={index} onClick={()=>handleInfluncerChat(item.associatedAccounts.accountID)}>
               <td>{item.associatedAccounts?.accountID}</td>
               <td>{item.associatedAccounts?.followers}</td>
               <td>{item.associatedAccounts?.posts}</td>

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import {ChatBoxList} from './ChatBoxList.js';
 import {ChatMessage} from './ChatMessage.js'
 
-export const ChatBox = () => {
+export const ChatBox = ({details}) => {
   const [height, setHeight] = useState();;
   const chatboxref=useRef(null);
 
@@ -26,7 +26,7 @@ const {userID}=useParams();
   return (
     <div  id="chatBoxContainer" style={{display:"flex",height:`${height}px`,boxSizing:"border-box"}} ref={chatboxref}>
         <ChatBoxList/>
-        <ChatMessage/>
+        <ChatMessage details={details}/>
     </div>
   )
 }

@@ -6,6 +6,8 @@ const router=express.Router();
 router.get('/',async (req,res)=>
 {
 
+    console.log('chatting');
+
     try{
         let associatedAccount=req.params.id;
         let loggedinUSer=req.user._id;
