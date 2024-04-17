@@ -22,8 +22,8 @@ return <><div id="navbarcontainer">
 
     {details?.email ? (<div className='navDetailsClass' onClick={()=>navigate('/myAccount')} id="account">
 
-      <div id="accountDetails">
-             A
+      <div id="accountDetails" >
+            <img src={details.profilepic} ></img>
         </div>
     </div>):(
     <div className='navDetailsClass' onClick={()=>navigate('/login')} id="login">Login</div>

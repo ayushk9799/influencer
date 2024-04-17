@@ -42,7 +42,7 @@ router.get('/google/callback', async (req, res) => {
         jwtaccesstoken= await jwt.sign({_id:checkUSer._id},'influencerChataccess')
    }
     else{
-      newUser=new User({email:payload.email});
+      newUser=new User({email:payload.email,name:payload.name,profilepic:payload.picture});
      await newUser.save();
      
       jwtaccesstoken=await jwt.sign({_id:newUser._id},'influencerChataccess')
