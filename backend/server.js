@@ -19,10 +19,10 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
     console.log(__dirname);
 const app=express();
 connectDatabase();
-app.use(cors());
+app.use(cors());   
 
 const server=http.createServer(app);
-const io=new Server(server,{cors:{origin:'*'}});
+const io=new Server(server,{cors:{origin:'http://localhost:3001',credentials:true}});
 const listOnline=new Map();
 const findUser=async(data)=>
 {
@@ -93,6 +93,20 @@ io.on('connection',async (socket)=>
 app.use('/auth',login)
  app.use('/getMyData',authenticationCheck,UserRouter)
  app.use('/getInfluencers',searchRouter);
+
+//  app.get('/check',async (req,res,next)=>
+//  {
+//   next(new Error("error in check "))
+//  });
+//  app.get("/hello",(req,res)=>
+//  {
+//   res.send("hello")
+//  })
+ app.use((err,req,res,next)=>
+ {``
+  console.log('errrrrr');
+  res.status(500).json({error:err.message})
+ })
 // app.get('/*',(req,res)=>
 // {
 //     res.sendFile(path.resolve(__dirname,"../frontend/build/index.html"));

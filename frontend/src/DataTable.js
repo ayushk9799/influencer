@@ -7,6 +7,8 @@ export const DataTable=()=>
     const navigate=useNavigate();
     //const data=useMemo(()=>MockData,[MockData]);
     const [data,setData]=useState([]);
+
+    
 useEffect(()=>
 {
   

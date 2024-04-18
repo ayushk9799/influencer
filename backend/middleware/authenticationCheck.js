@@ -24,7 +24,7 @@ export const authenticationCheck= async(req,res,next)=>
              }
              else{
                 console.log('else part')
-                throw new Error("user not found")
+                next(new Error("user not found"))
              }
            
         }
@@ -38,7 +38,7 @@ export const authenticationCheck= async(req,res,next)=>
     {
         console.log(error);
         res.clearCookie('jwtaccesstoken');
-        console.log("error and login please")
+        console.log("error and login please");
         return res.status(401).json({message:"please login"});
 
     }
