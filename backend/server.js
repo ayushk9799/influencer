@@ -41,7 +41,13 @@ io.on('connection',async (socket)=>
     try{
         let loggedinUSer=socket.user._id;
         console.log(loggedinUSer)
-        listOnline.set(loggedinUSer,socket.id);
+        if(listOnline.get(loggedinUSer))
+        {
+
+          listOnline.delete(loggedinUSer)
+          listOnline.set(loggedinUSer,socket.id);
+
+        }
         console.log("done");
         socket.on('message',async (data)=>
         {   
@@ -94,14 +100,7 @@ app.use('/auth',login)
  app.use('/getMyData',authenticationCheck,UserRouter)
  app.use('/getInfluencers',searchRouter);
 
-//  app.get('/check',async (req,res,next)=>
-//  {
-//   next(new Error("error in check "))
-//  });
-//  app.get("/hello",(req,res)=>
-//  {
-//   res.send("hello")
-//  })
+
  app.use((err,req,res,next)=>
  {``
   console.log('errrrrr');

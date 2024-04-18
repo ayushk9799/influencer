@@ -23,7 +23,7 @@ return <><div id="navbarcontainer">
     {details?.email ? (<div className='navDetailsClass' onClick={()=>navigate('/myAccount')} id="account">
 
       <div id="accountDetails" >
-            <img src={details.profilepic} ></img>
+            <img src={details.profilepic} referrerpolicy="no-referrer"></img>
         </div>
     </div>):(
     <div className='navDetailsClass' onClick={()=>navigate('/login')} id="login">Login</div>
