@@ -1,8 +1,14 @@
 import React, { useEffect ,useState} from 'react'
-import './ChatMessage.css'
+import './ChatMessage.css';
+import {io} from 'socket.io-client'
 import { useLocation } from 'react-router-dom'
 export const ChatMessage = ({details}) => {
 
+
+const socket =io('http://localhost:3000',{withCredentials: true});
+socket.on("connect_error", (err) => {
+  console.log(err.message); // prints the message associated with the error
+});
   const location =useLocation();
   const accountID=location.state?.account;
   console.log(accountID)
