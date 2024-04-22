@@ -15,6 +15,8 @@ export const DataTable = () => {
         setData(data.data);
       });
   }, []);
+
+  console.log(data[0]?.price.video)
   const handleInfluncerChat = (accountID) => {
     navigate(`/influencer/${accountID}`, { state: { account: accountID } });
   };

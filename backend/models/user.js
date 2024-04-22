@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-
+import { InstagramAccount } from "./InstagramAccount.js";
 
 const UserSchema=new Schema({
   email:{
@@ -27,12 +27,7 @@ const UserSchema=new Schema({
     type:String,
   }]  
  ,
-  field: [{
-    type: String,
-  }],
-  city:{
-    type:String
-  },
+ 
 
 InstagramAccount:{
   type:Schema.Types.ObjectId,

@@ -1,9 +1,9 @@
 import mongoose,{Schema} from 'mongoose';
-
+import { User } from './user.js'
 const InstagramAccountSchema=new Schema({
      user:{
         type:Schema.Types.ObjectId,
-        ref:'User'
+        ref:'user'
      },
     verification:
     {
@@ -15,11 +15,18 @@ const InstagramAccountSchema=new Schema({
         required: true
     },
     followers: {
-        type: Number
+        type: Number,
     },
     posts: {
-        type: Number
+        type: Number,
+        default:0
     },
+    field: [{
+        type: String,
+      }],
+      region:{
+        type:String,
+      },
     price:{
       video:{
         type:Number
