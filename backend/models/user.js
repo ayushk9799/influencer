@@ -1,5 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-import { InstagramAccount } from "./InstagramAccount.js";
 
 const UserSchema=new Schema({
   email:{

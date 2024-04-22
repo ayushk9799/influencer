@@ -1,5 +1,4 @@
 import mongoose,{Schema} from 'mongoose';
-import { User } from './user.js'
 const InstagramAccountSchema=new Schema({
      user:{
         type:Schema.Types.ObjectId,

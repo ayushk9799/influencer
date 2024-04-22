@@ -15,6 +15,7 @@ import { authenticationCheckSocket } from "./middleware/authenticationCheckSocke
 import { User } from "./models/user.js";
 import searchRouter from "./routes/searchRouter.js";
 import AddData from "./routes/AddData.js";
+import { InstagramAccount } from "./models/InstagramAccount.js";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
@@ -29,9 +30,7 @@ const io = new Server(server, {
 const listOnline = new Map();
 const findUser = async (data) => {
   try {
-    const docs = await User.findOne({
-      [`associatedAccounts.${0}.accountID`]: data,
-    });
+    const docs = await InstagramAccount.findOne({"accountID":data});
     return docs;
   } catch (err) {
     return null;
@@ -53,20 +52,20 @@ io.on("connection", async (socket) => {
 
     socket.on("message", async (data) => {
       try {
-        let receiverUser = await findUser(data.receiver);
+        let receiverUser = await findUser(data.accountID);
         if (!receiverUser) {
           throw new Error("User not found");
         }
-        let socketReceiver = listOnline.get(receiverUser._id.toString());
+        let socketReceiver = listOnline.get((receiverUser.user).toString());
 
         if (socketReceiver) {
           try {
             io.to(socketReceiver).emit("message", data.content);
 
-            await databaseChat(loggedinUSer, receiverUser._id, data.content);
+            await databaseChat(loggedinUSer, receiverUser.user, data.content);
           } catch (error) {}
         } else {
-          await databaseChat(loggedinUSer, receiverUser._id, data.content);
+          await databaseChat(loggedinUSer, receiverUser.user, data.content);
         }
       } catch (error) {}
     });
