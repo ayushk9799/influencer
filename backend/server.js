@@ -13,11 +13,13 @@ import { Server } from 'socket.io';
 import { authenticationCheck } from './middleware/authenticationCheck.js';
 import { authenticationCheckSocket } from './middleware/authenticationCheckSocket.js';
 import { User } from './models/user.js';
-import searchRouter from './routes/searchRouter.js'
+import searchRouter from './routes/searchRouter.js';
+import AddData from './routes/AddData.js'
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
     console.log(__dirname);
 const app=express();
+app.use(express.json())
 connectDatabase();
 app.use(cors());   
 
@@ -27,7 +29,7 @@ const listOnline=new Map();
 const findUser=async(data)=>
 {
     try {
-        const docs = await User.findOne({ associatedAccounts: { $elemMatch: { accountID: data } } });
+        const docs = await User.findOne({ [`associatedAccounts.${0}.accountID`]: data });
         return docs;
       } catch (err) {
         console.log(err);
@@ -40,28 +42,40 @@ io.on('connection',async (socket)=>
 {
     try{
         let loggedinUSer=socket.user._id;
+        loggedinUSer=loggedinUSer.toString();
         console.log(loggedinUSer)
         if(listOnline.get(loggedinUSer))
         {
-
-          listOnline.delete(loggedinUSer)
+          console.log('deelting')
+          listOnline.delete(loggedinUSer);
+          console.log(listOnline)
           listOnline.set(loggedinUSer,socket.id);
 
         }
+        else{
+          console.log('not found')
+          listOnline.set(loggedinUSer,socket.id)
+        }
         console.log("done");
+        console.log(listOnline);
+        console.log(listOnline.size)
         socket.on('message',async (data)=>
         {   
+
+          console.log('message')
           try{
             let receiverUser= await findUser(data.receiver);
             if(!receiverUser)
             {
                 throw new Error('User not found');
             }
-             let socketReceiver=listOnline.get(receiverUser._id)
+             let socketReceiver=listOnline.get((receiverUser._id).toString());
+             console.log(socketReceiver)
             if(socketReceiver)
             {
                 try{
                     io.to(socketReceiver).emit('message',data.content);
+                    console.log(data.content)
                     await   databaseChat(loggedinUSer,receiverUser._id,data.content)
                 }
                 catch(error)
@@ -99,10 +113,10 @@ io.on('connection',async (socket)=>
 app.use('/auth',login)
  app.use('/getMyData',authenticationCheck,UserRouter)
  app.use('/getInfluencers',searchRouter);
-
+app.use("/addMoreData", authenticationCheck,AddData)
 
  app.use((err,req,res,next)=>
- {``
+ {
   console.log('errrrrr');
   res.status(500).json({error:err.message})
  })

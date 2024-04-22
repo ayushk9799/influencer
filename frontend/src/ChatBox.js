@@ -24,7 +24,7 @@ console.log(chatboxref.current.getBoundingClientRect().top)
   }, []);
 const {userID}=useParams();
   return (
-    <div  id="chatBoxContainer" style={{display:"flex",height:`${height}px`,boxSizing:"border-box"}} ref={chatboxref}>
+    <div  id="chatBoxContainer" style={{display:"flex",height:`${height}px`,boxSizing:"border-box",overflowY:'hidden'}} ref={chatboxref}>
         <ChatBoxList/>
         <ChatMessage details={details}/>
     </div>

@@ -11,6 +11,9 @@ const UserSchema=new Schema({
     type:String,
     required:true,
   },
+  bio:{
+    type:String,
+  },
   contentCreator:
   {
     type:Boolean,
@@ -27,30 +30,18 @@ const UserSchema=new Schema({
   field: [{
     type: String,
   }],
-  verification:
-  {
-    type:Boolean,
-    default:false
+  city:{
+    type:String
   },
-  associatedAccounts:{
-    socialMedia:{
-        type:String,
-        enum:['You Tube','Instagram'],
-    },
-    accountID:
-    {
-        type:String, 
-    }, 
-    followers:
-    {
-      type:Number,
-    
-    },
-    posts:{
-      type:Number,
-    },
-}
 
+InstagramAccount:{
+  type:Schema.Types.ObjectId,
+  ref:'InstagramAccount'
+},
+YouTube:{
+  type:Schema.Types.ObjectId,
+  ref:'YouTube'
+},
 })
 
 export const User = mongoose.model("user", UserSchema);

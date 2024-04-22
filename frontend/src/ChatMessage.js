@@ -1,18 +1,25 @@
-import React, { useEffect ,useState} from 'react'
+import React, { useEffect ,useState,useMemo} from 'react'
 import './ChatMessage.css';
 import {io} from 'socket.io-client'
 import { useLocation } from 'react-router-dom'
 export const ChatMessage = ({details}) => {
 
 
-const socket =io('http://localhost:3000',{withCredentials: true});
+const socket =useMemo(()=>io('http://localhost:3000',{withCredentials: true}),[]);
 socket.on("connect_error", (err) => {
   console.log(err.message); // prints the message associated with the error
 });
+socket.on('connect',()=>
+{
+  console.log(socket.id)
+})
+
   const location =useLocation();
   const accountID=location.state?.account;
   console.log(accountID)
-  const [messageCurrent,setMessage]=useState('');
+  const [messageCurrentSend,setMessageSend]=useState('');
+  const [messageLists,setMessageList]=useState([])
+  const [messageCurrentReceived,setMessagaReceived]=useState('')
    const sender="ayush";
    
 
@@ -38,12 +45,116 @@ socket.on("connect_error", (err) => {
     timeStamp:'4'
    } ,
    {
+    sender:"rajiv",
+    content:"hi ayush",
+    timeStamp:"2"
+  },
+  {
+    sender :"rajiv",
+    content:'bhai reshmi ko pata lo tum ',
+    timeStamp:'3'
+  },
+ {
+  sender :"ayush",
+  content:"nahi bhai ",
+  timeStamp:'4'
+ } ,
+ {
+  sender:"rajiv",
+  content:"hi ayush",
+  timeStamp:"2"
+},
+{
+  sender :"rajiv",
+  content:'bhai reshmi ko pata lo tum ',
+  timeStamp:'3'
+},
+{
+sender :"ayush",
+content:"nahi bhai ",
+timeStamp:'4'
+} ,
+   {
     sender :"ayush",
     content:"paisa wapas de gaandu ",
     timeStamp:"5",
-   }
+   },
+   {
+    sender :"rajiv",
+    content:'bhai reshmi ko pata lo tum ',
+    timeStamp:'3'
+  },
+  {
+  sender :"ayush",
+  content:"nahi bhai ",
+  timeStamp:'4'
+  } ,
+  {
+    sender :"rajiv",
+    content:'bhai reshmi ko pata lo tum ',
+    timeStamp:'3'
+  },
+  {
+  sender :"ayush",
+  content:"nahi bhai ",
+  timeStamp:'4'
+  } ,
+  {
+    sender :"rajiv",
+    content:'bhai reshmi ko pata lo tum ',
+    timeStamp:'3'
+  },
+  {
+  sender :"ayush",
+  content:"nahi bhai ",
+  timeStamp:'4'
+  } ,
+  {
+    sender :"rajiv",
+    content:'bhai reshmi ko pata lo tum ',
+    timeStamp:'3'
+  },
+  {
+  sender :"ayush",
+  content:"nahi bhai ",
+  timeStamp:'4'
+  } ,
+  {
+    sender :"ayush",
+    content:"nahi bhai ",
+    timeStamp:'4'
+    } ,
+    {
+      sender :"rajiv",
+      content:'bhai reshmi ko pata lo tum ',
+      timeStamp:'3'
+    },
+    {
+    sender :"ayush",
+    content:"nahi bhai ",
+    timeStamp:'4'
+    } ,
+    {
+      sender :"ayush",
+      content:"nahi bhai ",
+      timeStamp:'4'
+      } ,
+      {
+        sender :"ayush",
+        content:"nahi bhai ",
+        timeStamp:'4'
+        } ,
+        {
+          sender :"rajiv",
+          content:'bhai reshmi ko pata lo tum ',
+          timeStamp:'3'
+        },
+        {
+        sender :"ayush",
+        content:"nahi bhai ",
+        timeStamp:'4'
+        } ,
   ]
-  const [messageLists,setMessageList]=useState([])
   useEffect(()=>
   {
     const getMessages=async()=>
@@ -59,19 +170,29 @@ socket.on("connect_error", (err) => {
 
   const handleSend=()=>
   {
-    setMessage('');
+
+    console.log("sending")
+   socket.emit('message',{accountID:accountID,content:messageCurrentSend,})
+   console.log("sent")
+    setMessageSend('');
 
   }
+
+  socket.on('message',(message)=>
+  {
+    setMessagaReceived(message)
+    console.log(message);
+  })
   const handleMesageInput=(event)=>
   {
-    setMessage(event.target.value);
+    setMessageSend(event.target.value);
   }
-  console.log(messageCurrent)
+  console.log(messageCurrentSend)
   return (
-    <div style={{border:'1px solid red',flex:'1',position:'relative'}}>
+    <div style={{border:'1px solid red',flex:'1',position:'relative',display:'grid'}}>
 
       {messageLists.length > 0 ? (
-      <div id="chathistory" style={{height:'max-content', border:'1px solid yellow',overflow:'auto'}}>
+      <div id="chathistory" style={{height:'100%', border:'1px solid yellow',overflowY:'scroll',overflowX:"hidden"}}>
         {messageLists.map((message, index) => (
           <div key={index}  style={{
             textAlign: message.sender === "ayush" ? 'right' : 'left',
@@ -98,8 +219,8 @@ socket.on("connect_error", (err) => {
       </div>
     )}
     
-      <div id="chatBox" style={{border:'1px solid yellow',display:'flex',justifyContent:'center',position:'absolute',left:'0',right:'0',bottom:'0'}}>
-        <textarea placeholder='Send Requirement and chat' rows={1} value={messageCurrent} onChange={handleMesageInput}></textarea>
+      <div id="chatBox" style={{border:'1px solid yellow',display:'flex',justifyContent:'center',position:'absolute',left:'0',right:'0',bottom:'0',height:'30px'}}>
+        <textarea placeholder='Send Requirement and chat'  value={messageCurrentSend} onChange={handleMesageInput}></textarea>
         <button onClick={handleSend}>Send</button>
       </div>
     </div>
