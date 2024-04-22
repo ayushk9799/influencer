@@ -13,7 +13,7 @@ router.post('/',async(req,res)=>
         await newData.save();
         console.log(newData)
         const updateUser=await User.findById(req.user._id);
-        updateUser.InstagramAccount=newData.user;
+        updateUser.InstagramAccount=newData._id;
         await updateUser.save();
         res.json({messages:"saved succesfully"})
  }
