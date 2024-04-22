@@ -20,7 +20,8 @@ router.post("/", async (req, res) => {
              "price.photo":req.body?.photo??0,
              "price.reels":req.body?.reels??0,
              field:req.body?.field,
-             region:req.body?.region
+             region:req.body?.region,
+             gender:req.body?.gender
           });
         
           await newData.save();
@@ -29,13 +30,25 @@ router.post("/", async (req, res) => {
      }
      else{
 
-        // 
-        check.user=req?.user?._id??check?.user,
-        check.accountID= req.body?.accountID??check?.accountID,
-        check.price.video=req.body?.videoPrice?? check?.price?.video,
-         check.price.photo=req.body?.photo??check?.price?.photo,
-         check.price.reels=req.body?.reels??check?.price?.reels,
-         check.region=req.body?.region??check?.region,
+
+        if (req.body?.accountID) {
+            check.accountID = req.body?.accountID;
+          }
+          if (req.body?.videoPrice ) {
+            check.price.video = req.body?.videoPrice;
+          }
+          if (req.body?.photo ) {
+            check.price.photo = req.body?.photo;
+          }
+          if (req.body?.reels ) {
+            check.price.reels = req.body?.reels;
+          }
+          if (req.body?.region) {
+            check.region = req.body?.region;
+          }
+          if (req.body?.gender) {
+            check.gender = req.body?.gender;
+          }
         await check.save();
         
      }

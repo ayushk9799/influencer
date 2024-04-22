@@ -57,6 +57,6 @@ router.get("/google/callback", async (req, res) => {
   res.cookie("jwtaccesstoken", jwtaccesstoken, {
     maxAge: 6 * 30 * 24 * 60 * 60 * 1000,
   });
-  res.redirect("http://localhost:3001/");
+  res.redirect("http://localhost:3001/myAccount");
 });
 export default router;

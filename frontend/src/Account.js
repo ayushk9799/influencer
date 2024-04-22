@@ -1,6 +1,8 @@
-import React from 'react'
+import React ,{useEffect}from 'react'
 
 export const Account = () => {
+
+
   return (
     <> <div> add instagram account</div>
     <input placeholder='enter id for instagram '></input>

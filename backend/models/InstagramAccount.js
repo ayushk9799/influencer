@@ -27,6 +27,9 @@ const InstagramAccountSchema=new Schema({
       region:{
         type:String,
       },
+      gender:{
+        type:String,
+      },
     price:{
       video:{
         type:Number

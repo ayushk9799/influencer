@@ -14,6 +14,9 @@ const UserSchema=new Schema({
   bio:{
     type:String,
   },
+  gender:{
+    type:String,
+  },
   contentCreator:
   {
     type:Boolean,
