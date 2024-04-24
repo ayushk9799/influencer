@@ -1,0 +1,49 @@
+
+
+.form-container {
+    width: calc(100% - 75px);
+    padding: 20px 40px 20px 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    >h2 {
+        margin-bottom: 10px;
+    }
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+    >select {
+        width: calc(100% + 16px);
+        padding: 8px 8px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input[type='text'],
+  input[type='tel'],
+  textarea {
+    width: 100%;
+    padding: 8px 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  textarea {
+    height: 100px;
+  }
+
+  .button-box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  

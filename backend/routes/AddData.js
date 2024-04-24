@@ -4,10 +4,10 @@ const router = express.Router();
 
 router.post("/", async (req, res,next) => {
   try {
-    //  const check=await User.findById(req.user._id);    
+     const check=await User.findById(req.user._id);    
     
     //  console.log(check)
-    let check=0;
+    // let check=0;
      if(!check)
      {
         next(new Error("user not found in database or try again"))

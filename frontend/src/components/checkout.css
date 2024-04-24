@@ -1,0 +1,40 @@
+.container2 {
+   width: 100%;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   text-align: center;
+}
+
+.checkout-form {
+    width: 500px;
+    margin-block: 7px;
+    >select, >input, >textarea {
+        width: 97%;
+        margin-bottom: 10px;
+        padding: 10px;
+        font-size: 16px;
+        letter-spacing: 0.8px;
+        border-radius: 10px;
+    }
+    button {
+        font-size: 16px;
+        font-family: Roboto;
+        width: 100px;
+        padding: 7px;
+        letter-spacing: 0.9;
+    }
+    >textarea {
+        height: 100px;
+    }
+}
+
+
+@media (max-width : 600px) {
+    .checkout-form {
+        width: 100%;
+        > textarea {
+            height: 50px;
+        }
+    }
+}

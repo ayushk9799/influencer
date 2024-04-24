@@ -6,6 +6,9 @@ import { Home } from "./Home";
 import { Login } from "./Login.js";
 import { Account } from "./Account.js";
 import { ChatBox } from "./ChatBox.js";
+import CompleteProfile from "./components/CompleteProfile";
+import Profile from "./components/Profile";
+import Checkout from "./components/Checkout";
 import { useState, useEffect } from "react";
 function App() {
   const [details, setDetails] = useState({});
@@ -48,6 +51,9 @@ function App() {
           Component={ChatBox}
           details={details}
         ></Route>
+        <Route path="/complete-profile" Component={CompleteProfile} />
+        <Route path="/profile" Component={Profile} />
+        <Route path="/checkout" Component={Checkout} />
       </Routes>
     </Router>
   );
