@@ -15,6 +15,7 @@ import { authenticationCheckSocket } from "./middleware/authenticationCheckSocke
 import { User } from "./models/user.js";
 import searchRouter from "./routes/searchRouter.js";
 import AddData from "./routes/AddData.js";
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
