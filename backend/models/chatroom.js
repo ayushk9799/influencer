@@ -3,13 +3,13 @@ const chatroom =new mongoose.Schema({
  
    participants:[{
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: 'user',
 
    }],
    messages: [{
       sender: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'user'
       },
       content: {
         type: String,

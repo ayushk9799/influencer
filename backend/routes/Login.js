@@ -21,18 +21,20 @@ router.get("/google", (req, res) => {
 });
 
 router.get("/google/callback", async (req, res) => {
+try{
+  console.log("callback")
   const code = req.query.code;
-
+console.log(code)
   const { tokens } = await oAuth2Client.getToken(code);
-
-  const { access_token, refresh_token, id_token } = tokens;
+console.log(tokens)
+  const {  id_token } = tokens;
   const ticket = await oAuth2Client.verifyIdToken({
     idToken: id_token,
     audience: CLIENT_ID,
   });
-
+console.log("tivcket")
   const payload = ticket.getPayload();
-
+console.log(payload)
   let jwtaccesstoken;
   const checkUSer = await User.findOne({ email: payload.email });
   let newUser;
@@ -58,5 +60,11 @@ router.get("/google/callback", async (req, res) => {
     maxAge: 6 * 30 * 24 * 60 * 60 * 1000,
   });
   res.redirect("http://localhost:3001/myAccount");
+}
+catch(error)
+  {
+    console.log(error);
+    res.json({error:error.message})
+  }
 });
 export default router;

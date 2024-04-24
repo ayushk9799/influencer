@@ -15,7 +15,6 @@ import { authenticationCheckSocket } from "./middleware/authenticationCheckSocke
 import { User } from "./models/user.js";
 import searchRouter from "./routes/searchRouter.js";
 import AddData from "./routes/AddData.js";
-import { InstagramAccount } from "./models/InstagramAccount.js";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
@@ -79,8 +78,7 @@ io.on("connection", async (socket) => {
 app.use("/auth", login);
 app.use("/getMyData", authenticationCheck, UserRouter);
 app.use("/getInfluencers", searchRouter);
-app.use("/addMoreData", authenticationCheck, AddData);
-
+app.use("/addData", authenticationCheck, AddData);
 app.use((err, req, res, next) => {
   res.status(500).json({ error: err.message });
 });

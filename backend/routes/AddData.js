@@ -1,61 +1,87 @@
 import express from "express";
-import { InstagramAccount } from "../models/InstagramAccount.js";
 import { User } from "../models/user.js";
 const router = express.Router();
 
-router.post("/", async (req, res) => {
+router.post("/", async (req, res,next) => {
   try {
-     const check=await InstagramAccount.findOne({user:req.user._id});
-
-     let newData;
-     console.log(check)
+    //  const check=await User.findById(req.user._id);    
+    
+    //  console.log(check)
+    let check=0;
      if(!check)
      {
-
-        
-         newData = new InstagramAccount({
-            user: req.user._id,
-            accountID: req.body?.accountID,
-            "price.video":req.body?.videoPrice?? 0,
-             "price.photo":req.body?.photo??0,
-             "price.reels":req.body?.reels??0,
-             field:req.body?.field,
-             region:req.body?.region,
-             gender:req.body?.gender
-          });
-        
-          await newData.save();
-      
-
+        next(new Error("user not found in database or try again"))
      }
      else{
 
-
-        if (req.body?.accountID) {
-            check.accountID = req.body?.accountID;
-          }
-          if (req.body?.videoPrice ) {
-            check.price.video = req.body?.videoPrice;
-          }
-          if (req.body?.photo ) {
-            check.price.photo = req.body?.photo;
-          }
-          if (req.body?.reels ) {
-            check.price.reels = req.body?.reels;
+        if(req.body?.bio)
+        {
+          check.bio=req.body?.bio
+        }
+        if (req.body?.gender) {
+            check.gender = req.body?.gender;
           }
           if (req.body?.region) {
             check.region = req.body?.region;
           }
-          if (req.body?.gender) {
-            check.gender = req.body?.gender;
+        
+          if(req.body?.field)
+          {
+            check.field=req.body?.field
+          }
+          if(req.body?.profilepic)
+          {
+            check.profilepic=req.body?.profilepic
+          }
+       
+        if(req.body?.iaccountID) {
+            check.iaccountID = req.body?.iaccountID;
+          }
+          if(req.body?.ifollowers)
+          {
+            check.ifollowers=req.body?.ifollowers;
+          }
+          if(req.body?.iposts)
+          {
+            check.iposts=req.body?.iposts
+          }
+          if(req.body?.ivideoPrice ) {
+            check.iprice.video = req.body?.ivideoPrice;
+          }
+          if(req.body?.iphotoPrice ) {
+            check.iprice.photo = req.body?.iphotoPrice;
+          }
+          if(req.body?.ireelsPrice ) {
+            check.iprice.reels = req.body?.ireelsPrice;
+          }
+         
+          if(req.body?.uaccountID)
+          {
+            check.uaccountID=req.body?.uaccountID
+          }
+          if(req.body?.uposts)
+          {
+            check.uposts=req.body?.uposts
+          }
+          if(req.body?.iverification)
+          {
+            check.iverification=req.body?.iverification;
+          }
+          if(req.body?.ufollowers)
+          {
+            check.ufollowers=req.body?.ufollowers
+          }
+          if(req.body?.uverification)
+          {
+            check.iverification=req.body?.uverification;
+          }
+          if(req.body?.uvideoPrice)
+          {
+            check.uprice=req.body?.uvideoPrice
           }
         await check.save();
         
      }
-   
-    const updateUser = await User.findById(req.user._id);
-    updateUser.InstagramAccount = check?._id??newData?._id;
-    await updateUser.save();
     res.json({ messages: "saved succesfully" });
   } catch (error) {
     res.json({ message: error.message });
