@@ -50,7 +50,7 @@ const Page4 = () => {
     }
 
     const handlerSubmit = () => {
-        dispatch(updateFormData({categories : Array.from(categories)}));
+        dispatch(updateFormData({field : Array.from(categories)}));
         dispatch(setCurrentStep(currentStep+1));
     }
   

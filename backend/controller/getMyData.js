@@ -1,5 +1,5 @@
 
-const getMyData=async(req,res)=>{
+export const getMyData=async(req,res)=>{
    
     try{
         if(req.user)
@@ -20,5 +20,7 @@ const getMyData=async(req,res)=>{
     
 }
 
-export default getMyData;
+export const uploadFiles = async (req, res) => {
+
+}
 

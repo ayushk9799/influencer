@@ -6,7 +6,7 @@ import Page4 from "./multipage/Page4";
 import Page5 from "./multipage/Page5";
 import Page6 from "./multipage/Page6";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 // import { setCurrentStep } from "../redux/FormSlice";
 
 const Home = () => {
@@ -14,7 +14,7 @@ const Home = () => {
   // const dispatch = useDispatch();
   const PageDisplay = () => {
     if (currentStep === 1) {
-      return <Page6 />;
+      return <Page6 />; // 6
     } else if (currentStep === 2) {
       return <Page5 />;
     } else if (currentStep === 3) {

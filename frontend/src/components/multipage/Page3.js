@@ -73,11 +73,11 @@ const Page3 = () => {
     }
     
     try{
-      const {data, status} = await axios.post('http://localhost:3001/upload', form, {
+      const {data, status} = await axios.post('http://localhost:3000/getMyData/upload-file', form, {
         headers: {
         'Content-Type': 'multipart/form-data',
-        'id': 'ayush' // Add ID as a custom header
-      }
+      },
+      withCredentials: true
     })
       const {profile, cover} = data;
       if(status === 200) {
