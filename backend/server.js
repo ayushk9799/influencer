@@ -21,7 +21,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 app.use(express.json());
 connectDatabase();
-app.use(cors());
+app.use(cors({ origin: "http://localhost:3001", credentials: true }));
 
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -79,6 +79,7 @@ io.on("connection", async (socket) => {
 app.use("/auth", login);
 app.use("/getMyData", authenticationCheck, UserRouter);
 app.use("/getInfluencers", searchRouter);
+app.options("*", cors({ origin: "http://localhost:3001", credentials: true }))
 app.use("/addData", authenticationCheck, AddData);
 app.use((err, req, res, next) => {
   res.status(500).json({ error: err.message });

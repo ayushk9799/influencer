@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
+import axios from 'axios'
 
 import React, { useState } from 'react';
 import "./page1.css"
@@ -10,20 +11,21 @@ const Page1 = () => {
   // State variables for form fields
   const navigate = useNavigate();
   const {formData} = useSelector(state=>state.form);
-  const [region, setRegion] = useState(formData?.region);
-  const [gender, setGender] = useState(formData?.gender);
-  const [mobileNumber, setMobileNumber] = useState(formData?.mobileNumber);
-  const [bio, setBio] = useState(formData?.mobileNumber);
+  const [region, setRegion] = useState(formData?.region || "");
+  const [gender, setGender] = useState(formData?.gender || "");
+  const [mobileNumber, setMobileNumber] = useState(formData?.mobileNumber || "");
+  const [bio, setBio] = useState(formData?.mobileNumber || "");
   const dispatch = useDispatch();
 
 
   // Function to handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(updateFormData({region, gender, mobileNumber, bio }))
-    // console.log('Form submitted:', { region, gender, mobileNumber, bio });
     dispatch(createAccount());
-    navigate('/profile');
+    // console.log('Form submitted:', { region, gender, mobileNumber, bio });
+    // navigate('/profile');
+    console.log('sent');
   };
 
   return (
