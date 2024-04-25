@@ -34,6 +34,9 @@ const UserSchema=new Schema({
   gallery: [ {
     type:String,
   }],
+  mobileNumber : {
+    type : Number,
+  },
   iverification:
   {
     type:Boolean,
@@ -56,32 +59,29 @@ const UserSchema=new Schema({
     photo:{
       type:Number,
     },
-    reels:{
-      type:Number
-    }
-
   },
   
-uaccountID: {
-    type: String,
-},
-ufollowers: {
-    type: Number
-},
-uposts: {
-    type: Number
-},
-uverification:
-{
-  type:Boolean,
-  default:false
-},
-uprice:
-{
-     video:{
-        type:Number
-     }
-},
+  yaccountID: {
+      type: String,
+  },
+  yfollowers: {
+      type: Number
+  },
+  yposts: {
+      type: Number
+  },
+  yverification: {
+    type:Boolean,
+    default:false
+  },
+  yprice:{
+    video:{
+      type:Number
+    },
+    photo:{
+      type:Number,
+    },
+  }
 })
 
 export const User = mongoose.model("user", UserSchema);
