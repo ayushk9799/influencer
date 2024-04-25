@@ -2,89 +2,99 @@ import express from "express";
 import { User } from "../models/user.js";
 const router = express.Router();
 
-router.post("/", async (req, res,next) => {
+router.post("/", async (req, res, next) => {
   try {
-     const check=await User.findById(req.user._id);    
+     let check=await User.findById(req.user._id);    
     
-    //  console.log(check)
+    //  console.log('user',check)
     // let check=0;
      if(!check)
      {
         next(new Error("user not found in database or try again"))
      }
      else{
+        const data = req.body;
+        // console.log('data', data);
+        // check = {...check, ...data}; 
+        console.log(req.body);
 
-        if(req.body?.bio)
-        {
-          check.bio=req.body?.bio
+        for(let keys in data) {
+          if(data[keys]) {
+            check[keys]=data[keys];
+          }
         }
-        if (req.body?.gender) {
-            check.gender = req.body?.gender;
-          }
-          if (req.body?.region) {
-            check.region = req.body?.region;
-          }
+
+        // if(req.body?.bio)
+        // {
+        //   check.bio=req.body?.bio
+        // }
+        // if (req.body?.gender) {
+        //     check.gender = req.body?.gender;
+        //   }
+        //   if (req.body?.region) {
+        //     check.region = req.body?.region;
+        //   }
         
-          if(req.body?.field)
-          {
-            check.field=req.body?.field
-          }
-          if(req.body?.profilepic)
-          {
-            check.profilepic=req.body?.profilepic
-          }
+        //   if(req.body?.field)
+        //   {
+        //     check.field=req.body?.field
+        //   }
+        //   if(req.body?.profile)
+        //   {
+        //     check.profilepic=req.body?.profile
+        //   }
        
-        if(req.body?.iaccountID) {
-            check.iaccountID = req.body?.iaccountID;
-          }
-          if(req.body?.ifollowers)
-          {
-            check.ifollowers=req.body?.ifollowers;
-          }
-          if(req.body?.iposts)
-          {
-            check.iposts=req.body?.iposts
-          }
-          if(req.body?.ivideoPrice ) {
-            check.iprice.video = req.body?.ivideoPrice;
-          }
-          if(req.body?.iphotoPrice ) {
-            check.iprice.photo = req.body?.iphotoPrice;
-          }
-          if(req.body?.ireelsPrice ) {
-            check.iprice.reels = req.body?.ireelsPrice;
-          }
+        // if(req.body?.iaccountID) {
+        //     check.iaccountID = req.body?.iaccountID;
+        //   }
+        //   if(req.body?.ifollowers)
+        //   {
+        //     check.ifollowers=req.body?.ifollowers;
+        //   }
+        //   if(req.body?.iposts)
+        //   {
+        //     check.iposts=req.body?.iposts
+        //   }
+        //   if(req.body?.ivideoPrice ) {
+        //     check.iprice.video = req.body?.ivideo;
+        //   }
+        //   if(req.body?.iphotoPrice ) {
+        //     check.iprice.photo = req.body?.iphotoPrice;
+        //   }
+        //   if(req.body?.ireelsPrice ) {
+        //     check.iprice.reels = req.body?.ireelsPrice;
+        //   }
          
-          if(req.body?.uaccountID)
-          {
-            check.uaccountID=req.body?.uaccountID
-          }
-          if(req.body?.uposts)
-          {
-            check.uposts=req.body?.uposts
-          }
-          if(req.body?.iverification)
-          {
-            check.iverification=req.body?.iverification;
-          }
-          if(req.body?.ufollowers)
-          {
-            check.ufollowers=req.body?.ufollowers
-          }
-          if(req.body?.uverification)
-          {
-            check.iverification=req.body?.uverification;
-          }
-          if(req.body?.uvideoPrice)
-          {
-            check.uprice=req.body?.uvideoPrice
-          }
+        //   if(req.body?.yaccountID)
+        //   {
+        //     check.yaccountID=req.body?.yaccountID
+        //   }
+        //   if(req.body?.yposts)
+        //   {
+        //     check.yposts=req.body?.yposts
+        //   }
+        //   if(req.body?.iverification)
+        //   {
+        //     check.iverification=req.body?.iverification;
+        //   }
+        //   if(req.body?.yfollowers)
+        //   {
+        //     check.yfollowers=req.body?.yfollowers
+        //   }
+        //   if(req.body?.yverification)
+        //   {
+        //     check.yverification=req.body?.yverification;
+        //   }
+        //   if(req.body?.yprice)
+        //   {
+        //     check.uprice=req.body?.yprice
+        //   }
         await check.save();
         
      }
-    res.json({ messages: "saved succesfully" });
+    res.status(200).json({ message: "saved succesfully", data : check });
   } catch (error) {
-    res.json({ message: error.message });
+    res.status(404).json({ message: error.message });
   }
 });
 

@@ -13,7 +13,8 @@ const Page5 = () => {
     const [yprice, setYprice] = useState(formData?.yprice || {video : undefined, photo : undefined});
     const dispatch = useDispatch();
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault();
         let temp = {};
         if(formData.iaccountID) {
             temp = {...temp, ...{iprice}};
@@ -30,7 +31,6 @@ const Page5 = () => {
     <div className='container-1'>
         <FormHeader heading={'Add Your content Packages'} />
         <p>Charges are listed on your profile can be purchased by brands. Ensure what to charge <a href='#'>Use our rate Calculator</a>. Colab.com will take 15% fee. </p>
-        <form onSubmit={handleSubmit}>
             <div className='items'>
                 <div className='item-body' style={{display : formData.iaccountID ? 'block' : 'none'}}>
                     <div className='icon-body' >
@@ -39,11 +39,11 @@ const Page5 = () => {
                     </div>
                     <div className='inpute-items'>
                         <p>Photo</p>
-                        <input required placeholder='Price(INR)' value={iprice.photo} onChange={(e) => setIprice({...iprice, ...{photo : e.target.value }})} type='number' />
+                        <input  placeholder='Price(INR)' value={iprice.photo} onChange={(e) => setIprice({...iprice, ...{photo : e.target.value }})} type='number' />
                     </div>
                     <div className='inpute-items'>
                         <p>{'Video'}</p>
-                        <input required placeholder='Price(INR)' value={iprice.video} onChange={(e) => setIprice({...iprice, ...{video : e.target.value }})} type='number'  />
+                        <input  placeholder='Price(INR)' value={iprice.video} onChange={(e) => setIprice({...iprice, ...{video : e.target.value }})} type='number'  />
                     </div>
                 </div>
                 <div className='item-body' style={{display : formData.yaccountID ? 'block' : 'none'}}>
@@ -53,18 +53,15 @@ const Page5 = () => {
                     </div>
                     <div className='inpute-items'>
                         <p>Photo</p>
-                        <input  required placeholder='Price(INR)' value={yprice.photo} onChange={(e) => setYprice({...yprice, ...{photo : e.target.value }})} type='number' />
+                        <input   placeholder='Price(INR)' value={yprice.photo} onChange={(e) => setYprice({...yprice, ...{photo : e.target.value }})} type='number' />
                     </div>
                     <div className='inpute-items'>
                         <p>{'Video'}</p>
-                        <input  required placeholder='Price(INR)' value={yprice.video} onChange={(e) => setYprice({...yprice, ...{video : e.target.value }})} type='number'  />
+                        <input placeholder='Price(INR)' value={yprice.video} onChange={(e) => setYprice({...yprice, ...{video : e.target.value }})} type='number'  />
                     </div>
                 </div>
             </div>
-            <div className='button-box'>
-                <button className='button-submit' type='submit'  >continue</button>
-            </div>
-       </form>
+            <button className='button-submit' onClick={handleSubmit}  >continue</button>
     </div>
   )
 }
