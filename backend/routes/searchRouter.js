@@ -3,38 +3,52 @@ import { User } from "../models/user.js";
 const router = express.Router();
 
 router.get("/search", async (req, res) => {
-  // const { platform, field, fmin, fmax, region,gender } = req.query;
-  // console.log(platform);
-  // console.log(field);
-  // console.log(fmin);
-  // console.log(fmax);
-  // console.log(country);
-  // console.log(gender)
 try{
-  // if(platform==="instagram")
-  // {
-  //   const data= await InstagramAccount.find({}).populate({path:'user'});
+ 
+   const {region,fmax,fmin,platform,field} =req.query;
+  
+   let query={};
+   if(region)
+   {
+    query.region=region
+   }
+   if(platform.includes('instagram'))
+   {
+    query.iaccountID={$exists:true}
+    if (fmax) {
+      query.ifollowers = { $lte: parseInt(fmax) };
+    }
+    if (fmin) {
+      query.ifollowers = { ...query.ifollowers,$gte: parseInt(fmin) };
+    }
+   }
+  if(platform.includes('youtube'))
+   {
 
-  //   res.json({data:data})
-  // }
-  // else{
+    query.uaccountID={$exists:true}
+    if (fmax) {
+      query.ufollowers = { $lte: parseInt(fmax) };
+    }
+    if (fmin) {
+      query.ufollowers = { ...query.ufollowers,$gte: parseInt(fmin) };
+    }
+    
+   }
+   if(field)
+   {
+    query.field={$in:field}
+   }
 
-  //   //youtube route not made 
-  //   res.json({
-  //     deicded:"not decided"
-  //   })
-  // }
-
-  res.json({data:data})
+   console.log(query)
+   const users= await User.find(query)
+  res.json({data:users})
 }
 catch(error)
 {
   res.status(500).json({error:error.message})
   console.log(error)
 }
-  
 
- 
 });
 
 // router.get("/featured/platform/instagram", async (req, res) => {
@@ -42,6 +56,11 @@ catch(error)
 //   res.json({ data: data });
 // });
 
-router.get("/featured/platform/youtube", (req, res) => {});
+router.get("/featured/platform/instagram", async(req, res) => {
+
+ const data=await User.find({iaccountID:{$exists:true}}).select('-email');
+ res.json({data:data})
+
+});
 
 export default router;

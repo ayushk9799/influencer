@@ -15,64 +15,22 @@ export const DataTable = () => {
         setData(data.data);
       });
   }, []);
-
-  console.log(data[0]?.price.video)
+console.log(data)
+  // console.log(data[0]?.price.video)
   const handleInfluncerChat = (accountID) => {
     navigate(`/influencer/${accountID}`, { state: { account: accountID } });
   };
   return (
     <>
-      <div className="table-container">
-        <table className="table">
-          <thead>
-            <tr>
-              <th>AccountID</th>
-              <th>Followers</th>
-              <th>Posts</th>
-              <th>Fields</th>
-              {/* <th>gender</th> */}
-              <th>Social Media</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((item, index) => (
-              <tr
-                key={index}
-                onClick={() =>
-                  handleInfluncerChat(item.associatedAccounts.accountID)
-                }
-              >
-                <td>{item.associatedAccounts?.accountID}</td>
-                <td>{item.associatedAccounts?.followers}</td>
-                <td>{item.associatedAccounts?.posts}</td>
-                {
-                  <td>
-                    <div className="array">
-                      {item.field?.map((feature, index) => (
-                        <div className="arrayelements" key={index}>
-                          {feature}
-                        </div>
-                      ))}
-                    </div>
-                  </td>
-                }
-                {/* <td>{item.gender}</td> */}
-
-                {/* { <td >
-                <div className='array'>
-                {(item.languages)?.map((feature,index)=>(
-                  <div className='arrayelements' >{feature}</div>
-                ))}
-                </div>
-            
-                </td> } */}
-
-                <td>{item.associatedAccounts?.socialMedia}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+    <div className="grid-container">
+    {data.map((item, index) => (
+      <div key={index} className="grid-item">
+        <img src={item.profilepic} alt="Profile Pic" />
+        <div className="name-overlay">{item.name}</div>
+        <div>{item.city}</div>
       </div>
+    ))}
+  </div>
     </>
   );
 };

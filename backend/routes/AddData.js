@@ -82,6 +82,7 @@ router.post("/", async (req, res,next) => {
         await check.save();
         
      }
+      
     res.json({ messages: "saved succesfully" });
   } catch (error) {
     res.json({ message: error.message });
