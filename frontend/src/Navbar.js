@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import { useState } from "react";
 import { HorizontalNav } from "./HorizontalNav";
+import { s3Domain } from "./assets/Data";
 
 export const Navbar = ({ details }) => {
   const [menuButton, setMenuButton] = useState(false);
@@ -32,7 +33,7 @@ export const Navbar = ({ details }) => {
             >
               <div id="accountDetails">
                 <img
-                  src={details.profilepic}
+                  src={`${s3Domain}/${details.profilePic}`}
                   referrerpolicy="no-referrer"
                 ></img>
               </div>

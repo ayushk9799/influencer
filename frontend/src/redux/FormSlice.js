@@ -8,23 +8,16 @@ const initialState = {
   error : ""
 };
 
-export const createAccount = createAsyncThunk('form/create-account', async (payload, {getState}) => {
+export const createAccount = createAsyncThunk('form/update-form', async (payload, {getState}) => {
   const {formData} = getState().form;
-  const temp = { ...formData, "profile": formData?.images?.profile, "gallery": formData?.images?.cover}
-  delete temp.images;
-  // console.log(temp);
-  const data = await axios.post('http://localhost:3000/addData', temp, {
+
+  const data = await axios.post('http://localhost:3000/addData', formData, {
     withCredentials: true,
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json' // Added Accept header
-    }
   });
-  // console.log(data);
   return data;
 })
 
-export const FromSlice = createSlice({
+const FromSlice = createSlice({
   name: "form",
   initialState,
   reducers: {
@@ -37,17 +30,15 @@ export const FromSlice = createSlice({
   },
   extraReducers : (builder) => {
     builder
-      .addCase(createAccount.pending, (state, action) => {
+      .addCase(createAccount.pending, (state) => {
         state.loading = true;
       })
       .addCase(createAccount.fulfilled, (state, action) => {
         state.loading = false;
-        console.log('redux', action.payload);
       })
       .addCase(createAccount.rejected, (state, action) => {
         state.loading = false;
-        // state.error = action.payload.error;
-        console.log('error', action);
+        state.error = action.error.message;
       })
   }
 });

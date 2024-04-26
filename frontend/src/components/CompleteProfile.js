@@ -6,12 +6,12 @@ import Page4 from "./multipage/Page4";
 import Page5 from "./multipage/Page5";
 import Page6 from "./multipage/Page6";
 
-import { useSelector } from "react-redux";
-// import { setCurrentStep } from "../redux/FormSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { setCurrentStep } from "../redux/FormSlice";
 
 const Home = () => {
   const {currentStep} = useSelector((state) => state.form);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const PageDisplay = () => {
     if (currentStep === 1) {
       return <Page6 />; // 6
@@ -41,7 +41,7 @@ const Home = () => {
 
   return (
     <div className="main-container">
-      {/* <div>
+      <div>
         <button
           disabled={currentStep === 1}
           onClick={() => dispatch(setCurrentStep(currentStep - 1))}
@@ -54,7 +54,7 @@ const Home = () => {
         >
           next
         </button>
-      </div> */}
+      </div>
       <div className="progress-bar-container">
         <div
           className="progress-bar"

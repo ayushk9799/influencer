@@ -12,7 +12,9 @@ const s3Domain = 'https://thousand-ways.s3.ap-south-1.amazonaws.com';
 
 const Page3 = () => {
   const {formData, currentStep} = useSelector(state=>state.form);
-  const imagesLocal = formData?.images;
+  // const imagesLocal = formData?.images;
+  const localProfilePicture = formData?.profilePic;
+  const localGallery = formData?.gallery;
   const [profileImage, setProfileImage] = useState();
   const [coverImages, setCoverImages] = useState();
   const [deletedKeys, setDeletedKeys] = useState([]);
@@ -22,8 +24,6 @@ const Page3 = () => {
   const profileAlertRef = useRef();
 
   const dispatch = useDispatch();
-  // console.log('local',imagesLocal);
-  // console.log('cover', coverImages);
   
   // profile picture selector
   const handler = (e) => {
@@ -50,7 +50,7 @@ const Page3 = () => {
   // continue button i.e submit
   const handlerContinue = async() => {
 
-    if(!profileImage && !imagesLocal) {
+    if(!profileImage && !localProfilePicture) {
       // alert('Select profile picture!');
       profileAlertRef.current.style.display = 'block'
       return;
@@ -78,11 +78,11 @@ const Page3 = () => {
         'Content-Type': 'multipart/form-data',
       },
       withCredentials: true
-    })
+      })
       const {profile, cover} = data;
       if(status === 200) {
-        if(profileImage && !profile) {
-          console.log('Some images is not uploaded-profile')
+        if(profile) {
+          dispatch(updateFormData({profilePic : profile}));
         }
 
         if(coverImages && cover) {
@@ -91,10 +91,7 @@ const Page3 = () => {
           }
         }
         
-        dispatch(updateFormData({images : {
-          profile : 'profile',
-          cover : cover
-        }}));
+        dispatch(updateFormData({gallery : cover}));
         setLoader(false);
         dispatch(setCurrentStep(currentStep+1));
       }
@@ -110,12 +107,9 @@ const Page3 = () => {
       const newCoverImages = coverImages.filter((_, i) => i !== index);
       setCoverImages(newCoverImages);
     } else {
-      setDeletedKeys([...deletedKeys, imagesLocal.cover[index]]);
-      const newImagesLocal = imagesLocal.cover.filter((_, i) => i !== index);
-      dispatch(updateFormData({images : {
-        ...imagesLocal,
-        cover : newImagesLocal
-      }}));
+      setDeletedKeys([...deletedKeys, localGallery[index]]);
+      const newImagesLocal = localGallery.filter((_, i) => i !== index);
+      dispatch(updateFormData({gallery : newImagesLocal}));
     }
   }
 
@@ -126,8 +120,8 @@ const Page3 = () => {
     <div className="containerx">
       <FormHeader heading={'Upload images'} />
       <div className="profile-container" onClick={() => profilePicRef.current.click()}>
-        {(profileImage || imagesLocal) ? (
-          <img alt="profile" src={profileImage ? URL.createObjectURL(profileImage) : `${s3Domain}/${imagesLocal.profile}`} style={{ height: "75px", width: "75px", objectFit : 'cover' }} />
+        {(profileImage || localProfilePicture) ? (
+          <img alt="profile" src={profileImage ? URL.createObjectURL(profileImage) : `${s3Domain}/${localProfilePicture}`} style={{ height: "75px", width: "75px", objectFit : 'cover' }} />
         ) : (
           <IoIosPersonAdd style={{ height: 50, width: 50 }} />
         )}
@@ -147,8 +141,8 @@ const Page3 = () => {
             </div>
           ))
         ) : ( 
-          imagesLocal?.cover && imagesLocal.cover.length ? (
-            imagesLocal.cover.map((value, index) => (
+          localGallery && localGallery.length ? (
+            localGallery.map((value, index) => (
               <div key={value} className="cover-image">
                 <img accept="image/*" src={`${s3Domain}/${value}`} alt="images"  />
                 <div onClick={(e) => {handleDelete(index, 1);} }  className='delete-button' >
@@ -169,7 +163,7 @@ const Page3 = () => {
         {/* <button onClick={() => photosRef.current.click()}>add image</button> */}
         <button className="button-submit" onClick={handlerContinue} disabled={loader} >
           {loader && (
-            <div class="loader"></div>
+            <div className="loader"></div>
           )}
           <p>CONTINUE</p>
         </button>
