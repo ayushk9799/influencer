@@ -8,7 +8,7 @@ const UserSchema=new Schema({
   },
   name:{
     type:String,
-    required:true,
+    // required:true, 
   },
   contentCreator:
   {
@@ -27,7 +27,7 @@ const UserSchema=new Schema({
   gender:{
     type:String,
   },
-  profilepic:
+  profilePic:
   {
     type:String,
   },

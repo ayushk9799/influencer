@@ -12,6 +12,7 @@ const Page1 = () => {
   const navigate = useNavigate();
   const {formData} = useSelector(state=>state.form);
   const [region, setRegion] = useState(formData?.region || "");
+  const [name, setName] = useState(formData?.region || "");
   const [gender, setGender] = useState(formData?.gender || "");
   const [mobileNumber, setMobileNumber] = useState(formData?.mobileNumber || "");
   const [bio, setBio] = useState(formData?.mobileNumber || "");
@@ -21,17 +22,27 @@ const Page1 = () => {
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(updateFormData({region, gender, mobileNumber, bio }))
+    dispatch(updateFormData({region, gender, mobileNumber, bio, name }))
     dispatch(createAccount());
     // console.log('Form submitted:', { region, gender, mobileNumber, bio });
-    // navigate('/profile');
-    console.log('sent');
+    navigate('/profile');
+    // console.log('sent');
   };
 
   return (
     <div className="form-container">
       <FormHeader heading={'Enter Your Information'} />
       <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="name">Name:</label>
+          <input
+            type="text"
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+        </div>
         <div className="form-group">
           <label htmlFor="region">Region:</label>
           <input
@@ -59,7 +70,7 @@ const Page1 = () => {
         <div className="form-group">
           <label htmlFor="mobileNumber">Mobile Number:</label>
           <input
-            type="tel"
+            type="number"
             id="mobileNumber"
             value={mobileNumber}
             onChange={(e) => setMobileNumber(e.target.value)}

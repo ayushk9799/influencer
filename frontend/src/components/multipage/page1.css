@@ -27,7 +27,7 @@
   }
   
   input[type='text'],
-  input[type='tel'],
+  input[type='number'],
   textarea {
     width: 100%;
     padding: 8px 8px;
