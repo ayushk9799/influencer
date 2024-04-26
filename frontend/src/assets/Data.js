@@ -3,6 +3,8 @@ import { FaInstagram, FaYoutube, FaTwitter, FaFacebook  } from "react-icons/fa";
 export const iconsArr = [<FaInstagram />, <FaYoutube />, <FaFacebook />, <FaTwitter />]
 export const socialMedia = {0 : "Instagram", 1 : "Youtube", 2 : "Facebook", 3 : "Twitter"}
 
+export const s3Domain = 'https://thousand-ways.s3.ap-south-1.amazonaws.com';
+
 
 export const getIcons = (index ) => {
     return iconsArr[index];
@@ -30,6 +32,6 @@ export const getCategory = (index) => {
 }
 
 export const getFieldBaseUrl = (index) => {
-    const socialMedia = {0 : "https://www.instagram.com", 1 : "https://www.youtube.com", 2 : "Facebook", 3 : "https://twitter.com"}
+    const socialMedia = {0 : "https://www.instagram.com", 1 : "https://www.youtube.com",}
     return socialMedia[index];
 }

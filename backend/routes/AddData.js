@@ -15,13 +15,13 @@ router.post("/", async (req, res, next) => {
      else{
         const data = req.body;
        
-        console.log(req.body);
+        console.log('data', data);
 
         for(let keys in data) {
           if(data[keys]) {
             check[keys]=data[keys];
           }
-        }
+        } 
 
         // if(req.body?.bio)
         // {
@@ -93,6 +93,7 @@ router.post("/", async (req, res, next) => {
      }
     res.status(200).json({ message: "saved succesfully", data : check });
   } catch (error) {
+    console.log(error);
     res.status(404).json({ message: error.message });
   }
 });

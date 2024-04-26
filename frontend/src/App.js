@@ -10,8 +10,11 @@ import CompleteProfile from "./components/CompleteProfile";
 import Profile from "./components/Profile";
 import Checkout from "./components/Checkout";
 import { useState, useEffect } from "react";
+import {useDispatch} from 'react-redux'
+import { setUserData } from "./redux/UserSlice.js";
 function App() {
   const [details, setDetails] = useState({});
+  const dispatch = useDispatch();
 
   const getData = async () => {
     try {
@@ -23,6 +26,7 @@ function App() {
         ...details,
         ...userDetails,
       });
+      dispatch(setUserData(userDetails));
     } catch (err) {}
   };
   useEffect(() => {
@@ -40,7 +44,7 @@ function App() {
         {details.email ? (
           <Route
             path="/myAccount"
-            Component={Account}
+            Component={Profile}
             details={details}
           ></Route>
         ) : (
@@ -52,7 +56,7 @@ function App() {
           details={details}
         ></Route>
         <Route path="/complete-profile" Component={CompleteProfile} />
-        <Route path="/profile" Component={Profile} />
+        <Route path="/profile"  />
         <Route path="/checkout" Component={Checkout} />
       </Routes>
     </Router>

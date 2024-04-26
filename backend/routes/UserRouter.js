@@ -24,17 +24,19 @@ router.post('/upload-file', upload.fields([{name : 'profile', maxCount : 1}, {na
   }
 
   let profileImage = false;
-
+  let key = v4();
   if(files['profile'] && files['profile'][0]) {
-    await (uploadToS3(files['profile'][0], 'profile')); 
-    profileImage = true;
+    const temp = await (uploadToS3(files['profile'][0], key)); 
+    if(temp) {
+      profileImage = key;
+    }
   }
   
   const images = files['files'];
   const ids = [];
   if(images) {
     for(let i = 0; i < images.length; i++) {
-      let key = v4();
+      key = v4();
       const temp = await uploadToS3(images[i], key);
       if(temp) ids.push(key);
     }

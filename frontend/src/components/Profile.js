@@ -1,7 +1,9 @@
 import React, {useMemo, useState} from 'react'
 import "./profile.css"
-import { getCategory, getIcons, getSociaIndex } from '../assets/Data'
+import { getCategory, getIcons, s3Domain } from '../assets/Data'
 import {useNavigate } from 'react-router-dom'
+import {useSelector} from 'react-redux'
+import {FaInstagram, FaYoutube} from 'react-icons/fa'
 
 const userData = {
     "id" : "xyx",
@@ -36,43 +38,33 @@ const userData = {
     }
 }
 
-const coverImage = [
-    '3f17c5fb-c18e-4179-8004-62720f4b4627',
-    // 'e50c04dc-7440-4408-8853-76c1fa8357f0',
-    // '8d842490-d5bf-4872-ab6a-24d2db9dbe5f',
-    // '4a03458b-c875-4703-a336-96b524dd449e',
-]
-
-const s3Domain = 'https://thousand-ways.s3.ap-south-1.amazonaws.com';
-
-
-
-const Profile = () => {
-    const {categories} = userData
+const Profile = () => { 
+    const {userDetails} = useSelector(state=>state.user);
+    const {name, bio, gallery, profilePic, field, region, iaccountID, ifollowers, iprice, yaccountID, yfollowers, yprice } = userDetails;
     const navigate = useNavigate ();
+
+    // for swipe detection
     const [startX, setStartX] = useState(0);
     const [coverIndexMobile, setCoverIndexMobile] = useState(0);
-    // const [dist, setDist] = useState(0);
 
     const handleTouchStart = (event) => {
         const touch = event.touches[0];
         setStartX(touch.pageX);
-      };
+    };
     
-      const handleTouchEnd = (event) => {
-        const touch = event.changedTouches[0];
-        const dist = touch.pageX - startX;
-        // setDist(dist);
-    
-        if (Math.abs(dist) >= 30) {
-            const len = coverImage.length;
-          if (dist < 0) {
-            setCoverIndexMobile((coverIndexMobile+1)%len)
-          } else {
-            setCoverIndexMobile(coverIndexMobile===0?len-1:coverIndexMobile-1);
-          }
+    const handleTouchEnd = (event) => {
+      const touch = event.changedTouches[0];
+      const dist = touch.pageX - startX;
+      // setDist(dist);
+      if (Math.abs(dist) >= 30) {
+          const len = gallery.length;
+        if (dist < 0) {
+          setCoverIndexMobile((coverIndexMobile+1)%len)
+        } else {
+          setCoverIndexMobile(coverIndexMobile===0?len-1:coverIndexMobile-1);
         }
-      };
+      }
+    };
 
     const socialIdexes = useMemo(() => {
         const {social} = userData;
@@ -91,30 +83,26 @@ const Profile = () => {
         navigate('/checkout', {state : {data : {index, type}}});
     }
 
-
-
-
-
   return (
     <div className='main'>
         <div className='container' >
             {/* cover */}
-            {getCoverImageComponents(coverImage)}
+            {getCoverImageComponents(gallery)}
             <div className='cover-container-mobile' onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
-                <img src={`${s3Domain}/${coverImage[coverIndexMobile]}`} />
-                <div className='cover-indicator'>{coverIndexMobile+1}/{coverImage.length}</div>
+                <img src={`${s3Domain}/${gallery[coverIndexMobile]}`} />
+                <div className='cover-indicator'>{coverIndexMobile+1}/{gallery.length}</div>
             </div>
             {/* profile */}
             <div className='profile-div'>
                 <div className='image-div'>
-                    <img src={userData.images.profile} alt='image' style={{height : '100px', width : '100px'}} />
+                    <img  src={`${s3Domain}/${profilePic}`} alt='image' style={{height : '100px', width : '100px'}} />
                 </div>
                 
                 <div>
-                    <p className='name'>{userData.name}</p>
+                    <p className='name'>{name}</p>
                     <div className='category-container'>
                         {
-                            categories && categories.map((val) => (
+                            field?.length!==0 && field.map((val) => (
                                 <div key={val}>
                                     {getCategory(val)}
                                 </div>
@@ -122,39 +110,46 @@ const Profile = () => {
                         }
                     </div>
                     <div className='field-container'>
-                        {
-                            socialIdexes.map((val) => (
-                                <a href={"#"} className='field-element' key={val}>
-                                    {getIcons(val)}144k
-                                </a>
-                            ))
-                        }
+                        {iaccountID && <a target='_blank' href={`https://www.instagram.com/${iaccountID}`} className='field-element'><FaInstagram size={18} />{ifollowers}144K</a>}
+                        {yaccountID && <a target='_blank' href={`https://www.youtube.com/@${iaccountID}`} className='field-element'><FaYoutube size={20} />{yfollowers}5M</a>}
                     </div>
                 </div>
             </div>
-            <p>{userData.description}</p>
-            <div>
-                <p>Packages</p>
-                <div>
-                {
-                    socialIdexes && socialIdexes.map(val => (
-                    <div key={val}>
+            <p>{bio}</p>
+            <div className='price-box'>
+                <p>Packages</p> 
+                {iprice && (
+                    <div>
                         <div className='price-items'>
-                            {getIcons(val)}
-                            <p>{getSociaIndex(val)} {val===0 ? 'Post/Stories' : 'Post'}</p>
-                            <p>₹{userData.social[val].price.photo}</p>
-                            <button onClick={() => handleContinue(val, 0)}>Continue</button>
+                            <FaInstagram />
+                            <p>Instagram post</p>
+                            <p>₹{iprice.photo}</p>
+                            <button onClick={() => handleContinue(0, 0)}>Continue</button>
                         </div>
                         <div className='price-items'>
-                            {getIcons(val)}
-                            <p>{getSociaIndex(val)} {val===0 ? 'Reels' : 'Videos'}</p>
-                            <p>₹{userData.social[val].price.photo}</p>
-                            <button onClick={() => handleContinue(val, 1)}>Continue</button>
+                            <FaInstagram />
+                            <p>Instagram Reels</p>
+                            <p>₹{iprice.video}</p>
+                            <button onClick={() => handleContinue(0, 1)}>Continue</button>
                         </div>
+                    </div>
+                )}
+                {yprice && (
+                    <div>
+                        <div className='price-items'>
+                            <FaYoutube />
+                            <p>Youtube Short</p>
+                            <p>₹{yprice.photo}</p>
+                            <button onClick={() => handleContinue(1, 0)}>Continue</button>
                         </div>
-                    ))
-                }
-                </div>
+                        <div className='price-items'>
+                            <FaYoutube />
+                            <p>Youtube video</p>
+                            <p>₹{yprice.video}</p>
+                            <button onClick={() => handleContinue(1, 1)}>Continue</button>
+                        </div>
+                    </div>
+                )}
                 <div className='price-items'>
                     <p>Do you want to send custom offer</p>
                     <button onClick={() => handleContinue(4, 0)}>Make Custom Offer</button>
@@ -204,6 +199,10 @@ const getCoverImageComponents = (coverImage) => {
                 <div><img src={`${s3Domain}/${coverImage[3]}`} alt='cover' /></div>
             </div>
         </div>
+        )
+    } else {
+        return (
+            <div className='cover-container'></div>
         )
     }
 }
