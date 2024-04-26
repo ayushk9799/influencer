@@ -4,25 +4,13 @@ import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentStep, updateFormData } from '../../redux/FormSlice';
 import FormHeader from '../subcomponents/FormHeader';
-
+import {getCategory} from '../../assets/Data.js'
 const Page4 = () => {
     const dispatch = useDispatch();
     const {formData, currentStep} = useSelector(state => state.form);
     const [categories, setCategories] = useState(new Set());
-    const [categoryArray, setCategoryArray] = useState([
-        {id : 0, name : 'Lifestyle', selected : false},
-        {id : 1, name : 'Fashion', selected : false},
-        {id : 2, name : 'Beauty', selected : false},
-        {id : 3, name : 'Comendy', selected : false},
-        {id : 4, name : 'Art & Photography', selected : false},
-        {id : 5, name : 'Music & Dance', selected : false},
-        {id : 6, name : 'Animals & Pets', selected : false},
-        {id : 7, name : 'Education', selected : false},
-        {id : 8, name : 'Gaming', selected : false},
-        {id : 9, name : 'Automobiles', selected : false},
-        {id : 10, name : 'Vlogger', selected : false},
-    ])
-
+    const [categoryArray, setCategoryArray] = useState(getCategory(-1))
+  console.log(categoryArray)
     useEffect(()=> {
         const data = formData['categories'];
         if(data) { 

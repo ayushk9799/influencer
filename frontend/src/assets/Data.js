@@ -15,6 +15,7 @@ export const getSociaIndex = (index) => {
 }  
 
 export const getCategory = (index) => {
+
     const arr = [
         {id : 0, name : 'Lifestyle', selected : false},
         {id : 1, name : 'Fashion', selected : false},
@@ -28,7 +29,14 @@ export const getCategory = (index) => {
         {id : 9, name : 'Automobiles', selected : false},
         {id : 10, name : 'Vlogger', selected : false},
     ]
-    return arr[index].name;
+    if(index===-1)
+    {
+        return arr;
+    }
+    else{
+        return arr[index].name;
+    }
+   
 }
 
 export const getFieldBaseUrl = (index) => {

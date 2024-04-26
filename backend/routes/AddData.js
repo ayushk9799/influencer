@@ -19,7 +19,17 @@ router.post("/", async (req, res, next) => {
 
         for(let keys in data) {
           if(data[keys]) {
-            check[keys]=data[keys];
+            if(typeof data[keys]==='object')
+            {
+              for(let nestedKey in data[keys])
+              {
+                check[keys][nestedKey]=data[keys][nestedKey];
+              }
+            }
+            else{
+              check[keys]=data[keys]
+            }
+           
           }
         } 
 

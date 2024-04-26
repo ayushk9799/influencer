@@ -91,6 +91,120 @@ const data=[ {
   "mobileNumber": 9799819942,
   "region": "ewrefwerf",
   "yverification": false
+},
+{
+  "iprice": {
+      "photo": 5666
+  },
+  "_id": "6628333b0acc5a2717a0fc42",
+  "name": "Ayush Kumar",
+  "contentCreator": false,
+  "field": [
+      "1",
+      "2",
+      "4",
+      "6",
+      "8"
+  ],
+  "profilepic": "https://lh3.googleusercontent.com/a/ACg8ocIwIOkZVBiFS2sAjqsP1Msnpc7Gn3I9gciI9cLQd3dTCDg2HA=s96-c",
+  "gallery": [
+      "6e688a54-4b36-479d-8b22-42012171108a"
+  ],
+  "iverification": false,
+  "iposts": 0,
+  "uverification": false,
+  "__v": 3,
+  "bio": "hello this my bio",
+  "gender": "male",
+  "iaccountID": "india ",
+  "mobileNumber": 9799819942,
+  "region": "ewrefwerf",
+  "yverification": false
+},
+{
+  "iprice": {
+      "photo": 5666
+  },
+  "_id": "6628333b0acc5a2717a0fc42",
+  "name": "Ayush Kumar",
+  "contentCreator": false,
+  "field": [
+      "1",
+      "2",
+      "4",
+      "6",
+      "8"
+  ],
+  "profilepic": "https://lh3.googleusercontent.com/a/ACg8ocIwIOkZVBiFS2sAjqsP1Msnpc7Gn3I9gciI9cLQd3dTCDg2HA=s96-c",
+  "gallery": [
+      "6e688a54-4b36-479d-8b22-42012171108a"
+  ],
+  "iverification": false,
+  "iposts": 0,
+  "uverification": false,
+  "__v": 3,
+  "bio": "hello this my bio",
+  "gender": "male",
+  "iaccountID": "india ",
+  "mobileNumber": 9799819942,
+  "region": "ewrefwerf",
+  "yverification": false
+},{
+  "iprice": {
+      "photo": 5666
+  },
+  "_id": "6628333b0acc5a2717a0fc42",
+  "name": "Ayush Kumar",
+  "contentCreator": false,
+  "field": [
+      "1",
+      "2",
+      "4",
+      "6",
+      "8"
+  ],
+  "profilepic": "https://lh3.googleusercontent.com/a/ACg8ocIwIOkZVBiFS2sAjqsP1Msnpc7Gn3I9gciI9cLQd3dTCDg2HA=s96-c",
+  "gallery": [
+      "6e688a54-4b36-479d-8b22-42012171108a"
+  ],
+  "iverification": false,
+  "iposts": 0,
+  "uverification": false,
+  "__v": 3,
+  "bio": "hello this my bio",
+  "gender": "male",
+  "iaccountID": "india ",
+  "mobileNumber": 9799819942,
+  "region": "ewrefwerf",
+  "yverification": false
+},{
+  "iprice": {
+      "photo": 5666
+  },
+  "_id": "6628333b0acc5a2717a0fc42",
+  "name": "Ayush Kumar",
+  "contentCreator": false,
+  "field": [
+      "1",
+      "2",
+      "4",
+      "6",
+      "8"
+  ],
+  "profilepic": "https://lh3.googleusercontent.com/a/ACg8ocIwIOkZVBiFS2sAjqsP1Msnpc7Gn3I9gciI9cLQd3dTCDg2HA=s96-c",
+  "gallery": [
+      "6e688a54-4b36-479d-8b22-42012171108a"
+  ],
+  "iverification": false,
+  "iposts": 0,
+  "uverification": false,
+  "__v": 3,
+  "bio": "hello this my bio",
+  "gender": "male",
+  "iaccountID": "india ",
+  "mobileNumber": 9799819942,
+  "region": "ewrefwerf",
+  "yverification": false
 },]
  
   // useEffect(() => {
@@ -109,15 +223,15 @@ console.log(data)
   };
   return (
     <>
-    <div  style={{display:'flex',justifyContent:'center' ,alignItems:'center',border:'1px solid green'}}>
+    <div  style={{display:'flex',justifyContent:'center' ,alignItems:'center',border:'1px solid green',margin:'5px'}}>
 
     <div className="grid-container" style={{width:(data.length+1)*200+"px"}}>
     {data.map((item, index) => (
       <div key={index} className="grid-item">
-        {/* <img src={item.profilepic} alt="Profile Pic" /> */}
+        <img src={item.profilepic} alt="Profile Pic" />
         <div  className="detailsContainer">
-        <div className="name-overlay">{item.name}</div>
-        <div>{item.city}</div>
+        <div className="name">{item.name}</div>
+        <div style={{fontSize:'10px'}}>{item.region}</div>
         </div>
        
       </div>
