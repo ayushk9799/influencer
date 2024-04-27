@@ -78,9 +78,6 @@ const UserSchema=new Schema({
     video:{
       type:Number
     },
-    photo:{
-      type:Number,
-    },
   }
 })
 
