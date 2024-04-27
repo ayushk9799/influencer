@@ -78,7 +78,22 @@ const UserSchema=new Schema({
     video:{
       type:Number
     },
+  },
+  uniqueID:{
+    type:String
   }
 })
 
+UserSchema.pre('save',async function (next)
+{
+if(this.iaccountID)
+{ 
+  this.uniqueID=this.iaccountID;
+
+}
+else if (this.yaccountID){
+  this.uniqueID=this.yaccountID;
+}
+next();
+})
 export const User = mongoose.model("user", UserSchema);

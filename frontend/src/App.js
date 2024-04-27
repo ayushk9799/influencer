@@ -52,7 +52,7 @@ function App() {
         )}
         <Route
           path="/influencer/:userID"
-          Component={ChatBox}
+          Component={Profile}
           details={details}
         ></Route>
         <Route path="/complete-profile" Component={CompleteProfile} />

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import "./DataTable.css";
+import "./DisplayData.css";
 import { useNavigate } from "react-router-dom";
 import { getCategory } from "./assets/Data.js";
 import { iconsArr } from "./assets/Data.js";
-export const DataTable = () => {
+export const DisplayData = () => {
   const navigate = useNavigate();
   //const data=useMemo(()=>MockData,[MockData]);
   // const [data, setData] = useState([]);
@@ -168,6 +168,7 @@ export const DataTable = () => {
         video:5000
       }
     },
+   
   ];
 
   const  findLowest=(num1, num2, num3) =>{
@@ -184,8 +185,9 @@ export const DataTable = () => {
     return lowestValue; 
   }
   console.log(data);
-  const handleInfluncerChat = (accountID) => {
-    navigate(`/influencer/${accountID}`, { state: { account: accountID } });
+  const handleInfluncerClick = (uniqueID) => {
+    console.log("clicked")
+    navigate(`/influencer/${uniqueID}`, { state: { account: uniqueID } });
   };
   return (
     <>
@@ -202,7 +204,7 @@ export const DataTable = () => {
           style={{ width: (data.length + 1) * 200 + "px" }}
         >
           {data.map((item, index) => (
-            <div key={index} className="grid-item">
+            <div key={index} className="grid-item" onClick={()=>handleInfluncerClick(item.uniqueID)}>
               <div className="nameRegionImage">
                 <img src={item.profilepic} alt="Profile Pic" />
                 <div className="nameRegion">
