@@ -233,7 +233,7 @@ export const DisplayData = () => {
                         fontWeight:'500'
                       }}
                     >
-                      {iconsArr[0]} {item.ifollowers} Followers
+                    <a href={`http://instagram.com/${item.iaccountID}`} target="_blank" onClick={(e)=>e.stopPropagation()}> {iconsArr[0]} {item.ifollowers} Followers</a>
                       
                     </div>
                   ) : (
