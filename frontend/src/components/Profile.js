@@ -1,47 +1,18 @@
-import React, {useMemo, useState} from 'react'
+import React, {useMemo, useState,useEffect} from 'react'
 import "./profile.css"
 import { getCategory, getIcons, s3Domain } from '../assets/Data'
-import {useNavigate } from 'react-router-dom'
+import {useNavigate ,useLocation} from 'react-router-dom'
 import {useSelector} from 'react-redux'
 import {FaInstagram, FaYoutube} from 'react-icons/fa'
 
-const userData = {
-    "id" : "xyx",
-    "name" : "Rajiv Ranjan",
-    "phone" : 9097849090,
-    "email" : "rajivranjan0013@gmail.com",
-    "city" : "Patna",
-    "description" : "This is a motovloging channel. All foreign trip blog is here",
-    "categories" : [1,3,5],
-    "images" : {
-        // "profile" : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwzqBOQU8-rmsHcEGZ1imKdw5fefN4G0gkyZdM6ydMNg&s",
-        "profile" : "https://thousand-ways.s3.ap-south-1.amazonaws.com/profile",
-        "cover" : "https://assets.iplt20.com/bcci/articles/1705737695_Tata%20IPL%20Thumbnail.webp"
-    },
-    "social" : {
-        0 : {
-            "social_id" : "rajivrocky90",
-            "followers" : "100k",
-            "price" : {
-                "photo" : 20000,
-                "video" : 40000,
-            } 
-        },
-        3 : {
-            "social_id" : "rajivrocky90",
-            "followers" : "20k",
-            "price" : {
-                "photo" : 20000,
-                "video" : 40000,
-            } 
-        }
-    }
-}
-
 const Profile = () => { 
-    const {userDetails} = useSelector(state=>state.user);
-    const {name, bio, gallery, profilePic, field, region, iaccountID, ifollowers, iprice, yaccountID, yfollowers, yprice } = userDetails;
-    const navigate = useNavigate ();
+    
+    const location = useLocation();
+    console.log('profile')
+    const item = location.state?.account;
+    const {name, bio, gallery, profilePic, field, region, iaccountID, ifollowers, iprice, yaccountID, yfollowers, yprice }=item;
+
+    const navigate = useNavigate();
 
     // for swipe detection
     const [startX, setStartX] = useState(0);
@@ -66,15 +37,6 @@ const Profile = () => {
       }
     };
 
-    const socialIdexes = useMemo(() => {
-        const {social} = userData;
-        const arr = [];
-        for(let key in social) {
-            arr.push(key);
-        }
-        return arr;
-    }, [])
-
     const handleContinue = (index, type) => {
         if(index > 3) {
             navigate("/checkout");
@@ -82,10 +44,10 @@ const Profile = () => {
         }
         navigate('/checkout', {state : {data : {index, type}}});
     }
-
+console.log(gallery)
   return (
     <div className='main'>
-        <div className='container' >
+        {name &&(<div className='container' >
             {/* cover */}
             {getCoverImageComponents(gallery)}
             <div className='cover-container-mobile' onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
@@ -95,7 +57,7 @@ const Profile = () => {
             {/* profile */}
             <div className='profile-div'>
                 <div className='image-div'>
-                    <img  src={`${s3Domain}/${profilePic}`} alt='image' style={{height : '100px', width : '100px'}} />
+                    <img  src={`${profilePic}`} alt='image' style={{height : '100px', width : '100px'}} />
                 </div>
                 
                 <div>
@@ -155,7 +117,8 @@ const Profile = () => {
                     <button onClick={() => handleContinue(4, 0)}>Make Custom Offer</button>
                 </div>
             </div>
-        </div>
+        </div>)}
+        
     </div>
   )
 }

@@ -81,6 +81,21 @@ app.use("/getMyData", authenticationCheck, UserRouter);
 app.use("/getInfluencers", searchRouter);
 app.options("*", cors({ origin: "http://localhost:3001", credentials: true }))
 app.use("/addData", authenticationCheck, AddData);
+
+app.get('/influencer',async(req,res)=>
+{
+  try{
+    console.log("got")
+    const data=await User.findOne({uniqueID:{$exists:true,$eq:req.query.uniqueID}});
+    console.log("send")
+   res.status(200).json({data:data})
+  }
+  catch(error)
+  {
+    console.log(error)
+    next(error)
+  }
+})
 app.use((err, req, res, next) => {
   res.status(500).json({ error: err.message });
 });

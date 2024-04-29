@@ -81,6 +81,10 @@ const UserSchema=new Schema({
   },
   uniqueID:{
     type:String
+  },
+  order:{
+    type:Schema.Types.ObjectId,
+    ref:'order'
   }
 })
 
@@ -94,6 +98,8 @@ if(this.iaccountID)
 else if (this.yaccountID){
   this.uniqueID=this.yaccountID;
 }
+
+
 next();
 })
 export const User = mongoose.model("user", UserSchema);

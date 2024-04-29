@@ -35,7 +35,7 @@ function App() {
 
   return (
     <Router>
-      <Navbar details={details} />
+      <Navbar  />
       <Routes>
         <Route path="/" Component={Home}></Route>
         <Route path="/how-to-use" Component={HowToUse}></Route>
@@ -44,8 +44,8 @@ function App() {
         {details.email ? (
           <Route
             path="/myAccount"
-            Component={Profile}
-            details={details}
+            Component={Account}
+           
           ></Route>
         ) : (
           <Route path="/login" Component={Login}></Route>
@@ -53,7 +53,7 @@ function App() {
         <Route
           path="/influencer/:userID"
           Component={Profile}
-          details={details}
+         
         ></Route>
         <Route path="/complete-profile" Component={CompleteProfile} />
         <Route path="/profile"  />

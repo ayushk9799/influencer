@@ -1,176 +1,52 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useRef } from "react";
 import "./DisplayData.css";
 import { useNavigate } from "react-router-dom";
 import { getCategory } from "./assets/Data.js";
 import { iconsArr } from "./assets/Data.js";
+import { ConsoleLogEntry } from "selenium-webdriver/bidi/logEntries.js";
 export const DisplayData = () => {
   const navigate = useNavigate();
-  //const data=useMemo(()=>MockData,[MockData]);
-  // const [data, setData] = useState([]);
-  const data = [
-    {
-      iprice: {
-        photo: 5666,
-      },
-      _id: "6628333b0acc5a2717a0fc42",
-      name: "Ayush Kumar",
-      contentCreator: false,
-      field: ["1", "2", "4", "6", "8"],
-      profilepic:
-        "https://lh3.googleusercontent.com/a/ACg8ocIwIOkZVBiFS2sAjqsP1Msnpc7Gn3I9gciI9cLQd3dTCDg2HA=s96-c",
-      gallery: ["6e688a54-4b36-479d-8b22-42012171108a"],
-      iverification: false,
-      iposts: 0,
-      uverification: false,
-      __v: 3,
-      bio: "hello this my bio",
-      gender: "male",
-      iaccountID: "india ",
-      mobileNumber: 9799819942,
-      region: "ewrefwerf",
-      yverification: false,
-    },
-    {
-      iprice: {
-        photo: 5666,
-      },
-      _id: "6628333b0acc5a2717a0fc42",
-      name: "Ayush Kumar",
-      contentCreator: false,
-      field: ["1", "2", "4", "6", "8"],
-      profilepic:
-        "https://lh3.googleusercontent.com/a/ACg8ocIwIOkZVBiFS2sAjqsP1Msnpc7Gn3I9gciI9cLQd3dTCDg2HA=s96-c",
-      gallery: ["6e688a54-4b36-479d-8b22-42012171108a"],
-      iverification: false,
-      iposts: 0,
-      uverification: false,
-      __v: 3,
-      bio: "hello this my bio",
-      gender: "male",
-      iaccountID: "india ",
-      mobileNumber: 9799819942,
-      region: "ewrefwerf",
-      yverification: false,
-    },
-    {
-      iprice: {
-        photo: 5666,
-      },
-      _id: "6628333b0acc5a2717a0fc42",
-      name: "Ayush Kumar",
-      contentCreator: false,
-      field: ["1", "2", "4", "6", "8"],
-      profilepic:
-        "https://lh3.googleusercontent.com/a/ACg8ocIwIOkZVBiFS2sAjqsP1Msnpc7Gn3I9gciI9cLQd3dTCDg2HA=s96-c",
-      gallery: ["6e688a54-4b36-479d-8b22-42012171108a"],
-      iverification: false,
-      iposts: 0,
-      uverification: false,
-      __v: 3,
-      bio: "hello this my bio",
-      gender: "male",
-      iaccountID: "india ",
-      mobileNumber: 9799819942,
-      region: "ewrefwerf",
-      yverification: false,
-    },
-    {
-      iprice: {
-        photo: 5666,
-      },
-      _id: "6628333b0acc5a2717a0fc42",
-      name: "Ayush Kumar",
-      contentCreator: false,
-      field: ["1", "2", "4", "6", "8"],
-      profilepic:
-        "https://lh3.googleusercontent.com/a/ACg8ocIwIOkZVBiFS2sAjqsP1Msnpc7Gn3I9gciI9cLQd3dTCDg2HA=s96-c",
-      gallery: ["6e688a54-4b36-479d-8b22-42012171108a"],
-      iverification: false,
-      iposts: 0,
-      uverification: false,
-      __v: 3,
-      bio: "hello this my bio",
-      gender: "male",
-      iaccountID: "india ",
-      mobileNumber: 9799819942,
-      region: "ewrefwerf",
-      yverification: false,
-    },
-    {
-      iprice: {
-        photo: 5666,
-      },
-      _id: "6628333b0acc5a2717a0fc42",
-      name: "Ayush Kumar",
-      contentCreator: false,
-      field: ["1", "2", "4", "6", "8"],
-      profilepic:
-        "https://lh3.googleusercontent.com/a/ACg8ocIwIOkZVBiFS2sAjqsP1Msnpc7Gn3I9gciI9cLQd3dTCDg2HA=s96-c",
-      gallery: ["6e688a54-4b36-479d-8b22-42012171108a"],
-      iverification: false,
-      iposts: 0,
-      uverification: false,
-      __v: 3,
-      bio: "hello this my bio",
-      gender: "male",
-      iaccountID: "india ",
-      mobileNumber: 9799819942,
-      region: "ewrefwerf",
-      yverification: false,
-    },
-    {
-      iprice: {
-        photo: 5666,
-      },
-      _id: "6628333b0acc5a2717a0fc42",
-      name: "Ayush Kumar",
-      contentCreator: false,
-      field: ["1", "2", "4", "6", "8"],
-      profilepic:
-        "https://lh3.googleusercontent.com/a/ACg8ocIwIOkZVBiFS2sAjqsP1Msnpc7Gn3I9gciI9cLQd3dTCDg2HA=s96-c",
-      gallery: ["6e688a54-4b36-479d-8b22-42012171108a"],
-      iverification: false,
-      iposts: 0,
-      uverification: false,
-      __v: 3,
-      bio: "hello this my bio",
-      gender: "male",
-      iaccountID: "india ",
-      mobileNumber: 9799819942,
-      region: "ewrefwerf",
-      yverification: false,
-    },
-    {
-      iprice: {
-        photo: 5666,
-      },
-      _id: "6628333b0acc5a2717a0fc42",
-      name: "Ayush Kumar",
-      contentCreator: false,
-      field: ["1", "8"],
-      profilepic:
-        "https://lh3.googleusercontent.com/a/ACg8ocIwIOkZVBiFS2sAjqsP1Msnpc7Gn3I9gciI9cLQd3dTCDg2HA=s96-c",
-      gallery: ["6e688a54-4b36-479d-8b22-42012171108a"],
-      iverification: false,
-      iposts: 0,
-      uverification: false,
-      __v: 3,
-      bio: "hello this my bio",
-      gender: "male",
-      iaccountID: "india",
-      ifollowers: 500,
-      yaccountID: "youtube",
-      yfollowers: 600,
-      mobileNumber: 9799819942,
-      region: "ewrefwerf",
-      yverification: false,
-      yprice:{
-        video:5000
-      }
-    },
-   
-  ];
+  const divRef=useRef(null)
+const [data,setData]=useState([])
+useEffect(()=>
+{  const getData=async()=>
+  {
+    const response=await fetch('http://localhost:3000/getInfluencers/featured/platform/instagram');
+   let data=await response.json();
+setData(data.data)
+  }
+  getData();
+},[])
 
+useEffect(() => {
+  const divElement = divRef.current;
+  console.log("helloo")
+if(divElement)
+{
+  const computedStyle = window.getComputedStyle(divElement);
+
+  // Get the styles before the image has loaded
+  const widthBefore = computedStyle.getPropertyValue('width');
+  const heightBefore = computedStyle.getPropertyValue('height');
+  console.log(widthBefore,heightBefore)
+  // Listen for the image load event
+  const img = divElement.querySelector('img');
+  img.addEventListener('load', () => {
+    const computedStyleAfterLoad = window.getComputedStyle(divElement);
+
+    // Get the styles after the image has loaded
+    const widthAfter = computedStyleAfterLoad.getPropertyValue('width');
+    const heightAfter = computedStyleAfterLoad.getPropertyValue('height');
+    console.log(widthAfter);
+    console.log(heightAfter)
+    
+  });
+}
+   
+  
+    // Clean up the event listener on component unmount
+  
+  },[divRef.current]);
   const  findLowest=(num1, num2, num3) =>{
 
     const value1 = num1 === undefined ? Infinity : num1;
@@ -185,9 +61,9 @@ export const DisplayData = () => {
     return lowestValue; 
   }
   console.log(data);
-  const handleInfluncerClick = (uniqueID) => {
+  const handleInfluncerClick = (item) => {
     console.log("clicked")
-    navigate(`/influencer/${uniqueID}`, { state: { account: uniqueID } });
+    navigate(`/influencer/${item.uniqueID}`, { state: { account: item } });
   };
   return (
     <>
@@ -203,10 +79,11 @@ export const DisplayData = () => {
           className="grid-container"
           style={{ width: (data.length + 1) * 200 + "px" }}
         >
-          {data.map((item, index) => (
-            <div key={index} className="grid-item" onClick={()=>handleInfluncerClick(item.uniqueID)}>
+          {data && data.map((item, index) => (
+            <div key={index} className="grid-item" onClick={()=>handleInfluncerClick(item)}>
               <div className="nameRegionImage">
-                <img src={item.profilepic} alt="Profile Pic" />
+                <div style={{width:'100%',height:'320px'}} ref={divRef}> <img src='https://picsum.photos/200/300' alt="Profile Pic" /></div>
+               
                 <div className="nameRegion">
                   <div className="name">{item.name}</div>
                   <div style={{ fontSize: "10px" }}>{item.region}</div>

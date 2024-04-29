@@ -3,9 +3,11 @@ import "./Navbar.css";
 import { useState } from "react";
 import { HorizontalNav } from "./HorizontalNav";
 import { s3Domain } from "./assets/Data";
+import { useSelector } from "react-redux";
 
 export const Navbar = ({ details }) => {
   const [menuButton, setMenuButton] = useState(false);
+  const {userDetails}=useSelector(state=>state.user);
   const handleChange = () => {
     setMenuButton(!menuButton);
   };
@@ -25,7 +27,7 @@ export const Navbar = ({ details }) => {
             How to use
           </div>
 
-          {details?.email ? (
+          {userDetails?.email ? (
             <div
               className="navDetailsClass"
               onClick={() => navigate("/myAccount")}
@@ -33,7 +35,7 @@ export const Navbar = ({ details }) => {
             >
               <div id="accountDetails">
                 <img
-                  src={`${s3Domain}/${details.profilePic}`}
+                  src={`${userDetails.profilePic}`}
                   referrerpolicy="no-referrer"
                 ></img>
               </div>

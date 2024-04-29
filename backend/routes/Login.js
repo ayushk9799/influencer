@@ -47,7 +47,7 @@ console.log(payload)
     newUser = new User({
       email: payload.email,
       name: payload.name,
-      profilepic: payload.picture,
+      profilePic: payload.picture,
     });
     await newUser.save();
 

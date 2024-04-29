@@ -1,17 +1,13 @@
 import React ,{useEffect}from 'react'
-
+import {useSelector} from 'react-redux'
 export const Account = () => {
-
+const {userDetails}=useSelector(state=>state.user)
 
   return (
-    <> <div> add instagram account</div>
-    <input placeholder='enter id for instagram '></input>
-    <input placeholder='followers '></input>
-    <input placeholder='posts'></input>
-    <input placeholder='price for photos '></input>
-    <input placeholder='price for reels'></input>
-    <input placeholder='price for  '></input>
+    <>
+        
     </>
+   
    
   )
 }
