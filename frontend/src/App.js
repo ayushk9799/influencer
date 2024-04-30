@@ -10,22 +10,19 @@ import CompleteProfile from "./components/CompleteProfile";
 import Profile from "./components/Profile";
 import Checkout from "./components/Checkout";
 import { useState, useEffect } from "react";
-import {useDispatch} from 'react-redux'
+import {useDispatch,useSelector} from 'react-redux'
 import { setUserData } from "./redux/UserSlice.js";
 function App() {
-  const [details, setDetails] = useState({});
-  const dispatch = useDispatch();
 
+const {isAuthenticated}=useSelector(state=>state.user)
+  const dispatch = useDispatch();
+console.log("home")
   const getData = async () => {
     try {
       const response = await fetch("http://localhost:3000/getMyData", {
         credentials: "include",
       });
       const { userDetails } = await response.json();
-      setDetails({
-        ...details,
-        ...userDetails,
-      });
       dispatch(setUserData(userDetails));
     } catch (err) {}
   };
@@ -41,7 +38,7 @@ function App() {
         <Route path="/how-to-use" Component={HowToUse}></Route>
         <Route path="/pricing" Component={Pricing}></Route>
 
-        {details.email ? (
+        {isAuthenticated ? (
           <Route
             path="/myAccount"
             Component={Account}
@@ -55,6 +52,7 @@ function App() {
           Component={Profile}
          
         ></Route>
+        <Route path='/chat/:uniqueID' Component={ChatBox}></Route>
         <Route path="/complete-profile" Component={CompleteProfile} />
         <Route path="/profile"  />
         <Route path="/checkout" Component={Checkout} />

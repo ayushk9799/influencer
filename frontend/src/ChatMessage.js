@@ -1,18 +1,19 @@
 import React, { useEffect, useState, useMemo } from "react";
 import "./ChatMessage.css";
 import { io } from "socket.io-client";
-import { useLocation } from "react-router-dom";
-export const ChatMessage = ({ details }) => {
+import { useLocation,useSelector } from "react-router-dom";
+export const ChatMessage = () => {
   const socket = useMemo(
     () => io("http://localhost:3000", { withCredentials: true }),
     []
   );
   socket.on("connect_error", (err) => {});
   socket.on("connect", () => {});
-
+    // const {userDetails}=useSelector(state=>state.user);
+    // const you=userDetails._id;
   const location = useLocation();
-  const accountID = location.state?.account;
-
+  const recieverData= location.state?.account;
+  
   const [messageCurrentSend, setMessageSend] = useState("");
   const [messageLists, setMessageList] = useState([]);
   const [messageCurrentReceived, setMessagaReceived] = useState("");
@@ -152,7 +153,7 @@ export const ChatMessage = ({ details }) => {
   ];
   useEffect(() => {
     const getMessages = async () => {
-      // const response =await fetch(`http://localhost:3000/chats/${accountID}`,{credentials:'include'})
+      // const response =await fetch(`http://localhost:3000/chats/t}`,{credentials:'include'})
       // const {messages}= response.json();
 
       setMessageList(arrayObject);
@@ -162,7 +163,7 @@ export const ChatMessage = ({ details }) => {
 
   const handleSend = () => {
     socket.emit("message", {
-      accountID: accountID,
+     accountID:recieverData._id,
       content: messageCurrentSend,
     });
 

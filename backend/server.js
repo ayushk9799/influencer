@@ -28,14 +28,6 @@ const io = new Server(server, {
   cors: { origin: "http://localhost:3001", credentials: true },
 });
 const listOnline = new Map();
-const findUser = async (data) => {
-  try {
-    const docs = await InstagramAccount.findOne({"accountID":data});
-    return docs;
-  } catch (err) {
-    return null;
-  }
-};
 io.use(authenticationCheckSocket);
 io.on("connection", async (socket) => {
   try {
@@ -52,20 +44,20 @@ io.on("connection", async (socket) => {
 
     socket.on("message", async (data) => {
       try {
-        let receiverUser = await findUser(data.accountID);
-        if (!receiverUser) {
+        
+        if (!data?.accountID) {
           throw new Error("User not found");
         }
-        let socketReceiver = listOnline.get((receiverUser.user).toString());
+        let socketReceiver = listOnline.get((data.accountID).toString());
 
         if (socketReceiver) {
           try {
             io.to(socketReceiver).emit("message", data.content);
 
-            await databaseChat(loggedinUSer, receiverUser.user, data.content);
+            await databaseChat(loggedinUSer, data.accountID, data.content);
           } catch (error) {}
         } else {
-          await databaseChat(loggedinUSer, receiverUser.user, data.content);
+          await databaseChat(loggedinUSer, data.accountID, data.content);
         }
       } catch (error) {}
     });

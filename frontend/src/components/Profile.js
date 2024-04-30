@@ -10,7 +10,7 @@ const Profile = () => {
     const location = useLocation();
     console.log('profile')
     const item = location.state?.account;
-    const {name, bio, gallery, profilePic, field, region, iaccountID, ifollowers, iprice, yaccountID, yfollowers, yprice }=item;
+    const {name, bio, gallery, profilePic, field, region, iaccountID, ifollowers, iprice, yaccountID, yfollowers, yprice ,uniqueID}=item;
 
     const navigate = useNavigate();
 
@@ -36,7 +36,10 @@ const Profile = () => {
         }
       }
     };
-
+const handleChat=()=>
+{
+    navigate(`/chat/${uniqueID}`,{state:{account:uniqueID}})
+}
     const handleContinue = (index, type) => {
         if(index > 3) {
             navigate("/checkout");
@@ -75,6 +78,7 @@ console.log(gallery)
                         {iaccountID && <a target='_blank' href={`https://www.instagram.com/${iaccountID}`} className='field-element'><FaInstagram size={18} />{ifollowers}144K</a>}
                         {yaccountID && <a target='_blank' href={`https://www.youtube.com/@${iaccountID}`} className='field-element'><FaYoutube size={20} />{yfollowers}5M</a>}
                     </div>
+                    <div onClick={()=>handleChat()}>Chat</div>
                 </div>
             </div>
             <p>{bio}</p>

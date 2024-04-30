@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { ChatBoxList } from "./ChatBoxList.js";
 import { ChatMessage } from "./ChatMessage.js";
 
-export const ChatBox = ({ details }) => {
+export const ChatBox = () => {
   const [height, setHeight] = useState();
   const chatboxref = useRef(null);
 
@@ -35,7 +35,7 @@ export const ChatBox = ({ details }) => {
       ref={chatboxref}
     >
       <ChatBoxList />
-      <ChatMessage details={details} />
+      <ChatMessage  />
     </div>
   );
 };
