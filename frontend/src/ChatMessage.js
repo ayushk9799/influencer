@@ -13,7 +13,6 @@ export const ChatMessage = () => {
     // const you=userDetails._id;
   const location = useLocation();
   const recieverData= location.state?.account;
-  
   const [messageCurrentSend, setMessageSend] = useState("");
   const [messageLists, setMessageList] = useState([]);
   const [messageCurrentReceived, setMessagaReceived] = useState("");

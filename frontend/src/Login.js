@@ -8,7 +8,7 @@ export const Login=()=>
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState(null);
   
-
+console.log("login")
   useEffect(() => {
 
   }, []);
@@ -35,13 +35,13 @@ export const Login=()=>
   // };
   return (
     <div>
-      {isLoggedIn ? (
+      {/* {isLoggedIn ? (
         <div>
           <p>You are logged in as: {userEmail}</p>
         </div>
-      ) : (
+      ) : ( */}
         <button onClick={handleSignIn}>Sign in with Google</button>
-      )}
+      {/* )} */}
     </div>
   );
       }

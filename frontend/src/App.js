@@ -16,6 +16,7 @@ function App() {
 
 const {isAuthenticated}=useSelector(state=>state.user)
   const dispatch = useDispatch();
+  console.log(isAuthenticated)
 console.log("home")
   const getData = async () => {
     try {
@@ -23,7 +24,12 @@ console.log("home")
         credentials: "include",
       });
       const { userDetails } = await response.json();
-      dispatch(setUserData(userDetails));
+      console.log(userDetails)
+      if(userDetails)
+      {
+        dispatch(setUserData(userDetails));
+
+      }
     } catch (err) {}
   };
   useEffect(() => {

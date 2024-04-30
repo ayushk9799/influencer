@@ -3,7 +3,6 @@ import "./DisplayData.css";
 import { useNavigate } from "react-router-dom";
 import { getCategory } from "./assets/Data.js";
 import { iconsArr } from "./assets/Data.js";
-import { ConsoleLogEntry } from "selenium-webdriver/bidi/logEntries.js";
 export const DisplayData = () => {
   const navigate = useNavigate();
   const divRef=useRef(null)
