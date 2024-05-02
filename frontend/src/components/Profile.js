@@ -10,7 +10,8 @@ const Profile = () => {
     const location = useLocation();
     console.log('profile')
     const item = location.state?.account;
-    const {name, bio, gallery, profilePic, field, region, iaccountID, ifollowers, iprice, yaccountID, yfollowers, yprice ,uniqueID}=item;
+    console.log('item', item);
+    const {_id, name, bio, gallery, profilePic, field, region, iaccountID, ifollowers, iprice, yaccountID, yfollowers, yprice ,uniqueID}=item;
 
     const navigate = useNavigate();
 
@@ -36,18 +37,19 @@ const Profile = () => {
         }
       }
     };
-const handleChat=()=>
-{
-    navigate(`/chat/${uniqueID}`,{state:{account:uniqueID}})
-}
-    const handleContinue = (index, type) => {
-        if(index > 3) {
-            navigate("/checkout");
-            return;
-        }
-        navigate('/checkout', {state : {data : {index, type}}});
+
+    const handleChat=()=> {
+        navigate(`/chat/${uniqueID}`,{state:{account:uniqueID}})
     }
-console.log(gallery)
+
+    const handleContinue = (index, productName, amount) => {
+        if(index === 4) {
+            navigate("/custom-offer", {state : {data : {influencerID : _id, profilePic}}});
+        }else {
+            navigate('/checkout', {state : {data : {influencerID :_id, profilePic , amount, productName}}});
+        }
+    }
+    
   return (
     <div className='main'>
         {name &&(<div className='container' >
@@ -90,13 +92,13 @@ console.log(gallery)
                             <FaInstagram />
                             <p>Instagram post</p>
                             <p>₹{iprice.photo}</p>
-                            <button onClick={() => handleContinue(0, 0)}>Continue</button>
+                            <button onClick={() => handleContinue(0, "Instagram post", iprice.photo)}>Continue</button>
                         </div>
                         <div className='price-items'>
                             <FaInstagram />
                             <p>Instagram Reels</p>
                             <p>₹{iprice.video}</p>
-                            <button onClick={() => handleContinue(0, 1)}>Continue</button>
+                            <button onClick={() => handleContinue(0, "Instagram Reels", iprice.video)}>Continue</button>
                         </div>
                     </div>
                 )}
@@ -106,13 +108,13 @@ console.log(gallery)
                             <FaYoutube />
                             <p>Youtube Short</p>
                             <p>₹{yprice.photo}</p>
-                            <button onClick={() => handleContinue(1, 0)}>Continue</button>
+                            <button onClick={() => handleContinue(1, "Youtube Short", yprice.photo)}>Continue</button>
                         </div>
                         <div className='price-items'>
                             <FaYoutube />
                             <p>Youtube video</p>
                             <p>₹{yprice.video}</p>
-                            <button onClick={() => handleContinue(1, 1)}>Continue</button>
+                            <button onClick={() => handleContinue(1,"Youtube video", yprice.video)}>Continue</button>
                         </div>
                     </div>
                 )}

@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { BACKEND_URL } from "../assets/Data";
 
 const initialState = {
     isAuthenticated : false,
@@ -6,7 +7,7 @@ const initialState = {
 }
 
 export const getUserData = createAsyncThunk('user/get-data', async () => {
-    const response = await fetch("http://localhost:3000/getMyData", {
+    const response = await fetch(`${BACKEND_URL}/user/getMyData`, {
         credentials: "include",
     });
     const { userDetails } = await response.json();
