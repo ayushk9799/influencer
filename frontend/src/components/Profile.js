@@ -7,11 +7,11 @@ import { FaInstagram, FaYoutube } from "react-icons/fa";
 
 const Profile = () => { 
     
-    const location = useLocation();
-    console.log('profile')
-    const item = location.state?.account;
-    console.log('item', item);
-    const {_id, name, bio, gallery, profilePic, field, region, iaccountID, ifollowers, iprice, yaccountID, yfollowers, yprice ,uniqueID}=item;
+  const location = useLocation();
+  console.log('profile')
+  const item = location.state?.account;
+  console.log('item', item);
+  const {_id, name, bio, gallery, profilePic, field, region, iaccountID, ifollowers, iprice, yaccountID, yfollowers, yprice ,uniqueID}=item;
 
   const navigate = useNavigate();
 
@@ -38,22 +38,24 @@ const Profile = () => {
         );
       }
     };
+  }
 
-    const handleChat=()=> {
-        navigate(`/chat/${uniqueID}`,{state:{account:uniqueID}})
-    }
+  const handleChat=()=> {
+      navigate(`/chat/${uniqueID}`,{state:{account:uniqueID}})
+  }
 
-    const handleContinue = (index, productName, amount) => {
-        if(index === 4) {
-            navigate("/custom-offer", {state : {data : {influencerID : _id, profilePic}}});
-        }else {
-            navigate('/checkout', {state : {data : {influencerID :_id, profilePic , amount, productName}}});
-        }
-    }
+  const handleContinue = (index, productName, amount) => {
+      if(index === 4) {
+          navigate("/custom-offer", {state : {data : {influencerID : _id, profilePic}}});
+      }else {
+          navigate('/checkout', {state : {data : {influencerID :_id, profilePic , amount, productName}}});
+      }
+  }
     
   return (
     <div className='main'>
-        {name &&(<div className='container' >
+        {name && (
+          <div className='container' >
             {/* cover */}
             {getCoverImageComponents(gallery)}
             <div className='cover-container-mobile' onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
@@ -125,7 +127,6 @@ const Profile = () => {
                 </div>
             </div>
           </div>
-        </div>
       )}
     </div>
   );
@@ -189,3 +190,4 @@ const getCoverImageComponents = (coverImage) => {
     return <div className="cover-container"></div>;
   }
 };
+
