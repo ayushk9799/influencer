@@ -123,7 +123,7 @@ console.log("renderd")
             </div>
           ))
         ) : (
-          <div>No messages yet.</div>
+          <div>No messages yet</div>
         )}
       </div>
 
