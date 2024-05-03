@@ -1,4 +1,6 @@
 import {Order} from '../models/order.js'
+import {instance} from '../server.js'
+import crypto from 'crypto'
 
 
 export const getMyData=async(req,res)=>{
@@ -34,45 +36,51 @@ export const getPaymentKey = (req,res) => {
 export const paymentCheckout = async (req, res) => {
     try {
         const {amount, influencer} = req.body;
-    
-        const userID = '661c282942e850fe006c071b';
+        const user = req.user;
+        // const userID = '661c282942e850fe006c071b';
         const option = {
           amount : Number(amount * 100),
           currency : 'INR',
-          receipt : userID,
+          receipt : user._id,
           notes : {
             influencer : influencer
           }
         }
         const order = await instance.orders.create(option);
         // update database with order id
-        const values = {buyer : userID, influencer, amount, orderID : order.id};
+        const values = {buyer : user._id, influencer, amount, orderID : order.id};
         await Order.create(values);
         res.status(200).json({order});
     } catch (err) {
+      console.log(err);
         res.status(404).json({message : "unable to create order"});
     }
 }
 
 export const paymentVerification =  async(req, res) => {
-    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
-    const body = razorpay_order_id + "|" + razorpay_payment_id;
-    const expectedSignature = crypto.createHmac("sha256", process.env.RAZORPAY_APT_SECRET).update(body.toString()).digest("hex");
-    const isAuthentic = expectedSignature === razorpay_signature;
-    // database update
-    if(isAuthentic) {
-      const order = await Order.findOne({orderID : razorpay_order_id});
-      console.log('order',order);
-      if(order) {
-        order.buyerPaymentDetails = {paymentID :  razorpay_payment_id, signatureID : razorpay_signature};
-        order.buyerPaymentStatus = "success";
-        await order.save();
+    try {
+      const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+      console.log('body', req.body);
+      const body = razorpay_order_id + "|" + razorpay_payment_id;
+      const expectedSignature = crypto.createHmac("sha256", process.env.RAZORPAY_APT_SECRET).update(body.toString()).digest("hex");
+      const isAuthentic = expectedSignature === razorpay_signature;
+      // database update
+      if(isAuthentic) {
+        const order = await Order.findOne({orderID : razorpay_order_id});
+        console.log('order',order);
+        if(order) {
+          order.buyerPaymentDetails = {paymentID :  razorpay_payment_id, signatureID : razorpay_signature};
+          order.buyerPaymentStatus = "success"; 
+          await order.save();
+        } else {
+          console.log('Order not created');
+        }
       } else {
-        console.log('Order not created');
+        return res.redirect(`${process.env.FRONTEND_URL}/payment-failed`);
       }
-    } else {
-      res.redirect(`${process.env.FRONTEND_URL}/payment-failed`);
+      return res.redirect(`${process.env.FRONTEND_URL}/payment-success?reference=${razorpay_payment_id}`);
+    } catch(err) {
+      return res.status(404).json({success : false, message : err.message});
     }
-    res.redirect(`${process.env.FRONTEND_URL}/payment-success?reference=${razorpay_payment_id}`);
 }
 

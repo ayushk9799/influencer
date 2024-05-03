@@ -29,6 +29,7 @@ export const instance = new Razorpay({
 
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({extended : true}));
 connectDatabase();
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 
@@ -77,15 +78,15 @@ io.on("connection", async (socket) => {
   } catch (error) {}
 });
 
-setInterval(()=>
-{
-  console.log(listOnline)
-},10000)
+// setInterval(()=>
+// {
+//   console.log(listOnline)
+// },10000)
 //app.use(express.static(path.join(__dirname, '../frontend/build')));
+app.options("*", cors({ origin: process.env.FRONTEND_URL, credentials: true }))
 app.use("/auth", login);
 app.use("/user", authenticationCheck, UserRouter);
 app.use("/getInfluencers", searchRouter);
-app.options("*", cors({ origin: process.env.FRONTEND_URL, credentials: true }))
 app.use("/addData", authenticationCheck, AddData);
 
 app.get("/influencer", async (req, res) => {

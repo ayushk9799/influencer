@@ -9,11 +9,12 @@ const Checkout = () => {
     const handlePay = async() => {
         try {
             // fetchig razorpay key
-            const response = await fetch(`${BACKEND_URL}/user/payment/get-key`);
+            const response = await fetch(`${BACKEND_URL}/user/payment/get-key`, {credentials : "include"});
             const {key} = response.json();
             //creating order
             const response1 = await fetch(`${BACKEND_URL}/user/payment/checkout`, {
                 method : 'POST',
+                credentials : 'include',
                 headers : {
                     'Content-Type' : 'application/json'
                 },
@@ -30,7 +31,7 @@ const Checkout = () => {
                 description : "Payment for influencer",
                 image : "https://avatars.githubusercontent.com/u/98911997?v=4",
                 order_id : order.id,
-                callback_url : `${BACKEND_URL}/user/payment-verification`,
+                callback_url : `${BACKEND_URL}/user/payment/payment-verification`,
                 prefill : {
                     name : "Rajiv Ranjan",
                     email : "rajivranjan0013@gamil.com",

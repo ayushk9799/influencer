@@ -5,7 +5,7 @@ import multer from "multer";
 import {deleteS3, uploadToS3} from '../s3.js'
 
 const storage = multer.memoryStorage();
-const upload = multer({storage : storage});
+const upload = multer({storage : storage}); 
 const router = express.Router();
 
 router.get('/getMyData',getMyData); // get
@@ -14,7 +14,7 @@ router.get('/payment/get-key', getPaymentKey);
 
 router.post('/payment/checkout', paymentCheckout);
 
-router.post('/payment/payment-verification', paymentVerification);
+router.post('/payment/payment-verification', paymentVerification); 
 
 router.post('/upload-file', upload.fields([{name : 'profile', maxCount : 1}, {name : 'files', maxCount : 4}]), async(req,res) => {
     const files = req.files;
