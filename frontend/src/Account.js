@@ -5,9 +5,9 @@ const {userDetails}=useSelector(state=>state.user)
 
   return (
     <>
-
+      <div>
+        my account
+      </div>
     </>
-   
-   
   )
 }

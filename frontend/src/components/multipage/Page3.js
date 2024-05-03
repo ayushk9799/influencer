@@ -2,14 +2,13 @@ import React, { useRef, useState } from "react";
 import "./page3.css";
 import { IoIosPersonAdd } from "react-icons/io";
 import { TiDelete } from "react-icons/ti";
-import { FiUpload } from "react-icons/fi";
-import { s3Domain } from "../../assets/Data";
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import {  FiUpload } from "react-icons/fi";
+import { BACKEND_URL, s3Domain } from "../../assets/Data";
+import axios from 'axios'
+import {useDispatch, useSelector} from 'react-redux'
 import { setCurrentStep, updateFormData } from "../../redux/FormSlice";
 import FormHeader from "../subcomponents/FormHeader";
 
-// const s3Domain = 'https://thousand-ways.s3.ap-south-1.amazonaws.com';
 
 const Page3 = () => {
   const { formData, currentStep } = useSelector((state) => state.form);
@@ -71,22 +70,18 @@ const Page3 = () => {
     if (deletedKeys.length > 0) {
       form.append("deletedKeys", JSON.stringify(deletedKeys));
     }
-
-    try {
-      const { data, status } = await axios.post(
-        "http://localhost:3000/getMyData/upload-file",
-        form,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-          withCredentials: true,
-        }
-      );
-      const { profile, cover } = data;
-      if (status === 200) {
-        if (profile) {
-          dispatch(updateFormData({ profilePic: `${s3Domain}/${profile}` }));
+    
+    try{
+      const {data, status} = await axios.post(`${BACKEND_URL}/user/upload-file`, form, {
+        headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      withCredentials: true
+      })
+      const {profile, cover} = data;
+      if(status === 200) {
+        if(profile) {
+          dispatch(updateFormData({profilePic : `${s3Domain}/${profile}`}));
         }
 
         if (coverImages && cover) {

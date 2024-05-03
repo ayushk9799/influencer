@@ -1,14 +1,20 @@
 import express from 'express';
-import  {getMyData, uploadFiles}  from '../controller/getMyData.js';
+import  {getMyData, paymentCheckout, getPaymentKey, paymentVerification}  from '../controller/userController.js';
 import {v4} from 'uuid'
 import multer from "multer";
 import {deleteS3, uploadToS3} from '../s3.js'
 
 const storage = multer.memoryStorage();
-const upload = multer({storage : storage});
-const router=express.Router();
+const upload = multer({storage : storage}); 
+const router = express.Router();
 
-router.get('/',getMyData); // get
+router.get('/getMyData',getMyData); // get
+
+router.get('/payment/get-key', getPaymentKey);
+
+router.post('/payment/checkout', paymentCheckout);
+
+router.post('/payment/payment-verification', paymentVerification); 
 
 router.post('/upload-file', upload.fields([{name : 'profile', maxCount : 1}, {name : 'files', maxCount : 4}]), async(req,res) => {
     const files = req.files;

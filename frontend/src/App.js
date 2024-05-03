@@ -12,13 +12,16 @@ import Checkout from "./components/Checkout";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserData } from "./redux/UserSlice.js";
+import CustomOffer from "./components/CustomOffer.js";
+import PaymentSuccess from "./components/Payment/PaymentSuccess.js";
+import PaymentFail from "./components/Payment/PaymentFail.js";
 function App() {
   const { isAuthenticated } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const getData = async () => {
     try {
-      const response = await fetch("http://localhost:3000/getMyData", {
+      const response = await fetch("http://localhost:3000/user/getMyData", {
         credentials: "include",
       });
       const { userDetails } = await response.json();
@@ -50,6 +53,9 @@ function App() {
         <Route path="/complete-profile" Component={CompleteProfile} />
         <Route path="/profile" />
         <Route path="/checkout" Component={Checkout} />
+        <Route path="/custom-offer" Component={CustomOffer} />
+        <Route path="/payment-success" Component={PaymentSuccess} />
+        <Route path="/payment-failed" Component={PaymentFail} />
       </Routes>
     </Router>
   );
