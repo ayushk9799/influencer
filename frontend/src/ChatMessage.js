@@ -1,178 +1,206 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useRef } from "react";
 import "./ChatMessage.css";
 import { io } from "socket.io-client";
-import { useLocation,useSelector } from "react-router-dom";
+import { useLocation} from "react-router-dom";
+import { useSelector } from "react-redux";
 export const ChatMessage = () => {
-  const socket = useMemo(
-    () => io("http://localhost:3000", { withCredentials: true }),
-    []
-  );
-  socket.on("connect_error", (err) => {});
-  socket.on("connect", () => {});
+  // const socket = useMemo(
+  //   () => io("http://localhost:3000", { withCredentials: true }),
+  //   []
+  // );
+  const chatHistoryRef=useRef(null)
+  const socket =useRef(null)
+  // socket.on("connect_error", (err) => {});
+  // socket.on("connect", () => {});
     // const {userDetails}=useSelector(state=>state.user);
     // const you=userDetails._id;
+    const {userDetails}=useSelector(state=>state.user);
+    const you=userDetails._id;
+    console.log(typeof(you))
   const location = useLocation();
-  const recieverData= location.state?.account;
-  
+  const other= (location.state?.account)._id;
+  console.log(other)
   const [messageCurrentSend, setMessageSend] = useState("");
   const [messageLists, setMessageList] = useState([]);
   const [messageCurrentReceived, setMessagaReceived] = useState("");
+  
   const sender = "ayush";
 
-  const arrayObject = [
-    {
-      sender: "ayush",
-      content: "Hello",
-      timeStamp: "1",
-    },
-    {
-      sender: "rajiv",
-      content: "hi ayush",
-      timeStamp: "2",
-    },
-    {
-      sender: "rajiv",
-      content: "bhai reshmi ko pata lo tum ",
-      timeStamp: "3",
-    },
-    {
-      sender: "ayush",
-      content: "nahi bhai ",
-      timeStamp: "4",
-    },
-    {
-      sender: "rajiv",
-      content: "hi ayush",
-      timeStamp: "2",
-    },
-    {
-      sender: "rajiv",
-      content: "bhai reshmi ko pata lo tum ",
-      timeStamp: "3",
-    },
-    {
-      sender: "ayush",
-      content: "nahi bhai ",
-      timeStamp: "4",
-    },
-    {
-      sender: "rajiv",
-      content: "hi ayush",
-      timeStamp: "2",
-    },
-    {
-      sender: "rajiv",
-      content: "bhai reshmi ko pata lo tum ",
-      timeStamp: "3",
-    },
-    {
-      sender: "ayush",
-      content: "nahi bhai ",
-      timeStamp: "4",
-    },
-    {
-      sender: "ayush",
-      content: "paisa wapas de gaandu ",
-      timeStamp: "5",
-    },
-    {
-      sender: "rajiv",
-      content: "bhai reshmi ko pata lo tum ",
-      timeStamp: "3",
-    },
-    {
-      sender: "ayush",
-      content: "nahi bhai ",
-      timeStamp: "4",
-    },
-    {
-      sender: "rajiv",
-      content: "bhai reshmi ko pata lo tum ",
-      timeStamp: "3",
-    },
-    {
-      sender: "ayush",
-      content: "nahi bhai ",
-      timeStamp: "4",
-    },
-    {
-      sender: "rajiv",
-      content: "bhai reshmi ko pata lo tum ",
-      timeStamp: "3",
-    },
-    {
-      sender: "ayush",
-      content: "nahi bhai ",
-      timeStamp: "4",
-    },
-    {
-      sender: "rajiv",
-      content: "bhai reshmi ko pata lo tum ",
-      timeStamp: "3",
-    },
-    {
-      sender: "ayush",
-      content: "nahi bhai ",
-      timeStamp: "4",
-    },
-    {
-      sender: "ayush",
-      content: "nahi bhai ",
-      timeStamp: "4",
-    },
-    {
-      sender: "rajiv",
-      content: "bhai reshmi ko pata lo tum ",
-      timeStamp: "3",
-    },
-    {
-      sender: "ayush",
-      content: "nahi bhai ",
-      timeStamp: "4",
-    },
-    {
-      sender: "ayush",
-      content: "nahi bhai ",
-      timeStamp: "4",
-    },
-    {
-      sender: "ayush",
-      content: "nahi bhai ",
-      timeStamp: "4",
-    },
-    {
-      sender: "rajiv",
-      content: "bhai reshmi ko pata lo tum ",
-      timeStamp: "3",
-    },
-    {
-      sender: "ayush",
-      content: "nahi bhai ",
-      timeStamp: "4",
-    },
-  ];
+  // const arrayObject = [
+  //   {
+  //     sender: "ayush",
+  //     content: "Hello",
+  //     timeStamp: "1",
+  //   },
+  //   {
+  //     sender: "rajiv",
+  //     content: "hi ayush",
+  //     timeStamp: "2",
+  //   },
+  //   {
+  //     sender: "rajiv",
+  //     content: "bhai reshmi ko pata lo tum ",
+  //     timeStamp: "3",
+  //   },
+  //   {
+  //     sender: "ayush",
+  //     content: "nahi bhai ",
+  //     timeStamp: "4",
+  //   },
+  //   {
+  //     sender: "rajiv",
+  //     content: "hi ayush",
+  //     timeStamp: "2",
+  //   },
+  //   {
+  //     sender: "rajiv",
+  //     content: "bhai reshmi ko pata lo tum ",
+  //     timeStamp: "3",
+  //   },
+  //   {
+  //     sender: "ayush",
+  //     content: "nahi bhai ",
+  //     timeStamp: "4",
+  //   },
+  //   {
+  //     sender: "rajiv",
+  //     content: "hi ayush",
+  //     timeStamp: "2",
+  //   },
+  //   {
+  //     sender: "rajiv",
+  //     content: "bhai reshmi ko pata lo tum ",
+  //     timeStamp: "3",
+  //   },
+  //   {
+  //     sender: "ayush",
+  //     content: "nahi bhai ",
+  //     timeStamp: "4",
+  //   },
+  //   {
+  //     sender: "ayush",
+  //     content: "paisa wapas de gaandu ",
+  //     timeStamp: "5",
+  //   },
+  //   {
+  //     sender: "rajiv",
+  //     content: "bhai reshmi ko pata lo tum ",
+  //     timeStamp: "3",
+  //   },
+  //   {
+  //     sender: "ayush",
+  //     content: "nahi bhai ",
+  //     timeStamp: "4",
+  //   },
+  //   {
+  //     sender: "rajiv",
+  //     content: "bhai reshmi ko pata lo tum ",
+  //     timeStamp: "3",
+  //   },
+  //   {
+  //     sender: "ayush",
+  //     content: "nahi bhai ",
+  //     timeStamp: "4",
+  //   },
+  //   {
+  //     sender: "rajiv",
+  //     content: "bhai reshmi ko pata lo tum ",
+  //     timeStamp: "3",
+  //   },
+  //   {
+  //     sender: "ayush",
+  //     content: "nahi bhai ",
+  //     timeStamp: "4",
+  //   },
+  //   {
+  //     sender: "rajiv",
+  //     content: "bhai reshmi ko pata lo tum ",
+  //     timeStamp: "3",
+  //   },
+  //   {
+  //     sender: "ayush",
+  //     content: "nahi bhai ",
+  //     timeStamp: "4",
+  //   },
+  //   {
+  //     sender: "ayush",
+  //     content: "nahi bhai ",
+  //     timeStamp: "4",
+  //   },
+  //   {
+  //     sender: "rajiv",
+  //     content: "bhai reshmi ko pata lo tum ",
+  //     timeStamp: "3",
+  //   },
+  //   {
+  //     sender: "ayush",
+  //     content: "nahi bhai ",
+  //     timeStamp: "4",
+  //   },
+  //   {
+  //     sender: "ayush",
+  //     content: "nahi bhai ",
+  //     timeStamp: "4",
+  //   },
+  //   {
+  //     sender: "ayush",
+  //     content: "nahi bhai ",
+  //     timeStamp: "4",
+  //   },
+  //   {
+  //     sender: "rajiv",
+  //     content: "bhai reshmi ko pata lo tum ",
+  //     timeStamp: "3",
+  //   },
+  //   {
+  //     sender: "ayush",
+  //     content: "nahi bhai ",
+  //     timeStamp: "4",
+  //   },
+  // ];
   useEffect(() => {
-    const getMessages = async () => {
-      // const response =await fetch(`http://localhost:3000/chats/t}`,{credentials:'include'})
-      // const {messages}= response.json();
+    // const chatContainer = chatHistoryRef.current;
+    // chatContainer.scrollTop = chatContainer.scrollHeight - chatContainer.clientHeight;
+      socket.current =io("http://localhost:3000", { withCredentials: true })
 
-      setMessageList(arrayObject);
+      socket.current.on("message", (message) => {
+        console.log(message)
+        // setMessagaReceived(message);
+        setMessageList([...messageLists,{sender:other,content:message,sentAt: (new Date()).toISOString()}])
+      });
+
+    const getMessages = async () => {
+      const response =await fetch(`http://localhost:3000/chats/${other}`,{credentials:'include'})
+      const {chats}= await response.json();
+      console.log(chats);
+      // console.log(typeof())
+      setMessageList([...messageLists,...chats]);
     };
     getMessages();
+    return () => {
+      if (socket.current) {
+        socket.current.disconnect();
+      }
+    };
   }, []);
 
   const handleSend = () => {
-    socket.emit("message", {
-     accountID:recieverData._id,
-      content: messageCurrentSend,
-    });
 
-    setMessageSend("");
+    if(socket.current)
+    {
+      socket.current.emit("message", {
+        accountID:other,
+         content: messageCurrentSend,
+       });
+   
+       console.log(messageLists)
+       setMessageList([...messageLists,{sender:userDetails._id,content:messageCurrentSend,sentAt: (new Date()).toISOString()}])
+       setMessageSend("");
+    }
+
   };
 
-  socket.on("message", (message) => {
-    setMessagaReceived(message);
-  });
+ console.log(messageLists.length)
   const handleMesageInput = (event) => {
     setMessageSend(event.target.value);
   };
@@ -188,6 +216,7 @@ export const ChatMessage = () => {
     >
       {messageLists.length > 0 ? (
         <div
+        ref={chatHistoryRef}
           id="chathistory"
           style={{
             height: "100%",
@@ -200,22 +229,22 @@ export const ChatMessage = () => {
             <div
               key={index}
               style={{
-                textAlign: message.sender === "ayush" ? "right" : "left",
+                textAlign: message.sender === you ? "right" : "left",
                 margin: "10px",
                 padding: "5px 10px 5px 5px",
                 backgroundColor:
-                  message.sender === "ayush" ? "#add8e6" : "#90ee90",
+                  message.sender === you ? "#add8e6" : "#90ee90",
                 borderRadius: "10px",
                 maxWidth: "50%",
                 width: "max-content",
-                marginLeft: message.sender === "ayush" ? "auto" : "10px",
-                marginRight: message.sender === "rajiv" ? "auto" : "10px",
+                marginLeft: message.sender === you ? "auto" : "10px",
+                marginRight: message.sender === other ? "auto" : "10px",
                 fontSize: "15px",
                 fontFamily:
                   "Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif",
                 backgroundColor:
-                  message.sender === "ayush" ? "black" : "rgb(239, 239, 239)",
-                color: message.sender === "ayush" ? "white" : "black",
+                  message.sender === you ? "black" : "rgb(239, 239, 239)",
+                color: message.sender === other ? "black" : "white",
               }}
             >
               <b>{message.sender}:</b> {message.content}

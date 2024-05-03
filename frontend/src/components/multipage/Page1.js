@@ -1,37 +1,38 @@
 import { useSelector, useDispatch } from "react-redux";
-import axios from 'axios'
+import axios from "axios";
 
-import React, { useState } from 'react';
-import "./page1.css"
+import React, { useState } from "react";
+import "./page1.css";
 import FormHeader from "../subcomponents/FormHeader";
 import { createAccount, updateFormData } from "../../redux/FormSlice";
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 
 const Page1 = () => {
   // State variables for form fields
   const navigate = useNavigate();
-  const {formData} = useSelector(state=>state.form);
+  const { formData } = useSelector((state) => state.form);
   const [region, setRegion] = useState(formData?.region || "");
   const [name, setName] = useState(formData?.region || "");
   const [gender, setGender] = useState(formData?.gender || "");
-  const [mobileNumber, setMobileNumber] = useState(formData?.mobileNumber || "");
+  const [mobileNumber, setMobileNumber] = useState(
+    formData?.mobileNumber || ""
+  );
   const [bio, setBio] = useState(formData?.mobileNumber || "");
   const dispatch = useDispatch();
-
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(updateFormData({region, gender, mobileNumber, bio, name }))
+    dispatch(updateFormData({ region, gender, mobileNumber, bio, name }));
     dispatch(createAccount());
-    // console.log('Form submitted:', { region, gender, mobileNumber, bio });
-    navigate('/profile');
-    // console.log('sent');
+    //
+    navigate("/profile");
+    //
   };
 
   return (
     <div className="form-container">
-      <FormHeader heading={'Enter Your Information'} />
+      <FormHeader heading={"Enter Your Information"} />
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="name">Name:</label>
@@ -61,7 +62,9 @@ const Page1 = () => {
             onChange={(e) => setGender(e.target.value)}
             required
           >
-            <option disabled hidden value="">Select Gender</option>
+            <option disabled hidden value="">
+              Select Gender
+            </option>
             <option value="male">Male</option>
             <option value="female">Female</option>
             <option value="other">Other</option>
@@ -81,12 +84,14 @@ const Page1 = () => {
           <textarea
             id="bio"
             value={bio}
-            placeholder='Eg. Fitness content creator & gamer.'
+            placeholder="Eg. Fitness content creator & gamer."
             onChange={(e) => setBio(e.target.value)}
           />
         </div>
         <div className="button-box">
-        <button type="submit" className='button-submit'>Submit</button>
+          <button type="submit" className="button-submit">
+            Submit
+          </button>
         </div>
       </form>
     </div>
@@ -94,4 +99,3 @@ const Page1 = () => {
 };
 
 export default Page1;
-

@@ -54,7 +54,7 @@ const Checkout = () => {
         <h4>Checkout</h4>
         <button onClick={handlePay}>Place Order</button>
     </div>
-  )
-}
+  );
+};
 
-export default Checkout
+export default Checkout;

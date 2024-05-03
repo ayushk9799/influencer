@@ -1,9 +1,9 @@
-import React, {useMemo, useState,useEffect} from 'react'
-import "./profile.css"
-import { getCategory, getIcons, s3Domain } from '../assets/Data'
-import {useNavigate ,useLocation} from 'react-router-dom'
-import {useSelector} from 'react-redux'
-import {FaInstagram, FaYoutube} from 'react-icons/fa'
+import React, { useMemo, useState, useEffect } from "react";
+import "./profile.css";
+import { getCategory, getIcons, s3Domain } from "../assets/Data";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { FaInstagram, FaYoutube } from "react-icons/fa";
 
 const Profile = () => { 
     
@@ -13,28 +13,29 @@ const Profile = () => {
     console.log('item', item);
     const {_id, name, bio, gallery, profilePic, field, region, iaccountID, ifollowers, iprice, yaccountID, yfollowers, yprice ,uniqueID}=item;
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    // for swipe detection
-    const [startX, setStartX] = useState(0);
-    const [coverIndexMobile, setCoverIndexMobile] = useState(0);
+  // for swipe detection
+  const [startX, setStartX] = useState(0);
+  const [coverIndexMobile, setCoverIndexMobile] = useState(0);
 
-    const handleTouchStart = (event) => {
-        const touch = event.touches[0];
-        setStartX(touch.pageX);
-    };
-    
-    const handleTouchEnd = (event) => {
-      const touch = event.changedTouches[0];
-      const dist = touch.pageX - startX;
-      // setDist(dist);
-      if (Math.abs(dist) >= 30) {
-          const len = gallery.length;
-        if (dist < 0) {
-          setCoverIndexMobile((coverIndexMobile+1)%len)
-        } else {
-          setCoverIndexMobile(coverIndexMobile===0?len-1:coverIndexMobile-1);
-        }
+  const handleTouchStart = (event) => {
+    const touch = event.touches[0];
+    setStartX(touch.pageX);
+  };
+
+  const handleTouchEnd = (event) => {
+    const touch = event.changedTouches[0];
+    const dist = touch.pageX - startX;
+    // setDist(dist);
+    if (Math.abs(dist) >= 30) {
+      const len = gallery.length;
+      if (dist < 0) {
+        setCoverIndexMobile((coverIndexMobile + 1) % len);
+      } else {
+        setCoverIndexMobile(
+          coverIndexMobile === 0 ? len - 1 : coverIndexMobile - 1
+        );
       }
     };
 
@@ -123,55 +124,68 @@ const Profile = () => {
                     <button onClick={() => handleContinue(4, 0)}>Make Custom Offer</button>
                 </div>
             </div>
-        </div>)}
-        
+          </div>
+        </div>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;
 
 const getCoverImageComponents = (coverImage) => {
-    const size = coverImage?.length || 0;
-    if(size===1) {
-        return (
-           <div className='cover-container'>
-             <img src={`${s3Domain}/${coverImage[0]}`} alt='cover' />
-           </div>
-        )
-    } else if(size === 2) {
-        return (
-          <div className='cover-container'>
-                <div><img src={`${s3Domain}/${coverImage[0]}`} alt='cover' /></div>
-                <div><img src={`${s3Domain}/${coverImage[1]}`} alt='cover' /></div>
+  const size = coverImage?.length || 0;
+  if (size === 1) {
+    return (
+      <div className="cover-container">
+        <img src={`${s3Domain}/${coverImage[0]}`} alt="cover" />
+      </div>
+    );
+  } else if (size === 2) {
+    return (
+      <div className="cover-container">
+        <div>
+          <img src={`${s3Domain}/${coverImage[0]}`} alt="cover" />
+        </div>
+        <div>
+          <img src={`${s3Domain}/${coverImage[1]}`} alt="cover" />
+        </div>
+      </div>
+    );
+  } else if (size === 3) {
+    return (
+      <div className="cover-container">
+        <div>
+          <img src={`${s3Domain}/${coverImage[0]}`} alt="cover" />
+        </div>
+        <div className="image-three">
+          <div>
+            <img src={`${s3Domain}/${coverImage[1]}`} alt="cover" />
           </div>
-        )
-    } else if (size === 3) {
-        return (
-        <div className='cover-container'>
-            <div><img src={`${s3Domain}/${coverImage[0]}`} alt='cover' /></div>
-            <div className='image-three'>
-                <div><img src={`${s3Domain}/${coverImage[1]}`} alt='cover' /></div>
-                <div><img src={`${s3Domain}/${coverImage[2]}`} alt='cover' /></div>
-            </div>
+          <div>
+            <img src={`${s3Domain}/${coverImage[2]}`} alt="cover" />
+          </div>
         </div>
-        )
-    } else if(size === 4) {
-        return (
-        <div className='cover-container'>
-            <div><img src={`${s3Domain}/${coverImage[0]}`} alt='cover' /></div>
-            <div className="image-three" >
-                <div className="third">
-                    <img src={`${s3Domain}/${coverImage[1]}`} alt='cover' />
-                    <img src={`${s3Domain}/${coverImage[2]}`} alt='cover' /> 
-                </div>
-                <div><img src={`${s3Domain}/${coverImage[3]}`} alt='cover' /></div>
-            </div>
+      </div>
+    );
+  } else if (size === 4) {
+    return (
+      <div className="cover-container">
+        <div>
+          <img src={`${s3Domain}/${coverImage[0]}`} alt="cover" />
         </div>
-        )
-    } else {
-        return (
-            <div className='cover-container'></div>
-        )
-    }
-}
+        <div className="image-three">
+          <div className="third">
+            <img src={`${s3Domain}/${coverImage[1]}`} alt="cover" />
+            <img src={`${s3Domain}/${coverImage[2]}`} alt="cover" />
+          </div>
+          <div>
+            <img src={`${s3Domain}/${coverImage[3]}`} alt="cover" />
+          </div>
+        </div>
+      </div>
+    );
+  } else {
+    return <div className="cover-container"></div>;
+  }
+};

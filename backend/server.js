@@ -53,11 +53,10 @@ io.on("connection", async (socket) => {
 
     socket.on("message", async (data) => {
       try {
-        
         if (!data?.accountID) {
           throw new Error("User not found");
         }
-        let socketReceiver = listOnline.get((data.accountID).toString());
+        let socketReceiver = listOnline.get(data.accountID.toString());
 
         if (socketReceiver) {
           try {
@@ -72,10 +71,16 @@ io.on("connection", async (socket) => {
     });
 
     socket.on("disconnect", () => {
+      console.log("disconnect")
       listOnline.delete(loggedinUSer);
     });
   } catch (error) {}
 });
+
+setInterval(()=>
+{
+  console.log(listOnline)
+},10000)
 //app.use(express.static(path.join(__dirname, '../frontend/build')));
 app.use("/auth", login);
 app.use("/user", authenticationCheck, UserRouter);
@@ -83,20 +88,17 @@ app.use("/getInfluencers", searchRouter);
 app.options("*", cors({ origin: process.env.FRONTEND_URL, credentials: true }))
 app.use("/addData", authenticationCheck, AddData);
 
-app.get('/influencer',async(req,res)=>
-{
-  try{
-    console.log("got")
-    const data=await User.findOne({uniqueID:{$exists:true,$eq:req.query.uniqueID}});
-    console.log("send")
-   res.status(200).json({data:data})
+app.get("/influencer", async (req, res) => {
+  try {
+    const data = await User.findOne({
+      uniqueID: { $exists: true, $eq: req.query.uniqueID },
+    });
+
+    res.status(200).json({ data: data });
+  } catch (error) {
+    next(error);
   }
-  catch(error)
-  {
-    console.log(error)
-    next(error)
-  }
-})
+});
 app.use((err, req, res, next) => {
   res.status(500).json({ error: err.message });
 });
@@ -105,7 +107,7 @@ app.use((err, req, res, next) => {
 //     res.sendFile(path.resolve(__dirname,"../frontend/build/index.html"));
 //
 // })
-app.use("/chats/:id", authenticationCheck, ChatRouter);
-process.on('warning', e => console.warn(e.stack));
+app.use("/chats", authenticationCheck, ChatRouter);
+process.on("warning", (e) => console.warn(e.stack));
 
 server.listen(3000, () => {});

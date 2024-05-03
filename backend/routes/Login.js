@@ -21,50 +21,46 @@ router.get("/google", (req, res) => {
 });
 
 router.get("/google/callback", async (req, res) => {
-try{
-  console.log("callback")
-  const code = req.query.code;
-console.log(code)
-  const { tokens } = await oAuth2Client.getToken(code);
-console.log(tokens)
-  const {  id_token } = tokens;
-  const ticket = await oAuth2Client.verifyIdToken({
-    idToken: id_token,
-    audience: CLIENT_ID,
-  });
-console.log("tivcket")
-  const payload = ticket.getPayload();
-console.log(payload)
-  let jwtaccesstoken;
-  const checkUSer = await User.findOne({ email: payload.email });
-  let newUser;
-  if (checkUSer) {
-    jwtaccesstoken = await jwt.sign(
-      { _id: checkUSer._id },
-      "influencerChataccess"
-    );
-  } else {
-    newUser = new User({
-      email: payload.email,
-      name: payload.name,
-      profilePic: payload.picture,
-    });
-    await newUser.save();
+  try {
+    const code = req.query.code;
 
-    jwtaccesstoken = await jwt.sign(
-      { _id: newUser._id },
-      "influencerChataccess"
-    );
-  }
-  res.cookie("jwtaccesstoken", jwtaccesstoken, {
-    maxAge: 6 * 30 * 24 * 60 * 60 * 1000,
-  });
-  res.redirect("http://localhost:3001/myAccount");
-}
-catch(error)
-  {
-    console.log(error);
-    res.json({error:error.message})
+    const { tokens } = await oAuth2Client.getToken(code);
+
+    const { id_token } = tokens;
+    const ticket = await oAuth2Client.verifyIdToken({
+      idToken: id_token,
+      audience: CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+
+    let jwtaccesstoken;
+    const checkUSer = await User.findOne({ email: payload.email });
+    let newUser;
+    if (checkUSer) {
+      jwtaccesstoken = await jwt.sign(
+        { _id: checkUSer._id },
+        "influencerChataccess"
+      );
+    } else {
+      newUser = new User({
+        email: payload.email,
+        name: payload.name,
+        profilePic: payload.picture,
+      });
+      await newUser.save();
+
+      jwtaccesstoken = await jwt.sign(
+        { _id: newUser._id },
+        "influencerChataccess"
+      );
+    }
+    res.cookie("jwtaccesstoken", jwtaccesstoken, {
+      maxAge: 6 * 30 * 24 * 60 * 60 * 1000,
+    });
+    res.redirect("http://localhost:3001/myAccount");
+  } catch (error) {
+    res.json({ error: error.message });
   }
 });
 export default router;
