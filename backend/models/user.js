@@ -35,7 +35,7 @@ const UserSchema=new Schema({
     type:String,
   }],
   mobileNumber : {
-    type : Number,
+    type : String,
   },
   iverification:
   {
@@ -82,10 +82,10 @@ const UserSchema=new Schema({
   uniqueID:{
     type:String
   },
-  order:{
+  order:[{
     type:Schema.Types.ObjectId,
     ref:'order'
-  }
+  }]
 })
 
 UserSchema.pre('save',async function (next)
