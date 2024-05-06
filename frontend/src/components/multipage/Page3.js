@@ -2,14 +2,13 @@ import React, { useRef, useState } from "react";
 import "./page3.css";
 import { IoIosPersonAdd } from "react-icons/io";
 import { TiDelete } from "react-icons/ti";
-import { FiUpload } from "react-icons/fi";
-import { s3Domain } from "../../assets/Data";
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import {  FiUpload } from "react-icons/fi";
+import { BACKEND_URL, s3Domain } from "../../assets/Data";
+import axios from 'axios'
+import {useDispatch, useSelector} from 'react-redux'
 import { setCurrentStep, updateFormData } from "../../redux/FormSlice";
 import FormHeader from "../subcomponents/FormHeader";
 
-// const s3Domain = 'https://thousand-ways.s3.ap-south-1.amazonaws.com';
 
 const Page3 = () => {
   const { formData, currentStep } = useSelector((state) => state.form);
@@ -120,6 +119,9 @@ const Page3 = () => {
 
           if(status===200)
           dispatch(updateFormData({ profilePic: `${s3Domain}/${keys[0]}` }));
+
+    
+  
         }
 
         if (coverImages.length>0) {

@@ -8,8 +8,8 @@ import {
   const s3 = new S3Client({
     region: 'ap-south-1',
     credentials: {
-      accessKeyId: 'AKIAVRUVSJHVG4OBAKFK',
-      secretAccessKey: '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',
+      accessKeyId: process.env.RAZORPAY_API_KEY,
+      secretAccessKey: process.env.RAZORPAY_APT_SECRET,
     },
   });
   const s3Client = new S3Client({
@@ -23,7 +23,7 @@ import {
   //most probably ot be deleted (handles uplaod from client to server to s3)
 export  const uploadToS3 = async (file, id) => {
     const command = new PutObjectCommand({
-      Bucket: 'thousand-ways',
+      Bucket: process.env.AWS_BUCKET_NAME,
       Key: id,
       Body: file.buffer,
       ContentType: file.mimetype,
@@ -77,7 +77,7 @@ export const presignedUrl=async (total)=>
  export const deleteS3 = async (keys) => {
     const objects = keys.map(key => ({ Key: key }));
     const command = new DeleteObjectsCommand({
-      Bucket : 'signedayush',
+      Bucket : 'signedayush',     
       Delete : {
         Objects : objects
       }
@@ -89,6 +89,3 @@ export const presignedUrl=async (total)=>
       return false;
     }
   }
-
-  
-  

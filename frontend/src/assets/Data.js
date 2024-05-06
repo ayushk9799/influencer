@@ -3,7 +3,10 @@ import { FaInstagram, FaYoutube, FaTwitter, FaFacebook  } from "react-icons/fa";
 export const iconsArr = [<FaInstagram />, <FaYoutube />, <FaFacebook />, <FaTwitter />]
 export const socialMedia = {0 : "Instagram", 1 : "Youtube", 2 : "Facebook", 3 : "Twitter"}
 
+
 export const s3Domain = 'https://signedayush.s3.ap-south-1.amazonaws.com';
+
+export const BACKEND_URL = 'http://localhost:3000';
 
 
 export const getIcons = (index ) => {
