@@ -10,7 +10,7 @@ const initialState = {
 
 export const createAccount = createAsyncThunk('form/update-form', async (payload, {getState}) => {
   const {formData} = getState().form;
-
+ console.log(formData)
   const data = await axios.post('http://localhost:3000/addData', formData, {
     withCredentials: true,
   });
@@ -26,6 +26,7 @@ const FromSlice = createSlice({
     },
     updateFormData: (state, action) => {
       state.formData = { ...state.formData, ...action.payload };
+      console.log(state.formData)
     },
   },
   extraReducers : (builder) => {

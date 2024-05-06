@@ -78,10 +78,6 @@ io.on("connection", async (socket) => {
   } catch (error) {}
 });
 
-// setInterval(()=>
-// {
-//   console.log(listOnline)
-// },10000)
 //app.use(express.static(path.join(__dirname, '../frontend/build')));
 app.options("*", cors({ origin: process.env.FRONTEND_URL, credentials: true }))
 app.use("/auth", login);
