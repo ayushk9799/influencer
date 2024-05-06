@@ -77,7 +77,7 @@ const Page3 = () => {
     if (deletedKeys.length > 0) {
       // form.append("deletedKeys", JSON.stringify(deletedKeys));
   try{
-    const {data,status}=await axios.get(`http://localhost:3000/getMyData/delete?delete=${deletedKeys.join(',')}`,{withCredentials:true})
+    const {data,status}=await axios.get(`http://localhost:3000/user/getMyData/delete?delete=${deletedKeys.join(',')}`,{withCredentials:true})
     if(status===200)
     {
       console.log(localGallery)
@@ -95,7 +95,7 @@ const Page3 = () => {
 
     try {
       const { data, status } = await axios.get(
-        `http://localhost:3000/getMyData/presigned?total=${profileImage ?coverImages.length+1:coverImages.length}`,
+        `http://localhost:3000/user/getMyData/presigned?total=${profileImage ?coverImages.length+1:coverImages.length}`,
         // form,
         {
           // headers: {
