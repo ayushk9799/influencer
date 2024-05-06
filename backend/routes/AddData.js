@@ -12,17 +12,19 @@ router.post("/", async (req, res, next) => {
       next(new Error("user not found in database or try again"));
     } else {
       const data = req.body;
-
+     
       for (let keys in data) {
-        if (data[keys]) {
-          if (typeof data[keys] === "object") {
-            for (let nestedKey in data[keys]) {
-              check[keys][nestedKey] = data[keys][nestedKey];
-            }
-          } else {
-            check[keys] = data[keys];
-          }
-        }
+        // if (data[keys]) {
+        //   if (typeof data[keys] === "object") {
+        //     for (let nestedKey in data[keys]) {
+        //       check[keys][nestedKey] = data[keys][nestedKey];
+        //     }
+        //   } else {
+        //     check[keys] = data[keys];
+        //   }
+        // }    //array wont get updated
+
+        check[keys]=data[keys]
       }
 
       // if(req.body?.bio)

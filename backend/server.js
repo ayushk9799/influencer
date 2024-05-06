@@ -68,10 +68,7 @@ io.on("connection", async (socket) => {
   } catch (error) {}
 });
 
-setInterval(()=>
-{
-  console.log(listOnline)
-},10000)
+
 //app.use(express.static(path.join(__dirname, '../frontend/build')));
 app.use("/auth", login);
 app.use("/getMyData", authenticationCheck, UserRouter);
