@@ -41,7 +41,7 @@ const Profile = () => {
   }
 
   const handleChat=()=> {
-      navigate(`/chat/${uniqueID}`,{state:{account:uniqueID}})
+      navigate(`/chat/${uniqueID}`,{state:{account:_id}})
   }
 
   const handleContinue = (index, productName, amount) => {

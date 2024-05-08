@@ -1,11 +1,20 @@
-textarea {
+.textarea {
   resize: none;
+ position: relative;
   outline: none;
-  width:50%;
+ width:100%;
   font-family: 'Inter';
-  font-size: 10px;
+  font-size: 15px;
   padding:5px 10px 5px 5px;
-  
+ 
+}
+#fileattach{
+  background-color: #b5b3b3;
+}
+#fileattach:hover
+{
+   background-color: rgb(128, 126, 126);
+   cursor: pointer;
 }
 
 

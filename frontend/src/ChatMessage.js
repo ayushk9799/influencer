@@ -3,16 +3,27 @@ import "./ChatMessage.css";
 import { io } from "socket.io-client";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { MdAttachFile } from "react-icons/md";
 export const ChatMessage = () => {
   const chatHistoryRef = useRef(null);
   const socket = useRef(null);
   const { userDetails } = useSelector((state) => state.user);
   const you = userDetails._id;
+  console.log(you);
   const location = useLocation();
-  const other = (location.state?.account)._id;
-  console.log(other);
+  const otherID = location.state?.account;
+  console.log(otherID);
   const [messageCurrentSend, setMessageSend] = useState("");
   const [messageLists, setMessageList] = useState([]);
+  const textareaRef = useRef();
+  const [showFileInput, setShowFileInput] = useState(false);
+const [selectedFile, setSelectedFile] = useState(null);
+const handleFileSelect = (event) => {
+  const file = event.target.files[0];
+  setSelectedFile(file);
+  // You can perform additional operations with the selected file here
+};
+  let initialHeight;
 
   useEffect(() => {
     const chatContainer = chatHistoryRef.current;
@@ -26,24 +37,32 @@ export const ChatMessage = () => {
     chatContainer.scrollTop =
       chatContainer.scrollHeight - chatContainer.clientHeight;
     socket.current = io("http://localhost:3000", { withCredentials: true });
-
+    initialHeight = Math.floor(
+      textareaRef.current.getBoundingClientRect().height
+    );
+    console.log(initialHeight);
     socket.current.on("message", (message) => {
       console.log(message);
       setMessageList([
         ...messageLists,
-        { sender: other, content: message, sentAt: new Date().toISOString() },
+        { sender: otherID, content: message, sentAt: new Date().toISOString() },
       ]);
     });
-console.log("renderd")
+    console.log("renderd");
     const getMessages = async () => {
-      const response = await fetch(`http://localhost:3000/chats/${other}`, {
-        credentials: "include",
-      });
-      const { chats } = await response.json();
-      console.log(chats);
-      setMessageList([...messageLists, ...chats]);
+      if (you !== otherID  && you!==undefined) {
+        const response = await fetch(`http://localhost:3000/chats/${otherID}`, {
+          credentials: "include",
+        });
+        const { chats } = await response.json();
+        console.log(chats);
+        if (chats) {
+          setMessageList([...messageLists, ...chats]);
+        }
+      }
     };
     getMessages();
+
     return () => {
       if (socket.current) {
         socket.current.disconnect();
@@ -54,8 +73,8 @@ console.log("renderd")
   const handleSend = () => {
     if (socket.current) {
       socket.current.emit("message", {
-        accountID: other,
-        content: messageCurrentSend
+        accountID: otherID,
+        content: messageCurrentSend.trim(),
       });
 
       console.log(messageLists);
@@ -63,23 +82,36 @@ console.log("renderd")
         ...messageLists,
         {
           sender: userDetails._id,
-          content: messageCurrentSend,
+          content: messageCurrentSend.trim(),
           sentAt: new Date().toISOString(),
         },
       ]);
+
+      textareaRef.current.style.height = `${initialHeight}px`;
+      textareaRef.current.style.top = "0px";
       setMessageSend("");
     }
   };
 
   console.log(messageLists.length);
   const handleMesageInput = (event) => {
+    console.log(initialHeight);
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+      textareaRef.current.style.top = `${
+        30 - textareaRef.current.scrollHeight
+      }px`;
+      console.log(textareaRef.current.style.top);
+    }
+
     setMessageSend(event.target.value);
   };
 
   return (
     <div
       style={{
-        border: "1px solid red",
+        // border: "1px solid red",
         flex: "1",
         position: "relative",
         display: "flex",
@@ -110,42 +142,62 @@ console.log("renderd")
                 maxWidth: "50%",
                 width: "max-content",
                 marginLeft: message.sender === you ? "auto" : "10px",
-                marginRight: message.sender === other ? "auto" : "10px",
+                marginRight: message.sender === otherID ? "auto" : "10px",
                 fontSize: "15px",
                 fontFamily:
                   "Segoe UI Historic, Segoe UI, Helvetica, Arial, sans-serif",
                 backgroundColor:
                   message.sender === you ? "black" : "rgb(239, 239, 239)",
-                color: message.sender === other ? "black" : "white",
+                color: message.sender === otherID ? "black" : "white",
+                whiteSpace: "pre-wrap",
               }}
             >
-              <b>{message.sender}:</b> {message.content}
+              {message.content}
             </div>
           ))
         ) : (
           <div>No messages yet</div>
         )}
       </div>
-
       <div
-        id="chatBox"
         style={{
-          border: "1px solid yellow",
           display: "flex",
           justifyContent: "center",
-          // position: "absolute",
-          // left: "0",
-          // right: "0",
-          // bottom: "0",
-          height: "30px",
+          alignItems: "center",
         }}
       >
-        <textarea
-          placeholder="Send Requirement and chat"
-          value={messageCurrentSend}
-          onChange={handleMesageInput}
-        ></textarea>
-        <button onClick={handleSend}>Send</button>
+        <div
+          id="chatBox"
+          style={{
+            //  border: "1px solid black",
+            display: "flex",
+            justifyContent: "center",
+            boxSizing: "border-box",
+            height: "30px",
+            width: "50%",
+            margin: "3px",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: "5px",
+            }}
+            id="fileattach"
+          >
+            <MdAttachFile size={22} color="white" />
+          </div>
+          <textarea
+            placeholder="Send Requirement and chat"
+            value={messageCurrentSend}
+            onChange={handleMesageInput}
+            className="textarea"
+            ref={textareaRef}
+          ></textarea>
+          <button onClick={handleSend}>Send</button>
+        </div>
       </div>
     </div>
   );

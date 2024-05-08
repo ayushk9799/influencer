@@ -87,6 +87,7 @@ const Page1 = () => {
             value={bio}
             placeholder="Eg. Fitness content creator & gamer."
             onChange={(e) => setBio(e.target.value)}
+            className="bio"
           />
         </div>
         <div className="button-box">
