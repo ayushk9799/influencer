@@ -82,7 +82,7 @@ const UserSchema=new Schema({
   uniqueID:{
     type:String
   },
-  order:[{
+  orders:[{
     type:Schema.Types.ObjectId,
     ref:'order'
   }]

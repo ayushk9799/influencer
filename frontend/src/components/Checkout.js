@@ -4,7 +4,8 @@ import { BACKEND_URL } from '../assets/Data';
 
 const Checkout = () => {
     const location = useLocation();
-    const checkoutData = location?.state?.data;
+    const checkoutData = location?.state;
+    const {influencer, amount, orderSummary} = checkoutData;
     console.log('checkout',location);
     const handlePay = async() => {
         try {
@@ -18,7 +19,7 @@ const Checkout = () => {
                 headers : {
                     'Content-Type' : 'application/json'
                 },
-                body : JSON.stringify({amount : checkoutData.amount, influencer : checkoutData.influencerID})
+                body : JSON.stringify({influencer, amount, orderSummary})
             });
             const {order} = await response1.json();
             console.log('order', order);

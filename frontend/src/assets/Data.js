@@ -44,3 +44,46 @@ export const getFieldBaseUrl = (index) => {
     const socialMedia = {0 : "https://www.instagram.com", 1 : "https://www.youtube.com",}
     return socialMedia[index];
 }
+
+export const getDateFormatted = (value) => {
+    if(!value) {
+        return "";
+    }
+    const date = new Date(value);
+    // Define an array to hold the names of the days
+    var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+    // Define an array to hold the names of the months
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    // Get the day of the week (0-6)
+    var dayOfWeek = date.getDay();
+
+    // Get the day of the month (1-31)
+    var dayOfMonth = date.getDate();
+
+    // Get the month (0-11)
+    var month = date.getMonth();
+
+    // Format the date string
+    var dateString = days[dayOfWeek] + ', ' + dayOfMonth + getSuffix(dayOfMonth) + ' ' + months[month];
+
+    return dateString;
+}
+
+// Function to get the suffix for the day of the month (e.g., 'st', 'nd', 'rd', 'th')
+function getSuffix(day) {
+    if (day >= 11 && day <= 13) {
+        return 'th';
+    }
+    switch (day % 10) {
+        case 1:
+            return 'st';
+        case 2:
+            return 'nd';
+        case 3:
+            return 'rd';
+        default:
+            return 'th';
+    }
+}

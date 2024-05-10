@@ -2,7 +2,7 @@ import React, { useMemo, useState, useEffect } from "react";
 import "./profile.css";
 import { getCategory, getIcons, s3Domain } from "../assets/Data";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { FaInstagram, FaYoutube } from "react-icons/fa";
 
 const Profile = () => { 
@@ -45,10 +45,16 @@ const Profile = () => {
   }
 
   const handleContinue = (index, productName, amount) => {
+      
       if(index === 4) {
-          navigate("/custom-offer", {state : {data : {influencerID : _id, profilePic}}});
+          navigate("/custom-offer", {state : {influencer : _id, profilePic, name}});
       }else {
-          navigate('/checkout', {state : {data : {influencerID :_id, profilePic , amount, productName}}});
+        const orderSummary = {
+          accountType : index===0 ? 'instagram' : 'youtube',
+          details : productName,
+          orderType : 'main'
+        }
+          navigate('/user/checkout', {state : {influencer :_id, profilePic , amount, orderSummary}});
       }
   }
     
@@ -95,13 +101,13 @@ const Profile = () => {
                             <FaInstagram />
                             <p>Instagram post</p>
                             <p>₹{iprice.photo}</p>
-                            <button onClick={() => handleContinue(0, "Instagram post", iprice.photo)}>Continue</button>
+                            <button onClick={() => handleContinue(0, "1 Instagram post", iprice.photo)}>Continue</button>
                         </div>
                         <div className='price-items'>
                             <FaInstagram />
                             <p>Instagram Reels</p>
                             <p>₹{iprice.video}</p>
-                            <button onClick={() => handleContinue(0, "Instagram Reels", iprice.video)}>Continue</button>
+                            <button onClick={() => handleContinue(0, "1 Instagram Reels", iprice.video)}>Continue</button>
                         </div>
                     </div>
                 )}
@@ -111,13 +117,13 @@ const Profile = () => {
                             <FaYoutube />
                             <p>Youtube Short</p>
                             <p>₹{yprice.photo}</p>
-                            <button onClick={() => handleContinue(1, "Youtube Short", yprice.photo)}>Continue</button>
+                            <button onClick={() => handleContinue(1, "1 Youtube Short", yprice.photo)}>Continue</button>
                         </div>
                         <div className='price-items'>
                             <FaYoutube />
                             <p>Youtube video</p>
                             <p>₹{yprice.video}</p>
-                            <button onClick={() => handleContinue(1,"Youtube video", yprice.video)}>Continue</button>
+                            <button onClick={() => handleContinue(1,"1 Youtube video", yprice.video)}>Continue</button>
                         </div>
                     </div>
                 )}
