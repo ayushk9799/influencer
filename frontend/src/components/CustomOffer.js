@@ -32,8 +32,8 @@ const CustomOffer = () => {
       </div>
       <WorkingStep />
     </div>
-  )
-}
+  );
+};
 
 export default CustomOffer;
 

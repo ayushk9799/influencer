@@ -61,12 +61,12 @@ io.on("connection", async (socket) => {
 
         if (socketReceiver) {
           try {
-            io.to(socketReceiver).emit("message", data.content);
+            io.to(socketReceiver).emit("message", data);
 
-            await databaseChat(loggedinUSer, data.accountID, data.content);
+            await databaseChat(loggedinUSer, data.accountID, data.content,data.type);
           } catch (error) {}
         } else {
-          await databaseChat(loggedinUSer, data.accountID, data.content);
+          await databaseChat(loggedinUSer, data.accountID, data.content,data.type);
         }
       } catch (error) {}
     });
@@ -78,10 +78,6 @@ io.on("connection", async (socket) => {
   } catch (error) {}
 });
 
-// setInterval(()=>
-// {
-//   console.log(listOnline)
-// },10000)
 //app.use(express.static(path.join(__dirname, '../frontend/build')));
 app.options("*", cors({ origin: process.env.FRONTEND_URL, credentials: true }))
 app.use("/auth", login);

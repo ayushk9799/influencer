@@ -1,21 +1,24 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from 'axios'
+import axios from "axios";
 
 const initialState = {
   currentStep: 1,
   formData: {},
-  loading : false,
-  error : ""
+  loading: false,
+  error: "",
 };
 
-export const createAccount = createAsyncThunk('form/update-form', async (payload, {getState}) => {
-  const {formData} = getState().form;
+export const createAccount = createAsyncThunk(
+  "form/update-form",
+  async (payload, { getState }) => {
+    const { formData } = getState().form;
 
-  const data = await axios.post('http://localhost:3000/addData', formData, {
-    withCredentials: true,
-  });
-  return data;
-})
+    const data = await axios.post("http://localhost:3000/addData", formData, {
+      withCredentials: true,
+    });
+    return data;
+  }
+);
 
 const FromSlice = createSlice({
   name: "form",
@@ -28,7 +31,7 @@ const FromSlice = createSlice({
       state.formData = { ...state.formData, ...action.payload };
     },
   },
-  extraReducers : (builder) => {
+  extraReducers: (builder) => {
     builder
       .addCase(createAccount.pending, (state) => {
         state.loading = true;
@@ -39,10 +42,9 @@ const FromSlice = createSlice({
       .addCase(createAccount.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
-      })
-  }
+      });
+  },
 });
 export const { setCurrentStep, updateFormData } = FromSlice.actions;
 
 export default FromSlice.reducer;
-  

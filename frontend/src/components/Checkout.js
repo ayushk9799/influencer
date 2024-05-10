@@ -1,6 +1,6 @@
-import React from 'react'
-import {useLocation} from 'react-router-dom'
-import { BACKEND_URL } from '../assets/Data';
+import React from "react";
+import { useLocation } from "react-router-dom";
+import { BACKEND_URL } from "../assets/Data";
 
 const Checkout = () => {
     const location = useLocation();
@@ -24,37 +24,35 @@ const Checkout = () => {
             const {order} = await response1.json();
             console.log('order', order);
 
-            const options = {
-                key,
-                amount : order.amount,
-                currency : "INR",
-                name : 'Thousand ways private limited',
-                description : "Payment for influencer",
-                image : "https://avatars.githubusercontent.com/u/98911997?v=4",
-                order_id : order.id,
-                callback_url : `${BACKEND_URL}/user/payment/payment-verification`,
-                prefill : {
-                    name : "Rajiv Ranjan",
-                    email : "rajivranjan0013@gamil.com",
-                    contact : "2302930293"
-                },
-                notes : {
-                    "address" : "gaya"
-                },
-                theme : {
-                    "color" : "#121212"
-                }
-            }
-            const razor = new window.Razorpay(options)
-            razor.open();
-        } catch (err) {
-            console.log(err);
-        }
-    }
+      const options = {
+        key,
+        amount: order.amount,
+        currency: "INR",
+        name: "Thousand ways private limited",
+        description: "Payment for influencer",
+        image: "https://avatars.githubusercontent.com/u/98911997?v=4",
+        order_id: order.id,
+        callback_url: `${BACKEND_URL}/user/payment/payment-verification`,
+        prefill: {
+          name: "Rajiv Ranjan",
+          email: "rajivranjan0013@gamil.com",
+          contact: "2302930293",
+        },
+        notes: {
+          address: "gaya",
+        },
+        theme: {
+          color: "#121212",
+        },
+      };
+      const razor = new window.Razorpay(options);
+      razor.open();
+    } catch (err) {}
+  };
   return (
     <div>
-        <h4>Checkout</h4>
-        <button onClick={handlePay}>Place Order</button>
+      <h4>Checkout</h4>
+      <button onClick={handlePay}>Place Order</button>
     </div>
   );
 };

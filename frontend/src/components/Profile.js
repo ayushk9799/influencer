@@ -5,13 +5,27 @@ import { useNavigate, useLocation } from "react-router-dom";
 // import { useSelector } from "react-redux";
 import { FaInstagram, FaYoutube } from "react-icons/fa";
 
-const Profile = () => { 
-    
+const Profile = () => {
   const location = useLocation();
-  console.log('profile')
+
   const item = location.state?.account;
-  console.log('item', item);
-  const {_id, name, bio, gallery, profilePic, field, region, iaccountID, ifollowers, iprice, yaccountID, yfollowers, yprice ,uniqueID}=item;
+
+  const {
+    _id,
+    name,
+    bio,
+    gallery,
+    profilePic,
+    field,
+    region,
+    iaccountID,
+    ifollowers,
+    iprice,
+    yaccountID,
+    yfollowers,
+    yprice,
+    uniqueID,
+  } = item;
 
   const navigate = useNavigate();
 
@@ -37,12 +51,12 @@ const Profile = () => {
           coverIndexMobile === 0 ? len - 1 : coverIndexMobile - 1
         );
       }
-    };
-  }
+    }
+  };
 
-  const handleChat=()=> {
-      navigate(`/chat/${uniqueID}`,{state:{account:uniqueID}})
-  }
+  const handleChat = () => {
+    navigate(`/chat/${uniqueID}`, { state: { account: _id } });
+  };
 
   const handleContinue = (index, productName, amount) => {
       
@@ -196,4 +210,3 @@ const getCoverImageComponents = (coverImage) => {
     return <div className="cover-container"></div>;
   }
 };
-

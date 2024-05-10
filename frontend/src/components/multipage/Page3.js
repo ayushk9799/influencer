@@ -2,22 +2,23 @@ import React, { useRef, useState } from "react";
 import "./page3.css";
 import { IoIosPersonAdd } from "react-icons/io";
 import { TiDelete } from "react-icons/ti";
-import {  FiUpload } from "react-icons/fi";
+import { FiUpload } from "react-icons/fi";
 import { BACKEND_URL, s3Domain } from "../../assets/Data";
-import axios from 'axios'
-import {useDispatch, useSelector} from 'react-redux'
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 import { setCurrentStep, updateFormData } from "../../redux/FormSlice";
 import FormHeader from "../subcomponents/FormHeader";
 
-
 const Page3 = () => {
   const { formData, currentStep } = useSelector((state) => state.form);
+  const { userDetails } = useSelector((state) => state.user);
   // const imagesLocal = formData?.images;
-  const localProfilePicture = formData?.profilePic;
-  const localGallery = formData?.gallery;
+  const localProfilePicture = userDetails?.profilePic;
+  const [localGallery, setLocalGallery] = useState(userDetails?.gallery);
   const [profileImage, setProfileImage] = useState();
-  const [coverImages, setCoverImages] = useState();
+  const [coverImages, setCoverImages] = useState([]);
   const [deletedKeys, setDeletedKeys] = useState([]);
+  const [showGallery, setShowGallery] = useState([]);
   const [loader, setLoader] = useState(false);
   const profilePicRef = useRef();
   const photosRef = useRef();
@@ -36,7 +37,8 @@ const Page3 = () => {
   const handlePhotos = (e) => {
     const files = e.target.files;
     const p = Array.from(files);
-    if (p.length > 4) {
+
+    if (coverImages.length + p.length > 4) {
       alert("Maximum 4 photos allowed");
       return;
     }
@@ -56,40 +58,78 @@ const Page3 = () => {
     }
     setLoader(true);
 
-    const form = new FormData();
-    if (profileImage) {
-      form.append("profile", profileImage);
-    }
+    // const form = new FormData();
+    // if (profileImage) {
+    //   form.append("profile", profileImage);
+    // }
 
-    if (coverImages) {
-      for (let i = 0; i < coverImages.length; i++) {
-        form.append(`files`, coverImages[i]);
-      }
-    }
+    // if (coverImages) {
+    //   for (let i = 0; i < coverImages.length; i++) {
+    //     form.append(`files`, coverImages[i]);
+    //   }
+    // }
 
     if (deletedKeys.length > 0) {
-      form.append("deletedKeys", JSON.stringify(deletedKeys));
+      // form.append("deletedKeys", JSON.stringify(deletedKeys));
+      try {
+        const { data, status } = await axios.get(
+          `http://localhost:3000/user/delete?delete=${deletedKeys.join(",")}`,
+          { withCredentials: true }
+        );
+        if (status === 200) {
+          dispatch(updateFormData({ gallery: localGallery }));
+        }
+      } catch (error) {}
     }
-    
-    try{
-      const {data, status} = await axios.post(`${BACKEND_URL}/user/upload-file`, form, {
-        headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-      withCredentials: true
-      })
-      const {profile, cover} = data;
-      if(status === 200) {
-        if(profile) {
-          dispatch(updateFormData({profilePic : `${s3Domain}/${profile}`}));
+
+    try {
+      const { data, status } = await axios.get(
+        `http://localhost:3000/user/presigned?total=${
+          profileImage ? coverImages.length + 1 : coverImages.length
+        }`,
+        // form,
+        {
+          // headers: {
+          //   "Content-Type": "multipart/form-data",
+          // },
+          withCredentials: true,
+        }
+      );
+
+      // const { profile, cover } = data;
+      if (status === 200) {
+        const { keys, urls } = data;
+        if (keys[0] && urls[0] !== -1 && profileImage) {
+          const { status } = await fetch(urls[0], {
+            method: "PUT",
+            body: profileImage,
+          });
+
+          if (status === 200)
+            dispatch(updateFormData({ profilePic: `${s3Domain}/${keys[0]}` }));
         }
 
-        if (coverImages && cover) {
-          if (coverImages.length !== cover.length) {
+        if (coverImages.length > 0) {
+          const coverArray = [...localGallery];
+          let offset = 0;
+          if (profileImage) {
+            offset = 1;
           }
+          for (let i = offset; i < coverImages.length; i++) {
+            if (urls[i] !== -1) {
+              const { status } = await fetch(urls[i], {
+                method: "PUT",
+                body: coverImages[i],
+              });
+              if (status === 200) {
+                coverArray.push(keys[i]);
+              }
+            }
+          }
+
+          dispatch(updateFormData({ gallery: coverArray }));
         }
 
-        dispatch(updateFormData({ gallery: cover }));
         setLoader(false);
         dispatch(setCurrentStep(currentStep + 1));
       }
@@ -105,8 +145,9 @@ const Page3 = () => {
       setCoverImages(newCoverImages);
     } else {
       setDeletedKeys([...deletedKeys, localGallery[index]]);
+
       const newImagesLocal = localGallery.filter((_, i) => i !== index);
-      dispatch(updateFormData({ gallery: newImagesLocal }));
+      setLocalGallery(newImagesLocal);
     }
   };
 
@@ -123,7 +164,7 @@ const Page3 = () => {
             src={
               profileImage
                 ? URL.createObjectURL(profileImage)
-                : `${s3Domain}/${localProfilePicture}`
+                : `${localProfilePicture}`
             }
             style={{ height: "75px", width: "75px", objectFit: "cover" }}
           />
@@ -144,34 +185,47 @@ const Page3 = () => {
       <p>Profile Picture</p>
       <p className="text-instruction">Timeline: Add images upto 4.</p>
       <div className="images-container">
-        {coverImages && coverImages.length ? (
-          coverImages.map((value, index) => (
-            <div key={URL.createObjectURL(value)} className="cover-image">
-              <img src={URL.createObjectURL(value)} alt="images" />
-              <div
-                onClick={(e) => {
-                  handleDelete(index, 0);
-                }}
-                className="delete-button"
-              >
-                <TiDelete size={25} color="red" />
-              </div>
-            </div>
-          ))
-        ) : localGallery && localGallery.length ? (
-          localGallery.map((value, index) => (
-            <div key={value} className="cover-image">
-              <img accept="image/*" src={`${s3Domain}/${value}`} alt="images" />
-              <div
-                onClick={(e) => {
-                  handleDelete(index, 1);
-                }}
-                className="delete-button"
-              >
-                <TiDelete color="red" size={25} />
-              </div>
-            </div>
-          ))
+        {coverImages.length > 0 || localGallery.length > 0 ? (
+          <>
+            {coverImages && coverImages.length > 0 ? (
+              coverImages.map((value, index) => (
+                <div key={URL.createObjectURL(value)} className="cover-image">
+                  <img src={URL.createObjectURL(value)} alt="images" />
+                  <div
+                    onClick={(e) => {
+                      handleDelete(index, 0);
+                    }}
+                    className="delete-button"
+                  >
+                    <TiDelete size={25} color="red" />
+                  </div>
+                </div>
+              ))
+            ) : (
+              <></>
+            )}
+            {localGallery && localGallery.length > 0 ? (
+              localGallery.map((value, index) => (
+                <div key={value} className="cover-image">
+                  <img
+                    accept="image/*"
+                    src={`${s3Domain}/${value}`}
+                    alt="images"
+                  />
+                  <div
+                    onClick={(e) => {
+                      handleDelete(index, 1);
+                    }}
+                    className="delete-button"
+                  >
+                    <TiDelete color="red" size={25} />
+                  </div>
+                </div>
+              ))
+            ) : (
+              <></>
+            )}
+          </>
         ) : (
           <div
             className="upload-phtos-btn"
@@ -184,6 +238,7 @@ const Page3 = () => {
             <p>Upload Photos</p>
           </div>
         )}
+
         <div
           onClick={(e) => {
             e.preventDefault();

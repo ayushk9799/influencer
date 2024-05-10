@@ -11,6 +11,7 @@ const Page1 = () => {
   // State variables for form fields
   const navigate = useNavigate();
   const { formData } = useSelector((state) => state.form);
+
   const [region, setRegion] = useState(formData?.region || "");
   const [name, setName] = useState(formData?.region || "");
   const [gender, setGender] = useState(formData?.gender || "");
@@ -86,6 +87,7 @@ const Page1 = () => {
             value={bio}
             placeholder="Eg. Fitness content creator & gamer."
             onChange={(e) => setBio(e.target.value)}
+            className="bio"
           />
         </div>
         <div className="button-box">
