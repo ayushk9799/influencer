@@ -61,12 +61,12 @@ io.on("connection", async (socket) => {
 
         if (socketReceiver) {
           try {
-            io.to(socketReceiver).emit("message", data.content);
+            io.to(socketReceiver).emit("message", data);
 
-            await databaseChat(loggedinUSer, data.accountID, data.content);
+            await databaseChat(loggedinUSer, data.accountID, data.content,data.type);
           } catch (error) {}
         } else {
-          await databaseChat(loggedinUSer, data.accountID, data.content);
+          await databaseChat(loggedinUSer, data.accountID, data.content,data.type);
         }
       } catch (error) {}
     });

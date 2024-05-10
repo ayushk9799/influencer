@@ -18,6 +18,10 @@ const chatroom =new mongoose.Schema({
       sentAt: {
         type: Date,
         default: Date.now
+      },
+      type:{
+        type:String,
+        default:"text/plain"
       }
     }],
 });

@@ -11,7 +11,7 @@ const Page1 = () => {
   // State variables for form fields
   const navigate = useNavigate();
   const { formData } = useSelector((state) => state.form);
-  console.log(formData)
+
   const [region, setRegion] = useState(formData?.region || "");
   const [name, setName] = useState(formData?.region || "");
   const [gender, setGender] = useState(formData?.gender || "");
