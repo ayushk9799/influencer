@@ -19,18 +19,40 @@ const OrderSchema = new Schema({
         type : Number,
         required : true
     },
+    orderSummary : {
+        orderType : {
+            type : String,
+            enum : ['main', 'custom']
+        },
+        accountType : {
+            type : String,
+            enum : ['instagram', 'youtube']
+        },
+        summary : String,
+        details : String,
+    },
     buyerPaymentStatus : {
         type : String,
         enum : ['pending', 'failed', 'success'],
         default : 'pending'
     },
     workAccepted : { // by influencer
-        type : Boolean,
-        default : false
+        status : {
+            type : Boolean,
+            // default : false
+        },
+        date : {
+            type : Date
+        }
     },
     workApproval : { // by buyer
-        type : Boolean,
-        default : false
+        status : {
+            type : Boolean,
+            default : false
+        },
+        date : {
+            type : Date
+        }
     },
     influencerPaymentStatus : {
         type : String,
@@ -87,10 +109,10 @@ OrderSchema.pre('save', function(next) {
         if (this.buyerPaymentStatus === 'success') {
             this.orderStatus[0] = true;
         }
-        if (this.workAccepted === true) {
+        if (this.workAccepted.status === true) {
             this.orderStatus[1] = true;
         }
-        if (this.workApproval === true) {
+        if (this.workApproval.status === true) {
             this.orderStatus[2] = true;
         }
         if (this.influencerPaymentStatus === 'success') {

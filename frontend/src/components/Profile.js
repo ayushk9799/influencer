@@ -2,7 +2,7 @@ import React, { useMemo, useState, useEffect } from "react";
 import "./profile.css";
 import { getCategory, getIcons, s3Domain } from "../assets/Data";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { FaInstagram, FaYoutube } from "react-icons/fa";
 
 const Profile = () => {
@@ -59,141 +59,94 @@ const Profile = () => {
   };
 
   const handleContinue = (index, productName, amount) => {
-    if (index === 4) {
-      navigate("/custom-offer", {
-        state: { data: { influencerID: _id, profilePic } },
-      });
-    } else {
-      navigate("/checkout", {
-        state: { data: { influencerID: _id, profilePic, amount, productName } },
-      });
-    }
-  };
-
+      
+      if(index === 4) {
+          navigate("/custom-offer", {state : {influencer : _id, profilePic, name}});
+      }else {
+        const orderSummary = {
+          accountType : index===0 ? 'instagram' : 'youtube',
+          details : productName,
+          orderType : 'main'
+        }
+          navigate('/user/checkout', {state : {influencer :_id, profilePic , amount, orderSummary}});
+      }
+  }
+    
   return (
-    <div className="main">
-      {name && (
-        <div className="container">
-          {/* cover */}
-          {getCoverImageComponents(gallery)}
-          <div
-            className="cover-container-mobile"
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-          >
-            <img src={`${s3Domain}/${gallery[coverIndexMobile]}`} />
-            <div className="cover-indicator">
-              {coverIndexMobile + 1}/{gallery.length}
+    <div className='main'>
+        {name && (
+          <div className='container' >
+            {/* cover */}
+            {getCoverImageComponents(gallery)}
+            <div className='cover-container-mobile' onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+                <img src={`${s3Domain}/${gallery[coverIndexMobile]}`} />
+                <div className='cover-indicator'>{coverIndexMobile+1}/{gallery.length}</div>
             </div>
-          </div>
-          {/* profile */}
-          <div className="profile-div">
-            <div className="image-div">
-              <img
-                src={`${profilePic}`}
-                alt="image"
-                style={{ height: "100px", width: "100px" }}
-              />
+            {/* profile */}
+            <div className='profile-div'>
+                <div className='image-div'>
+                    <img  src={`${profilePic}`} alt='image' style={{height : '100px', width : '100px'}} />
+                </div>
+                
+                <div>
+                    <p className='name'>{name}</p>
+                    <div className='category-container'>
+                        {
+                            field?.length!==0 && field.map((val) => (
+                                <div key={val}>
+                                    {getCategory(val)}
+                                </div>
+                            ))
+                        }
+                    </div>
+                    <div className='field-container'>
+                        {iaccountID && <a target='_blank' href={`https://www.instagram.com/${iaccountID}`} className='field-element'><FaInstagram size={18} />{ifollowers}144K</a>}
+                        {yaccountID && <a target='_blank' href={`https://www.youtube.com/@${iaccountID}`} className='field-element'><FaYoutube size={20} />{yfollowers}5M</a>}
+                    </div>
+                    <div onClick={()=>handleChat()}>Chat</div>
+                </div>
             </div>
-
-            <div>
-              <p className="name">{name}</p>
-              <div className="category-container">
-                {field?.length !== 0 &&
-                  field.map((val) => <div key={val}>{getCategory(val)}</div>)}
-              </div>
-              <div className="field-container">
-                {iaccountID && (
-                  <a
-                    target="_blank"
-                    href={`https://www.instagram.com/${iaccountID}`}
-                    className="field-element"
-                  >
-                    <FaInstagram size={18} />
-                    {ifollowers}144K
-                  </a>
+            <p>{bio}</p>
+            <div className='price-box'>
+                <p>Packages</p> 
+                {iprice && (
+                    <div>
+                        <div className='price-items'>
+                            <FaInstagram />
+                            <p>Instagram post</p>
+                            <p>₹{iprice.photo}</p>
+                            <button onClick={() => handleContinue(0, "1 Instagram post", iprice.photo)}>Continue</button>
+                        </div>
+                        <div className='price-items'>
+                            <FaInstagram />
+                            <p>Instagram Reels</p>
+                            <p>₹{iprice.video}</p>
+                            <button onClick={() => handleContinue(0, "1 Instagram Reels", iprice.video)}>Continue</button>
+                        </div>
+                    </div>
                 )}
-                {yaccountID && (
-                  <a
-                    target="_blank"
-                    href={`https://www.youtube.com/@${iaccountID}`}
-                    className="field-element"
-                  >
-                    <FaYoutube size={20} />
-                    {yfollowers}5M
-                  </a>
+                {yprice && (
+                    <div>
+                        <div className='price-items'>
+                            <FaYoutube />
+                            <p>Youtube Short</p>
+                            <p>₹{yprice.photo}</p>
+                            <button onClick={() => handleContinue(1, "1 Youtube Short", yprice.photo)}>Continue</button>
+                        </div>
+                        <div className='price-items'>
+                            <FaYoutube />
+                            <p>Youtube video</p>
+                            <p>₹{yprice.video}</p>
+                            <button onClick={() => handleContinue(1,"1 Youtube video", yprice.video)}>Continue</button>
+                        </div>
+                    </div>
                 )}
-              </div>
-              <div onClick={() => handleChat()}>Chat</div>
+                <div className='price-items'>
+                    <p>Do you want to send custom offer</p>
+                    <button onClick={() => handleContinue(4, 0)}>Make Custom Offer</button>
+                </div>
             </div>
           </div>
-          <p>{bio}</p>
-          <div className="price-box">
-            <p>Packages</p>
-            {iprice && (
-              <div>
-                <div className="price-items">
-                  <FaInstagram />
-                  <p>Instagram post</p>
-                  <p>₹{iprice.photo}</p>
-                  <button
-                    onClick={() =>
-                      handleContinue(0, "Instagram post", iprice.photo)
-                    }
-                  >
-                    Continue
-                  </button>
-                </div>
-                <div className="price-items">
-                  <FaInstagram />
-                  <p>Instagram Reels</p>
-                  <p>₹{iprice.video}</p>
-                  <button
-                    onClick={() =>
-                      handleContinue(0, "Instagram Reels", iprice.video)
-                    }
-                  >
-                    Continue
-                  </button>
-                </div>
-              </div>
-            )}
-            {yprice && (
-              <div>
-                <div className="price-items">
-                  <FaYoutube />
-                  <p>Youtube Short</p>
-                  <p>₹{yprice.photo}</p>
-                  <button
-                    onClick={() =>
-                      handleContinue(1, "Youtube Short", yprice.photo)
-                    }
-                  >
-                    Continue
-                  </button>
-                </div>
-                <div className="price-items">
-                  <FaYoutube />
-                  <p>Youtube video</p>
-                  <p>₹{yprice.video}</p>
-                  <button
-                    onClick={() =>
-                      handleContinue(1, "Youtube video", yprice.video)
-                    }
-                  >
-                    Continue
-                  </button>
-                </div>
-              </div>
-            )}
-            <div className="price-items">
-              <p>Do you want to send custom offer</p>
-              <button onClick={() => handleContinue(4, 0)}>
-                Make Custom Offer
-              </button>
-            </div>
-          </div>
-        </div>
       )}
     </div>
   );

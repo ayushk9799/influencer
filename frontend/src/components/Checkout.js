@@ -3,29 +3,26 @@ import { useLocation } from "react-router-dom";
 import { BACKEND_URL } from "../assets/Data";
 
 const Checkout = () => {
-  const location = useLocation();
-  const checkoutData = location?.state?.data;
-
-  const handlePay = async () => {
-    try {
-      // fetchig razorpay key
-      const response = await fetch(`${BACKEND_URL}/user/payment/get-key`, {
-        credentials: "include",
-      });
-      const { key } = response.json();
-      //creating order
-      const response1 = await fetch(`${BACKEND_URL}/user/payment/checkout`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          amount: checkoutData.amount,
-          influencer: checkoutData.influencerID,
-        }),
-      });
-      const { order } = await response1.json();
+    const location = useLocation();
+    const checkoutData = location?.state;
+    const {influencer, amount, orderSummary} = checkoutData;
+    console.log('checkout',location);
+    const handlePay = async() => {
+        try {
+            // fetchig razorpay key
+            const response = await fetch(`${BACKEND_URL}/user/payment/get-key`, {credentials : "include"});
+            const {key} = response.json();
+            //creating order
+            const response1 = await fetch(`${BACKEND_URL}/user/payment/checkout`, {
+                method : 'POST',
+                credentials : 'include',
+                headers : {
+                    'Content-Type' : 'application/json'
+                },
+                body : JSON.stringify({influencer, amount, orderSummary})
+            });
+            const {order} = await response1.json();
+            console.log('order', order);
 
       const options = {
         key,

@@ -3,7 +3,8 @@ import { BACKEND_URL } from "../assets/Data";
 
 const initialState = {
     isAuthenticated : false,
-    userDetails : {}
+    userDetails : {},
+    orders : []
 }
 
 export const getUserData = createAsyncThunk('user/get-data', async () => {
@@ -12,7 +13,15 @@ export const getUserData = createAsyncThunk('user/get-data', async () => {
     });
     const { userDetails } = await response.json();
     return userDetails;
-})
+});
+
+export const getOrder = createAsyncThunk('user/get-orders', async () => {
+    const response = await fetch(`${BACKEND_URL}/user/orders`, {
+        credentials: "include",
+    });
+    const { orders } = await response.json();
+    return orders;
+});
 
 const UserSlice = createSlice({
     name : 'user',
@@ -28,6 +37,9 @@ const UserSlice = createSlice({
             .addCase(getUserData.fulfilled, (state, action) => {
                 state.userDetails = action.payload.userDetails;
                 state.isAuthenticated = true;
+            })
+            .addCase(getOrder.fulfilled, (state, action) => {
+                state.orders = action.payload;
             })
     }
 })
