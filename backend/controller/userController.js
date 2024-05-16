@@ -138,7 +138,7 @@ export const influencerWorkAcceptance = async (req, res) => {
     // console.log('order', order);
     if(order.influencer.toString() === user._id.toString() && user.contentCreator) {
       const temp = {
-        status : true,
+        status : 'accepted',
         date : new Date()
       }
       order.workAccepted = temp;
@@ -161,7 +161,7 @@ export const clientWorkApproval = async (req, res) => {
     const order = await Order.findById(params.orderID);
     if(order.buyer.toString() === user._id.toString() && !user.contentCreator) {
       const temp = {
-        status : true,
+        status : 'accepted',
         date : new Date()
       }
       order.workApproval = temp;
@@ -169,6 +169,38 @@ export const clientWorkApproval = async (req, res) => {
       return res.status(200).json({orderStatus : data.orderStatus, workApproval : data.workApproval});
     } else {
       return res.status(404).json({message : 'something went wrong'});
+    }
+  } catch (err) {
+    return res.status(500).json({message:"Internal Server Error"})
+  }
+}
+
+// client and influencer approval or rejection.
+export const orderEventController = async (req, res) => {
+  try {
+    const params = req.params;
+    const user = req.user;
+    const order = await Order.findById(params.orderID);
+    const {status, message, actionFor} = req.body;
+    if(!status || !actionFor) {
+      return res.status(500).json({message:"Internal Server Error"})
+    }
+    if(order) {
+      if(user.contentCreator && actionFor === 'influencer' && (user._id.toString() === order.influencer.toString())) {
+        const temp = {status, date : new Date(), message};
+        order.workAccepted = temp;
+        const data = await order.save();
+        return res.status(200).json({orderStatus : data.orderStatus, workAccepted : data.workAccepted})
+      } else if(!user.contentCreator && actionFor === 'client' && (user._id.toString() === order.buyer.toString())) {
+        const temp = {status, date : new Date(), message};
+        order.workApproval = temp;
+        const data = await order.save();
+        return res.status(200).json({orderStatus : data.orderStatus, workApproval : data.workApproval})
+      } else {
+        return res.status(404).json({message : 'Something went wrong'});
+      }
+    } else {
+      return res.status(404).json({message : 'Order not found'})
     }
   } catch (err) {
     return res.status(500).json({message:"Internal Server Error"})

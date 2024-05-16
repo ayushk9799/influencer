@@ -30,6 +30,9 @@ const UserSlice = createSlice({
         setUserData : (state, action) => {
             state.userDetails = action.payload;
             state.isAuthenticated = true;
+        },
+        updateUserDetails : (state, action) => {
+            state.userDetails = {...state.userDetails, ...action.payload}
         }
     },
     extraReducers : (builder) => {
@@ -44,6 +47,6 @@ const UserSlice = createSlice({
     }
 })
 
-export const {setUserData} = UserSlice.actions;
+export const {setUserData, updateUserDetails} = UserSlice.actions;
 
 export default UserSlice.reducer;

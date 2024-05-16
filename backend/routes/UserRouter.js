@@ -1,5 +1,5 @@
 import express from 'express';
-import  {getMyData, paymentCheckout, getPaymentKey, paymentVerification, getOrders, getOrderDetails, influencerWorkAcceptance, clientWorkApproval}  from '../controller/userController.js';
+import  {getMyData, paymentCheckout, getPaymentKey, paymentVerification, getOrders, getOrderDetails, influencerWorkAcceptance, clientWorkApproval, orderEventController}  from '../controller/userController.js';
 import {v4} from 'uuid'
 import multer from "multer";
 import {deleteS3, uploadToS3,presignedUrl} from '../s3.js'
@@ -25,6 +25,8 @@ router.get('/orders/:orderID', getOrderDetails);
 router.get('/order/influencer-work-accept/:orderID', influencerWorkAcceptance);
 
 router.get('/order/client-work-approval/:orderID', clientWorkApproval);
+
+router.post('/order/order-events/:orderID', orderEventController);
 
 router.post('/upload-file', upload.fields([{name : 'profile', maxCount : 1}, {name : 'files', maxCount : 4}]), async(req,res) => {
     const files = req.files;

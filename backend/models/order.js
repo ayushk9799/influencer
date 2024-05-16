@@ -38,8 +38,12 @@ const OrderSchema = new Schema({
     },
     workAccepted : { // by influencer
         status : {
-            type : Boolean,
-            // default : false
+            type : String,
+            enum : ['pending', 'accepted', 'rejected'],
+            default : 'pending'
+        },
+        message : {
+            type : String,
         },
         date : {
             type : Date
@@ -47,8 +51,12 @@ const OrderSchema = new Schema({
     },
     workApproval : { // by buyer
         status : {
-            type : Boolean,
-            default : false
+            type : String,
+            enum : ['pending', 'accepted', 'rejected'],
+            default : 'pending'
+        },
+        message : {
+            type : String,
         },
         date : {
             type : Date
@@ -90,14 +98,6 @@ const OrderSchema = new Schema({
     },
 });
 
-// OrderSchema.post('save', async (doc) => {
-//     try {
-//         const User = mongoose.model('user');
-//         await User.findByIdAndUpdate(doc.buyer, { $push: { order: doc._id } });
-//     } catch (error) {
-//         console.error('Error updating user with order ID:', error);
-//     }
-// })
 
 OrderSchema.pre('save', function(next) {
     // Check if the fields of interest have been modified
@@ -109,10 +109,10 @@ OrderSchema.pre('save', function(next) {
         if (this.buyerPaymentStatus === 'success') {
             this.orderStatus[0] = true;
         }
-        if (this.workAccepted.status === true) {
+        if (this.workAccepted.status === 'accepted') {
             this.orderStatus[1] = true;
         }
-        if (this.workApproval.status === true) {
+        if (this.workApproval.status === 'accepted') {
             this.orderStatus[2] = true;
         }
         if (this.influencerPaymentStatus === 'success') {
