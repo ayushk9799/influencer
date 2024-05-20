@@ -82,7 +82,12 @@ const UserSchema=new Schema({
   uniqueID:{
     type:String
   },
-  order:[{
+  bankDetails : {
+    account : String,
+    ifsc : String,
+    name : String
+  },
+  orders:[{
     type:Schema.Types.ObjectId,
     ref:'order'
   }]

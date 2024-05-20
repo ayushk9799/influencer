@@ -1,6 +1,6 @@
 import { Route, BrowserRouter as Router, Routes} from "react-router-dom";
 import { Navbar } from "./Navbar";
-import { Pricing } from "./Pricing";
+import  Pricing  from "./Pricing";
 import { HowToUse } from "./HowToUse.js";
 import { Home } from "./Home";
 import { Login } from "./Login.js";
@@ -15,6 +15,8 @@ import { setUserData } from "./redux/UserSlice.js";
 import CustomOffer from "./components/CustomOffer.js";
 import PaymentSuccess from "./components/Payment/PaymentSuccess.js";
 import PaymentFail from "./components/Payment/PaymentFail.js";
+import Order from "./components/Order.js";
+import OrderDetails from "./components/OrderDetails.js";
 function App() {
   const { isAuthenticated } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -51,8 +53,9 @@ function App() {
         <Route path="/influencer/:userID" Component={Profile}></Route>
         <Route path="/chat/:uniqueID" Component={ChatBox}></Route>
         <Route path="/complete-profile" Component={CompleteProfile} />
-        <Route path="/profile" />
-        <Route path="/checkout" Component={Checkout} />
+        <Route path="/user/orders" Component={Order} />
+        <Route path="/user/orders/:orderID" Component={OrderDetails} />
+        <Route path="/user/checkout" Component={Checkout} />
         <Route path="/custom-offer" Component={CustomOffer} />
         <Route path="/payment-success" Component={PaymentSuccess} />
         <Route path="/payment-failed" Component={PaymentFail} />

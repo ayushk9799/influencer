@@ -19,18 +19,48 @@ const OrderSchema = new Schema({
         type : Number,
         required : true
     },
+    orderSummary : {
+        orderType : {
+            type : String,
+            enum : ['main', 'custom']
+        },
+        accountType : {
+            type : String,
+            enum : ['instagram', 'youtube']
+        },
+        summary : String,
+        details : String,
+    },
     buyerPaymentStatus : {
         type : String,
         enum : ['pending', 'failed', 'success'],
         default : 'pending'
     },
     workAccepted : { // by influencer
-        type : Boolean,
-        default : false
+        status : {
+            type : String,
+            enum : ['pending', 'accepted', 'rejected'],
+            default : 'pending'
+        },
+        message : {
+            type : String,
+        },
+        date : {
+            type : Date
+        }
     },
     workApproval : { // by buyer
-        type : Boolean,
-        default : false
+        status : {
+            type : String,
+            enum : ['pending', 'accepted', 'rejected'],
+            default : 'pending'
+        },
+        message : {
+            type : String,
+        },
+        date : {
+            type : Date
+        }
     },
     influencerPaymentStatus : {
         type : String,
@@ -68,14 +98,6 @@ const OrderSchema = new Schema({
     },
 });
 
-// OrderSchema.post('save', async (doc) => {
-//     try {
-//         const User = mongoose.model('user');
-//         await User.findByIdAndUpdate(doc.buyer, { $push: { order: doc._id } });
-//     } catch (error) {
-//         console.error('Error updating user with order ID:', error);
-//     }
-// })
 
 OrderSchema.pre('save', function(next) {
     // Check if the fields of interest have been modified
@@ -87,10 +109,10 @@ OrderSchema.pre('save', function(next) {
         if (this.buyerPaymentStatus === 'success') {
             this.orderStatus[0] = true;
         }
-        if (this.workAccepted === true) {
+        if (this.workAccepted.status === 'accepted') {
             this.orderStatus[1] = true;
         }
-        if (this.workApproval === true) {
+        if (this.workApproval.status === 'accepted') {
             this.orderStatus[2] = true;
         }
         if (this.influencerPaymentStatus === 'success') {

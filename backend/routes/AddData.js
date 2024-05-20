@@ -100,4 +100,15 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+router.post("/bank-details", async (req,res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    user.bankDetails = req.body;
+    await user.save();
+    return res.status(200).json({message : 'added successfully'});
+  } catch (err) {
+    return res.status(500).json({message : 'internal server error'})
+  }
+})
+
 export default router;
