@@ -1,15 +1,16 @@
 import React, { useMemo, useState, useEffect } from "react";
 import "./profile.css";
 import { getCategory, getIcons, s3Domain } from "../assets/Data";
-import { useNavigate, useLocation } from "react-router-dom";
+import {  useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { FaInstagram, FaYoutube } from "react-icons/fa";
+import { useNavigateCustom } from "../CustomNavigate";
 
 const Profile = () => {
   const location = useLocation();
-
+console.log(location)
   const item = location.state?.account;
-
+ console.log(item)
   const {
     _id,
     name,
@@ -27,7 +28,7 @@ const Profile = () => {
     uniqueID,
   } = item;
 
-  const navigate = useNavigate();
+  const navigate = useNavigateCustom();
 
   // for swipe detection
   const [startX, setStartX] = useState(0);

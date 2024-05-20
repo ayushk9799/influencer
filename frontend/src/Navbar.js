@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import {useNavigateCustom} from './CustomNavigate.js'
 import "./Navbar.css";
 import { useState } from "react";
 import { HorizontalNav } from "./HorizontalNav";
@@ -11,7 +11,7 @@ export const Navbar = ({ details }) => {
   const handleChange = () => {
     setMenuButton(!menuButton);
   };
-  const navigate = useNavigate();
+  const navigate = useNavigateCustom();
   return (
     <>
       <div id="navbarcontainer">

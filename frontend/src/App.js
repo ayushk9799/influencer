@@ -1,4 +1,4 @@
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes} from "react-router-dom";
 import { Navbar } from "./Navbar";
 import { Pricing } from "./Pricing";
 import { HowToUse } from "./HowToUse.js";
@@ -18,7 +18,7 @@ import PaymentFail from "./components/Payment/PaymentFail.js";
 function App() {
   const { isAuthenticated } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-
+  console.log("app")
   const getData = async () => {
     try {
       const response = await fetch("http://localhost:3000/user/getMyData", {
@@ -41,7 +41,7 @@ function App() {
       <Routes>
         <Route path="/" Component={Home}></Route>
         <Route path="/how-to-use" Component={HowToUse}></Route>
-        <Route path="/pricing" Component={Pricing}></Route>
+        <Route path="/pricing" Component={ Pricing} ></Route>
 
         {isAuthenticated ? (
           <Route path="/myAccount" Component={Account}></Route>

@@ -8,7 +8,7 @@
 #searchFilter
 {
     display: grid;
-    grid-template-columns: repeat(4,1fr) 20px ;
+    grid-template-columns: repeat(4,minmax(0,1fr)) 20px ;
     grid-column-gap:5px;
     width:800px;
 }
@@ -22,7 +22,43 @@
     cursor:pointer;
     display:flex;
     justify-content: center;
+    box-sizing: border-box;
+    position: relative;
+    /* white-space: nowrap;  */
+    overflow: hidden; 
+    /* text-overflow: ellipsis; */
 }
+
+.dropbtn::after {
+  content: attr(title); /* Display the value of the title attribute */
+  position: absolute;
+  top: -30px; /* Adjust the position of the tooltip */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 5px;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+  z-index: 1;
+}
+
+.dropbtn:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+#overflows{
+ 
+  width: 80%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
 #dropdownPlatform
 {
     border:1px solid rgb(0, 0, 0);
@@ -152,6 +188,18 @@
     border-radius: 2px;
     
   }
+ 
+  .cross{
+    position: absolute;
+    top:50%;
+    right: 5px;
+    /* border:1px solid red; */
+    transform: translateY(-50%);
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    /* transition: none; */
+  }
   @media screen and (max-width:700px)
   {
     #searchFilter
@@ -169,6 +217,7 @@
         align-self: center; 
     justify-content: center;
     margin-bottom: 5px;
+    
     }
 
   .dropbtn

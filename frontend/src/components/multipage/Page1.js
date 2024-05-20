@@ -5,11 +5,11 @@ import React, { useState } from "react";
 import "./page1.css";
 import FormHeader from "../subcomponents/FormHeader";
 import { createAccount, updateFormData } from "../../redux/FormSlice";
-import { useNavigate } from "react-router-dom";
+import { useNavigateCustom } from "../../CustomNavigate";
 
 const Page1 = () => {
   // State variables for form fields
-  const navigate = useNavigate();
+  const navigate = useNavigateCustom();
   const { formData } = useSelector((state) => state.form);
 
   const [region, setRegion] = useState(formData?.region || "");

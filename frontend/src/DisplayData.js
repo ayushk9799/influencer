@@ -1,22 +1,90 @@
-import { useEffect, useState, useRef } from "react";
+import {
+  useEffect,
+  useState,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import "./DisplayData.css";
-import { useNavigate } from "react-router-dom";
 import { getCategory } from "./assets/Data.js";
 import { iconsArr } from "./assets/Data.js";
-export const DisplayData = () => {
-  const navigate = useNavigate();
+import { useNavigate} from "react-router-dom";
+import { useNavigateCustom } from "./CustomNavigate.js";
+export const DisplayData = forwardRef(({ query, button }, ref) => {
+  console.log("displayData");
+  const navigate = useNavigateCustom();
   const divRef = useRef(null);
+  console.log(query);
   const [data, setData] = useState([]);
+
+  const [typeOfDataDisplay, settypeofDataDisplay] = useState();
+  useImperativeHandle(ref, () => ({
+    getData,
+  }));
+  const getData = async () => {
+    if (button) {
+      let categories = getCategory(-1);
+      let url = "http://localhost:3000/getInfluencers/search/?";
+      if (query.fmax !== undefined) url += `&fmax=${query.fmax}`;
+      if (query.fmin !== undefined) url += `&fmin=${query.fmin}`;
+      if (query.region !== undefined) url += `&region=${query.region}`;
+      if (query.platform !== undefined) {
+        let platform=query.platform;
+        if(query.platform==="All")
+        {
+           platform=['Instagram', 'YouTube']
+        }
+        url += `&platform=${platform}`;
+      }
+      if (query.field !== undefined) {
+        let indexedFields = [];
+        for (let value of query.field) {
+          for (let category of categories) {
+            if (category.name === value) {
+              indexedFields.push(category.id);
+            }
+          }
+        }
+        console.log(indexedFields);
+        url += `&field=${indexedFields}`;
+      }
+      try {
+        const response = await fetch(url);
+        if (response.ok) {
+          let data = await response.json();
+          console.log(data);
+          setData(data.data);
+          settypeofDataDisplay("search result for your query");
+        } else {
+          throw new Error("error in getting data")
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      try {
+        const response = await fetch(
+          "http://localhost:3000/getInfluencers/featured/platform/instagram"
+        );
+        if (response.ok) {
+          let data = await response.json();
+          console.log(data);
+          settypeofDataDisplay("Featured");
+          setData(data.data);
+        }
+        else{
+          throw new Error("erro in getting data")
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
   useEffect(() => {
-    const getData = async () => {
-      const response = await fetch(
-        "http://localhost:3000/getInfluencers/featured/platform/instagram"
-      );
-      let data = await response.json();
-      setData(data.data);
-    };
+    console.log("dispjnfjcn");
+
     getData();
-  }, []);
+  }, [button]);
 
   useEffect(() => {
     const divElement = divRef.current;
@@ -59,6 +127,7 @@ export const DisplayData = () => {
   };
   return (
     <>
+      <div id="typeOfDataDisplay">{typeOfDataDisplay}</div>
       <div
         style={{
           display: "flex",
@@ -159,4 +228,4 @@ export const DisplayData = () => {
       </div>
     </>
   );
-};
+});

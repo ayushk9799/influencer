@@ -1,13 +1,19 @@
 import "./SearchFilter.css";
 import { useRef, useState, useEffect } from "react";
 import { RangeSelector } from "./RangeSelector";
+import { DisplayData } from "./DisplayData";
+import { RxCross1 } from "react-icons/rx";
 export const SearchFilter = () => {
   const dropDownRef = useRef(null);
   const fieldref = useRef(null);
   const searchRef = useRef(null);
   const countryRef = useRef(null);
   const followerRef = useRef(null);
+  const DisplayDataRef = useRef(null);
   const [searchJsx, setsearchJsx] = useState(null);
+  const [searchButton, setsearchButton] = useState(false);
+  const query = useRef({});
+  console.log("query")
   const searchinner = (
     <img
       src="iconSvg.svg"
@@ -15,24 +21,12 @@ export const SearchFilter = () => {
     ></img>
   );
   const [followerrange, setFollowerRange] = useState(["0", "1M+"]);
-  const [socialMediaOptions, setSocialMediaOptions] = useState([
-    "Instagram",
-    "YouTube",
-    "All",
-    // Add more social media options here
-  ]);
+  const socialMediaOptions = ["Instagram", "YouTube", "All"];
   const [selectedSocialMediaOptions, setselectedSocialMediaOptions] =
     useState(null);
-  const [fieldOptions, setFieldOptions] = useState([
-    "Dancing",
-    "Tech",
-    "Gaming",
-    "hello",
-    "fashion",
-    // Add more field options here
-  ]);
+  const fieldOptions = ["Dancing", "Tech", "Gaming", "hello", "fashion"];
   const [followerVisibilty, setFollowerVisibilty] = useState(null);
-  const [CountryOptions, setCountryOptions] = useState([
+  const CountryOptions = [
     "All",
     "India",
     "USA",
@@ -40,7 +34,7 @@ export const SearchFilter = () => {
     "Australia",
     "newZealnd",
     // Add more field options here
-  ]);
+  ];
   const [selectedCountryOptions, setSelectedCountryOptions] = useState([]);
   const [selectedfieldOptions, setselectedfieldOptions] = useState([]);
   const handleClickFollowers = () => {
@@ -49,14 +43,45 @@ export const SearchFilter = () => {
   };
   const handleSocialMediaChange = (option, event) => {
     // event.stopPropagation();
+    query.current.platform = option;
     setselectedSocialMediaOptions(option);
   };
   const handleCountryChange = (option, event) => {
     // event.stopPropagation();
-    if (!selectedCountryOptions.includes(option))
-      setSelectedCountryOptions([...selectedCountryOptions, option]);
+    if (!selectedCountryOptions.includes(option)) {
+      query.current.region = option;
+      setSelectedCountryOptions(option);
+    }
   };
-  const handleSearch = () => {};
+  const handlecross = (index,event) => {
+    event.stopPropagation();
+    switch (index) {
+      case 1:
+        delete query.current.platform;
+        setselectedSocialMediaOptions(null);
+        break;
+      case 2:
+        delete query.current.field;
+        setselectedfieldOptions([]);
+        break;
+      case 3:
+        delete query.current.region;
+        setSelectedCountryOptions([]);
+        break;
+      case 4:
+        delete query.current.fmax;
+        delete query.current.fmin;
+
+        setFollowerVisibilty(null);
+        break;
+      default:
+        return;
+    }
+  };
+  const handleSearch = () => {
+    DisplayDataRef.current.getData();
+    setsearchButton(true);
+  };
   const handleResize = () => {
     if (window.innerWidth < 700) {
       setsearchJsx(<div>getData</div>);
@@ -68,17 +93,53 @@ export const SearchFilter = () => {
 
   useEffect(() => {
     handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
   const handleFieldChange = (option, event) => {
     // event.stopPropagation();
-    if (!selectedfieldOptions.includes(option))
+    if (!selectedfieldOptions.includes(option)) {
+      query.current.field = [...selectedfieldOptions, option];
       setselectedfieldOptions([...selectedfieldOptions, option]);
+    }
+  };
+
+  const convertToNumber = (value) => {
+    let answer = 0;
+    switch (value) {
+      case 0:
+        answer = 0;
+        break;
+      case "10K":
+        answer = 10000;
+        break;
+      case "50K":
+        answer = 50000;
+        break;
+      case "100K":
+        answer = 100000;
+        break;
+      case "500K":
+        answer = 500000;
+        break;
+      case "1M+":
+        answer = 1000000;
+        break;
+      default:
+    }
+    return answer;
   };
   const handleClickField = () => {
     fieldref.current.style.display =
       fieldref.current.style.display === "grid" ? "none" : "grid";
   };
   const handleFollowerRangechange = (value) => {
+    console.log(value);
+
+    query.current.fmax = convertToNumber(value[1]);
+    query.current.fmin = convertToNumber(value[0]);
     setFollowerRange(value);
     setFollowerVisibilty(true);
   };
@@ -99,6 +160,16 @@ export const SearchFilter = () => {
               {selectedSocialMediaOptions
                 ? selectedSocialMediaOptions
                 : "Enter Platform"}
+              {selectedSocialMediaOptions ? (
+                <div
+                  className="cross"
+                  onClick={(event) => handlecross(1, event)}
+                >
+                  <RxCross1 size={20} />
+                </div>
+              ) : (
+                <></>
+              )}
             </div>
             <div
               className="dropdown-content"
@@ -120,9 +191,20 @@ export const SearchFilter = () => {
 
           <div className="dropdown" onClick={handleClickField}>
             <div className="dropbtn">
-              {!(selectedfieldOptions.length === 0)
+              <div id="overflows" title={selectedfieldOptions.join(", ")}>  {!(selectedfieldOptions.length === 0)
                 ? selectedfieldOptions + " "
-                : "Field/Category"}
+                : "Field/Category"}</div>
+            
+              {!(selectedfieldOptions.length === 0) ? (
+                <div
+                  className="cross"
+                  onClick={(event) => handlecross(2, event)}
+                >
+                  <RxCross1 size={20} />
+                </div>
+              ) : (
+                <></>
+              )}
             </div>
             <div
               className="dropdown-content"
@@ -146,6 +228,16 @@ export const SearchFilter = () => {
               {!(selectedCountryOptions.length === 0)
                 ? selectedCountryOptions + " "
                 : "Country"}
+              {!(selectedCountryOptions.length === 0) ? (
+                <div
+                  className="cross"
+                  onClick={(event) => handlecross(3, event)}
+                >
+                  <RxCross1 size={20} />
+                </div>
+              ) : (
+                <></>
+              )}
             </div>
             <div
               className="dropdown-content"
@@ -172,6 +264,16 @@ export const SearchFilter = () => {
               {followerVisibilty
                 ? `${followerrange[0]}---->${followerrange[1]}`
                 : "Follower Range"}
+              {followerVisibilty ? (
+                <div
+                  className="cross"
+                  onClick={(event) => handlecross(4, event)}
+                >
+                  <RxCross1 size={20} />
+                </div>
+              ) : (
+                <></>
+              )}
             </div>
             <div
               className="dropdown-content"
@@ -214,6 +316,11 @@ export const SearchFilter = () => {
           </div>
         </div>
       </div>
+      <DisplayData
+        query={query.current}
+        button={searchButton}
+        ref={DisplayDataRef}
+      ></DisplayData>
     </>
   );
 };

@@ -25,6 +25,7 @@ export const ChatMessage = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const handleFileSelect = async (event) => {
     const file = event.target.files[0];
+    console.log(file)
     setSelectedFile(file);
 
     try {
