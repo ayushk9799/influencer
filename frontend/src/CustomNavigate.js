@@ -5,7 +5,8 @@ export const useNavigateCustom=()=>
   const location = useLocation();
 
   const navigateWithCheck = (path,state) => {
-   
+     console.log(location.pathname);
+     console.log(path)
     if (location.pathname !== path) {
       navigate(path,state);
     } else {

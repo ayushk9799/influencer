@@ -11,26 +11,30 @@ export const ChatBox = () => {
     const updateWindowHeight = () => {
       setHeight(
         window.innerHeight -
-          (chatboxref.current.getBoundingClientRect().top + 1)
+          (chatboxref.current.getBoundingClientRect().top+1)
       );
     };
     updateWindowHeight();
     window.addEventListener("resize", updateWindowHeight);
 
-    // Cleanup function to remove the event listener when the component is unmounted
     return () => {
       window.removeEventListener("resize", updateWindowHeight);
     };
   }, []);
-  const { userID } = useParams();
+ 
   return (
     <div
       id="chatBoxContainer"
       style={{
         display: "flex",
-        height: `${height}px`,
+         height: `${height}px`,
         boxSizing: "border-box",
         overflowY: "hidden",
+        position:"relative",
+        bottom:"0px",
+     
+        left:'0px',
+        right:"0px"
       }}
       ref={chatboxref}
     >

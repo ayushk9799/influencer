@@ -4,21 +4,14 @@
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 10px;
   row-gap: 36px;
-  /* border: 1px solid rgb(7, 7, 7); */
 }
 
 .grid-item {
   display: flex;
   flex-direction: column;
-  
-
-  /* align-items: center; */
-
-  /* border: 1px solid #a43333; */
-
   width: 100%;
-   /* height: 200px;  */
 }
+
 .grid-item:hover{
    cursor: pointer;
 }
@@ -28,7 +21,6 @@
 }
 .grid-item img {
   width: 100%;
-    /* height:200px; */
   object-fit: cover;
   border-radius: 5px;
   max-height: 320px;
@@ -39,9 +31,9 @@
   
   padding: 5px;
   border-radius: 5px;
-  font-size: 13px;
-  font-weight: 500;
- 
+  font-size: 15px;
+  /* font-weight: 500;
+  */
 }
 .detialsContainer
 {
@@ -51,11 +43,17 @@
 {
     position: absolute;
     bottom: 5px;
+    color: white;
 }
 .pricing{
     position: absolute;
     bottom:5px;
     right:5px;
+    font-size: 20px;
+    color:white;
+    font-weight: bold;
+    
+    display:flex;
 }
 
 .fieldContainer {

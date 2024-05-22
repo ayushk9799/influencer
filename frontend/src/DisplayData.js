@@ -8,8 +8,9 @@ import {
 import "./DisplayData.css";
 import { getCategory } from "./assets/Data.js";
 import { iconsArr } from "./assets/Data.js";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useNavigateCustom } from "./CustomNavigate.js";
+import { FaDollarSign } from "react-icons/fa";
 export const DisplayData = forwardRef(({ query, button }, ref) => {
   console.log("displayData");
   const navigate = useNavigateCustom();
@@ -29,10 +30,9 @@ export const DisplayData = forwardRef(({ query, button }, ref) => {
       if (query.fmin !== undefined) url += `&fmin=${query.fmin}`;
       if (query.region !== undefined) url += `&region=${query.region}`;
       if (query.platform !== undefined) {
-        let platform=query.platform;
-        if(query.platform==="All")
-        {
-           platform=['Instagram', 'YouTube']
+        let platform = query.platform;
+        if (query.platform === "All") {
+          platform = ["Instagram", "YouTube"];
         }
         url += `&platform=${platform}`;
       }
@@ -56,7 +56,7 @@ export const DisplayData = forwardRef(({ query, button }, ref) => {
           setData(data.data);
           settypeofDataDisplay("search result for your query");
         } else {
-          throw new Error("error in getting data")
+          throw new Error("error in getting data");
         }
       } catch (error) {
         console.log(error);
@@ -71,9 +71,8 @@ export const DisplayData = forwardRef(({ query, button }, ref) => {
           console.log(data);
           settypeofDataDisplay("Featured");
           setData(data.data);
-        }
-        else{
-          throw new Error("erro in getting data")
+        } else {
+          throw new Error("erro in getting data");
         }
       } catch (error) {
         console.log(error);
@@ -158,9 +157,12 @@ export const DisplayData = forwardRef(({ query, button }, ref) => {
 
                   <div className="nameRegion">
                     <div className="name">{item.name}</div>
-                    <div style={{ fontSize: "10px" }}>{item.region}</div>
+                    <div style={{ fontSize: "10px", padding: "5px" }}>
+                      {item.region}
+                    </div>
                   </div>
                   <div className="pricing">
+                    <FaDollarSign />
                     {findLowest(
                       item.iprice?.video,
                       item.iprice?.photo,
@@ -176,6 +178,7 @@ export const DisplayData = forwardRef(({ query, button }, ref) => {
                       display: "flex",
                       flexDirection: "row",
                       justifyContent: "space-between",
+                      height: "25px",
                     }}
                   >
                     {item.iaccountID ? (
@@ -192,8 +195,13 @@ export const DisplayData = forwardRef(({ query, button }, ref) => {
                           href={`http://instagram.com/${item.iaccountID}`}
                           target="_blank"
                           onClick={(e) => e.stopPropagation()}
+                          style={{
+                            textDecoration: "none",
+                            color: "black",
+                            display: "flex", // Add this line
+                            alignItems: "center", // Add this line
+                          }}
                         >
-                          {" "}
                           {iconsArr[0]} {item.ifollowers} Followers
                         </a>
                       </div>
@@ -210,7 +218,19 @@ export const DisplayData = forwardRef(({ query, button }, ref) => {
                           fontWeight: "500",
                         }}
                       >
-                        {iconsArr[1]} {item.yfollowers} Followers
+                        <a
+                          href={`http://youtube.com/${item.iaccountID}`}
+                          target="_blank"
+                          onClick={(e) => e.stopPropagation()}
+                          style={{
+                            textDecoration: "none",
+                            color: "black",
+                            display: "flex", // Add this line
+                            alignItems: "center", // Add this line
+                          }}
+                        >
+                          {iconsArr[1]} {item.yfollowers} Followers
+                        </a>
                       </div>
                     ) : (
                       <div></div>

@@ -1,4 +1,4 @@
-import {useNavigateCustom} from './CustomNavigate.js'
+import { useNavigateCustom } from "./CustomNavigate.js";
 import "./Navbar.css";
 import { useState } from "react";
 import { HorizontalNav } from "./HorizontalNav";
@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 
 export const Navbar = ({ details }) => {
   const [menuButton, setMenuButton] = useState(false);
-  const {userDetails}=useSelector(state=>state.user);
+  const { userDetails } = useSelector((state) => state.user);
   const handleChange = () => {
     setMenuButton(!menuButton);
   };
@@ -17,23 +17,20 @@ export const Navbar = ({ details }) => {
       <div id="navbarcontainer">
         <div id="nameandlogo">Influencer Chat</div>
         <div id="navbardetails">
-          <div className="navDetailsClass" onClick={() => navigate("/pricing")}>
-            Pricing
+          <div className="navDetailsClass">
+            <span onClick={() => navigate("/pricing")}>Pricing</span>
           </div>
-          <div
-            className="navDetailsClass"
-            onClick={() => navigate("/how-to-use")}
-          >
-            How to use
+          <div className="navDetailsClass">
+            <span onClick={() => navigate("/how-to-use")}>How to use</span>
           </div>
 
           {userDetails?.email ? (
             <div
               className="navDetailsClass"
-              onClick={() => navigate("/myAccount")}
+             
               id="account"
             >
-              <div id="accountDetails">
+              <div id="accountDetails"  onClick={() => navigate("/myAccount")}>
                 <img
                   src={`${userDetails.profilePic}`}
                   referrerpolicy="no-referrer"

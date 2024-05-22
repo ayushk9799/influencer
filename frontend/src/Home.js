@@ -15,7 +15,7 @@ export const Home=()=>
          Your Product + Their Audience = Magic!!
     </div>
 
-    <div id="subheading"><p>Leverage the audience and reach of content creators to boost your product.</p></div>
+    <div id="subheading"><p id="leverage">Leverage the audience and reach of content creators to boost your product.</p></div>
     </div>
     <SearchFilter />
     </>

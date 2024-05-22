@@ -6,5 +6,48 @@
      color: white;
      border-radius: 5px;
      width:15%;
+      overflow-y: auto;
      font-size:16px;
+}
+.current{
+    font-weight: bolder;
+    border-bottom: 1px solid grey;
+    padding:5px;
+    cursor:pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; 
+   box-sizing: border-box; 
+   background-color: grey;
+    
+}
+.current:hover{
+     background-color: grey;
+}
+.chatItem{
+     border-bottom: 1px solid grey;
+     padding:5px;
+     cursor:pointer;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     width: 100%; 
+    box-sizing: border-box; 
+}
+.chatItem:hover{
+     background-color: grey;
+}
+@media screen  and (max-width:1000px) and (min-width:700px){
+     #chatboxlistcontainer{
+          width:200px;
+         
+     }
+     
+}
+
+@media screen  and (max-width:700px) {
+     #chatboxlistcontainer{
+          display:none;
+     }
 }

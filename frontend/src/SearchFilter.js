@@ -3,6 +3,8 @@ import { useRef, useState, useEffect } from "react";
 import { RangeSelector } from "./RangeSelector";
 import { DisplayData } from "./DisplayData";
 import { RxCross1 } from "react-icons/rx";
+import { FaSearch } from "react-icons/fa";
+
 export const SearchFilter = () => {
   const dropDownRef = useRef(null);
   const fieldref = useRef(null);
@@ -86,7 +88,7 @@ export const SearchFilter = () => {
     if (window.innerWidth < 700) {
       setsearchJsx(<div>getData</div>);
     } else {
-      setsearchJsx(searchinner);
+      setsearchJsx(<FaSearch size={25}/>);
     }
   };
   window.addEventListener("resize", handleResize);
@@ -312,7 +314,7 @@ export const SearchFilter = () => {
             </div>
           </div>
           <div id="getData" ref={searchRef} onClick={handleSearch}>
-            {searchJsx}
+           {searchJsx}
           </div>
         </div>
       </div>

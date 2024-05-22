@@ -13,10 +13,10 @@ export const ChatMessage = () => {
   const socket = useRef(null);
   const { userDetails } = useSelector((state) => state.user);
   const you = userDetails._id;
-
+  console.log("chatting")
   const location = useLocation();
   const otherID = location.state?.account;
-
+   console.log(otherID)
   const [messageCurrentSend, setMessageSend] = useState("");
   const [messageLists, setMessageList] = useState([]);
   const textareaRef = useRef();
@@ -102,18 +102,18 @@ export const ChatMessage = () => {
         const { chats } = await response.json();
 
         if (chats) {
-          setMessageList([...messageLists, ...chats]);
+          setMessageList([ ...chats]);
         }
       }
     };
     getMessages();
-
+  console.log('useedfetc')
     return () => {
       if (socket.current) {
         socket.current.disconnect();
       }
     };
-  }, []);
+  }, [otherID]);
 
   const findLinks = (text) => {
     const urlPattern = /\b(https?:\/\/\S+)\b/gi;
@@ -223,24 +223,33 @@ export const ChatMessage = () => {
 
   const handleMesageInput = (event) => {
     if (textareaRef.current) {
-      textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-      textareaRef.current.style.top = `${
-        30 - textareaRef.current.scrollHeight
-      }px`;
+     console.log(textareaRef.current.clientHeight)
+      if(textareaRef.current.clientHeight<=200)
+      {
+   console.log("true")
+        textareaRef.current.style.height = "auto";
+        textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+     
+        textareaRef.current.style.top = `${
+          30 - textareaRef.current.scrollHeight
+        }px`;
+      }
+      setMessageSend(event.target.value);
     }
 
-    setMessageSend(event.target.value);
+   
   };
 
   return (
     <div
       style={{
-        // border: "1px solid red",
+        //  border: "1px solid red",
         flex: "1",
         position: "relative",
         display: "flex",
         flexDirection: "column",
+        width:"auto",
+        overflowY:"hidden"
       }}
     >
       <div
@@ -248,7 +257,7 @@ export const ChatMessage = () => {
         id="chathistory"
         style={{
           height: "100%",
-          border: "1px solid yellow",
+        //  border:"1px solid yellow",
           flexGrow: "1",
           overflowY: "scroll",
           overflowX: "hidden",
@@ -264,8 +273,7 @@ export const ChatMessage = () => {
                 padding: "5px 10px 5px 5px",
                 backgroundColor: message.sender === you ? "#add8e6" : "#90ee90",
                 borderRadius: "10px",
-                maxWidth: "50%",
-                width: "max-content",
+               
                 marginLeft: message.sender === you ? "auto" : "10px",
                 marginRight: message.sender === otherID ? "auto" : "10px",
                 fontSize: "15px",
@@ -275,7 +283,9 @@ export const ChatMessage = () => {
                   message.sender === you ? "black" : "rgb(239, 239, 239)",
                 color: message.sender === otherID ? "black" : "white",
                 whiteSpace: "pre-wrap",
+               
               }}
+              className="chatmessagedisplay"
             >
               {renderMessage(message)}
             </div>
@@ -293,15 +303,7 @@ export const ChatMessage = () => {
       >
         <div
           id="chatBox"
-          style={{
-            //  border: "1px solid black",
-            display: "flex",
-            justifyContent: "center",
-            boxSizing: "border-box",
-            height: "30px",
-            width: "50%",
-            margin: "3px",
-          }}
+         
         >
           {/* <div
             style={{
@@ -337,7 +339,7 @@ export const ChatMessage = () => {
               style={{
                 position: "absolute",
                 top: `${fileattachRef.current.offsetTop - 50}px`,
-                left: `${fileattachRef.current.offsetLeft}px`,
+                left: `${fileattachRef.current.offsetLeft+150}px`,
                 transform: "translateX(-50%)",
                 backgroundColor: "white",
                 borderRadius: "5px",
@@ -375,7 +377,7 @@ export const ChatMessage = () => {
             className="textarea"
             ref={textareaRef}
           ></textarea>
-          <button onClick={handleSend}>Send</button>
+          <button onClick={handleSend} style={{backgroundColor:"black",color:"white",borderRadius:"3px"}}>Send</button>
         </div>
       </div>
     </div>

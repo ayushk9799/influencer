@@ -17,6 +17,8 @@ import { authenticationCheckSocket } from "./middleware/authenticationCheckSocke
 import { User } from "./models/user.js";
 import searchRouter from "./routes/searchRouter.js";
 import AddData from "./routes/AddData.js";
+import ChatRooms from "./models/chatroom.js";
+import { error } from "console";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -96,6 +98,21 @@ app.get("/influencer", async (req, res) => {
     next(error);
   }
 });
+
+
+app.get('/getAllChats',authenticationCheck,async(req,res,next)=>{
+  try{
+    
+        const response=await ChatRooms.find({participants:{$in:[req.user._id]}}).populate({path:'participants',select:"name uniqueID"});
+        res.status(200).json({chatsWith:response})
+  
+       
+  }
+  catch(error)
+  {
+         next(error)
+  }
+})
 app.use((err, req, res, next) => {
   res.status(500).json({ error: err.message });
 });

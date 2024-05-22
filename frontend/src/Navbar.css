@@ -20,6 +20,7 @@
     display: none;
    
 }
+
 #accountDetails img
 {
     display:flex;
@@ -29,6 +30,8 @@
   height: 30px;
    object-fit: cover;
    border:2px solid rgb(172, 169, 169);
+   cursor: pointer;
+
 }
 #account
 {
@@ -54,7 +57,7 @@
     justify-content: center;
     align-items: center;
     /* border:1px solid red; */
-    cursor: pointer;
+   
 
    
 }
@@ -75,8 +78,10 @@
      border-radius: 4px;
      /* width:max-content; */
 }
-
-.navDetailsClass:hover {
+.navDetailsClass >span{
+    cursor:pointer;
+}
+.navDetailsClass >span:hover {
     text-decoration: underline;
 }
 #account:hover

@@ -6,15 +6,54 @@
   font-family: 'Inter';
   font-size: 15px;
   padding:5px 10px 5px 5px;
- 
 }
 #fileattach{
   background-color: #b5b3b3;
+}
+.chatmessagedisplay{
+  max-width: 50%;
+  width: max-content;
 }
 #fileattach:hover
 {
    background-color: rgb(128, 126, 126);
    cursor: pointer;
+}
+#chatBox{
+
+  display: flex;
+  justify-content: center;
+  /* boxSizing: "border-box",
+  height: "30px",
+  width: "50%",
+  margin: "3px", */
+
+  box-sizing: border-box;
+  height: 30px;
+  width: 50%;
+  margin: 3px;
+}
+@media screen  and (max-width:1000px) and (min-width:700px){
+ #chatBox{
+  width:80%;
+ }
+  .chatmessagedisplay{
+    max-width: 60%;
+    width: max-content;
+  }
+}
+
+@media screen  and (max-width:700px) {
+  #chatboxlistcontainer{
+       display:none;
+  }
+  #chatBox{
+    width: 100%;
+  }
+  .chatmessagedisplay{
+    max-width: 70%;
+    width: max-content;
+  }
 }
 
 

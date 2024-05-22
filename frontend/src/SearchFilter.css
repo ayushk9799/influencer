@@ -8,7 +8,7 @@
 #searchFilter
 {
     display: grid;
-    grid-template-columns: repeat(4,minmax(0,1fr)) 20px ;
+    grid-template-columns: repeat(4,minmax(0,1fr)) auto;
     grid-column-gap:5px;
     width:800px;
 }
@@ -58,13 +58,19 @@
   text-overflow: ellipsis;
   text-align: center;
 }
-
-#dropdownPlatform
-{
+.dropdown{
+  position: relative;
+}
+.dropdown-content{
     border:1px solid rgb(0, 0, 0);
     margin-top:5px;
     border-radius: 10px;
     background-color: white;
+    /* display: flex; */
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    box-sizing: border-box;
 }
 .dropPlatfromclass
 {
@@ -181,6 +187,12 @@
     /* width:18px;
     height: 18px; */
     cursor:pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding:5px;
+    /* border:1px solid red;
+     */
     /* border:1px solid red; */
   }
   #getData:hover{
@@ -212,7 +224,7 @@
     }
     .dropdown,#getData
     {
-        width:75%;
+        width:60%;
         justify-self: center; 
         align-self: center; 
     justify-content: center;
@@ -227,11 +239,13 @@
     align-items: center;
     height: 25px;
     border-radius: 20px;
+   
   }
   
   #getData div
   {
     display: flex;
+    width: 100%;
     justify-content: center;
     background-color: black;
     border-radius: 15px;
