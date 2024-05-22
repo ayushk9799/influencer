@@ -1,6 +1,4 @@
 import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
-
 import React, { useState } from "react";
 import "./page1.css";
 import FormHeader from "../subcomponents/FormHeader";
@@ -13,12 +11,12 @@ const Page1 = () => {
   const { formData } = useSelector((state) => state.form);
 
   const [region, setRegion] = useState(formData?.region || "");
-  const [name, setName] = useState(formData?.region || "");
+  const [name, setName] = useState(formData?.name || "");
   const [gender, setGender] = useState(formData?.gender || "");
   const [mobileNumber, setMobileNumber] = useState(
     formData?.mobileNumber || ""
   );
-  const [bio, setBio] = useState(formData?.mobileNumber || "");
+  const [bio, setBio] = useState(formData?.bio || "");
   const dispatch = useDispatch();
 
   // Function to handle form submission
@@ -26,9 +24,7 @@ const Page1 = () => {
     e.preventDefault();
     dispatch(updateFormData({ region, gender, mobileNumber, bio, name }));
     dispatch(createAccount());
-    //
-    navigate("/profile");
-    //
+    navigate("/myAccount", {replace : true});
   };
 
   return (

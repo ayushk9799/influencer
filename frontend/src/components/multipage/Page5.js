@@ -9,8 +9,8 @@ import FormHeader from '../subcomponents/FormHeader';
 
 const Page5 = () => {
     const {formData, currentStep} = useSelector(state => state.form);
-    const [iprice, setIprice] = useState(formData?.iprice || {video : undefined, photo : undefined}); // {video : 123, photo : 3232}
-    const [yprice, setYprice] = useState(formData?.yprice || {video : undefined, photo : undefined});
+    const [iprice, setIprice] = useState(formData?.iprice || {reels : undefined, story : undefined, photo : undefined}); // {video : 123, photo : 3232}
+    const [yprice, setYprice] = useState(formData?.yprice || {shorts : undefined, video : undefined});
     const dispatch = useDispatch();
 
     const handleSubmit = (e) => {
@@ -34,26 +34,30 @@ const Page5 = () => {
             <div className='items'>
                 <div className='item-body' style={{display : formData.iaccountID ? 'block' : 'none'}}>
                     <div className='icon-body' >
-                        <FaInstagram />
-                        <p>Instagram</p>
+                        <FaInstagram size={30} />
+                        <p style={{fontWeight : 'bold', fontSize : '20px', letterSpacing : '0.5px'}}>Instagram</p>
+                    </div>
+                    <div className='inpute-items'>
+                        <p>Story</p>
+                        <input  placeholder='Price(INR)' value={iprice.story} onChange={(e) => setIprice({...iprice, ...{story : e.target.value }})} type='number'  />
                     </div>
                     <div className='inpute-items'>
                         <p>Photo</p>
                         <input  placeholder='Price(INR)' value={iprice.photo} onChange={(e) => setIprice({...iprice, ...{photo : e.target.value }})} type='number' />
                     </div>
                     <div className='inpute-items'>
-                        <p>{'Video'}</p>
-                        <input  placeholder='Price(INR)' value={iprice.video} onChange={(e) => setIprice({...iprice, ...{video : e.target.value }})} type='number'  />
+                        <p>Reels</p>
+                        <input  placeholder='Price(INR)' value={iprice.reels} onChange={(e) => setIprice({...iprice, ...{reels : e.target.value }})} type='number'  />
                     </div>
                 </div>
                 <div className='item-body' style={{display : formData.yaccountID ? 'block' : 'none'}}>
                     <div className='icon-body' >
-                        <FaYoutube />
-                        <p>Youtube</p>
+                        <FaYoutube size={30} />
+                        <p style={{fontWeight : 'bold', fontSize : '20px', letterSpacing : '0.5px'}}>Youtube</p>
                     </div>
                     <div className='inpute-items'>
-                        <p>Photo</p>
-                        <input   placeholder='Price(INR)' value={yprice.photo} onChange={(e) => setYprice({...yprice, ...{photo : e.target.value }})} type='number' />
+                        <p>Shorts</p>
+                        <input placeholder='Price(INR)' value={yprice.shorts} onChange={(e) => setYprice({...yprice, ...{shorts : e.target.value }})} type='number' />
                     </div>
                     <div className='inpute-items'>
                         <p>{'Video'}</p>

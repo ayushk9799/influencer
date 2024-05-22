@@ -69,7 +69,7 @@ console.log(location)
           details : productName,
           orderType : 'main'
         }
-          navigate('/user/checkout', {state : {influencer :_id, profilePic , amount, orderSummary}});
+          navigate('/user/checkout', {state : {influencer : item, amount, orderSummary}});
       }
   }
     
@@ -101,13 +101,13 @@ console.log(location)
                         }
                     </div>
                     <div className='field-container'>
-                        {iaccountID && <a target='_blank' href={`https://www.instagram.com/${iaccountID}`} className='field-element'><FaInstagram size={18} />{ifollowers}144K</a>}
-                        {yaccountID && <a target='_blank' href={`https://www.youtube.com/@${iaccountID}`} className='field-element'><FaYoutube size={20} />{yfollowers}5M</a>}
+                        {iaccountID && <a target='_blank' href={`https://www.instagram.com/${iaccountID}`} className='field-element'><FaInstagram size={18} />{ifollowers}</a>}
+                        {yaccountID && <a target='_blank' href={`https://www.youtube.com/@${iaccountID}`} className='field-element'><FaYoutube size={20} />{yfollowers}</a>}
                     </div>
                     <div onClick={()=>handleChat()}>Chat</div>
                 </div>
             </div>
-            <p>{bio}</p>
+            <p className="profile-bio">{bio}</p>
             <div className='price-box'>
                 <p>Packages</p> 
                 {iprice && (

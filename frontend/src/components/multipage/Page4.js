@@ -9,32 +9,23 @@ const Page4 = () => {
   const dispatch = useDispatch();
   const { formData, currentStep } = useSelector((state) => state.form);
   const [categories, setCategories] = useState(new Set());
-  const [categoryArray, setCategoryArray] = useState(getCategory(-1));
 
   useEffect(() => {
-    const data = formData["categories"];
+    const data = formData["field"];
     if (data) {
       const s = new Set([...data]);
       setCategories(s);
-      const temp = [...categoryArray];
-      data.forEach((element) => {
-        temp[element].selected = true;
-      });
-      setCategoryArray(temp);
     }
   }, [formData]);
 
   const handler = (index) => {
     const s = new Set(categories);
-    if (categories.has(index)) {
+    if (s.has(index)) {
       s.delete(index);
     } else {
       s.add(index);
     }
     setCategories(s);
-    const values = [...categoryArray];
-    values[index].selected = !values[index].selected;
-    setCategoryArray(values);
   };
 
   const handlerSubmit = () => {
@@ -48,14 +39,14 @@ const Page4 = () => {
       <FormHeader heading={"Your content categories"} />
       <p>Select categories that match with your content.</p>
       <div className="button-container">
-        {categoryArray.map((value, index) => (
+        {getCategory(-1).map((value, index) => (
           <Button
-            key={value.id}
+            key={index}
             sx={{ m: 0.5 }}
             onClick={() => handler(index)}
-            variant={value.selected ? "contained" : "outlined"}
+            variant={categories.has(index) ? "contained" : "outlined"}
           >
-            {value.name}
+            {value}
           </Button>
         ))}
       </div>
