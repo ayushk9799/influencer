@@ -1,4 +1,4 @@
-import { useNavigateCustom } from "./CustomNavigate.js";
+import { useNavigateCustom } from "./CustomNavigate";
 import "./Navbar.css";
 import { useState } from "react";
 import { HorizontalNav } from "./HorizontalNav";

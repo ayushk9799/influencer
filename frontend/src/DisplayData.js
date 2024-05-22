@@ -9,7 +9,7 @@ import "./DisplayData.css";
 import { getCategory } from "./assets/Data.js";
 import { iconsArr } from "./assets/Data.js";
 import { useNavigate } from "react-router-dom";
-import { useNavigateCustom } from "./CustomNavigate.js";
+import { useNavigateCustom } from "./CustomNavigate";
 import { FaDollarSign } from "react-icons/fa";
 export const DisplayData = forwardRef(({ query, button }, ref) => {
   console.log("displayData");

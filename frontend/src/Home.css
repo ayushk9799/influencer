@@ -1,4 +1,8 @@
-
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
 #home
 {
     
@@ -10,8 +14,6 @@
 #homeContainer
 {
     padding-top:40px;
-    
-
 }
 #subheading
 {
@@ -20,6 +22,9 @@
     align-items: center;
     text-align: center;
     font-size: 32px;
+}
+#leverage{
+    margin: 32px 0px;
 }
 
 @media screen and (max-width:665px) and (min-width:415px)

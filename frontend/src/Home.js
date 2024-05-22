@@ -1,10 +1,10 @@
 import './Home.css'
-import { useState } from 'react';
+// import { useState } from 'react';
 import {SearchFilter} from './SearchFilter.js'
-import {DisplayData} from './DisplayData.js';
-import {MockChatSystem} from './MockChatSystem.js';
-import { SendSomeData } from './SendSomeData.js';
-import { ConsoleLogEntry } from 'selenium-webdriver/bidi/logEntries.js';
+// import {DisplayData} from './DisplayData.js';
+// import {MockChatSystem} from './MockChatSystem.js';
+// import { SendSomeData } from './SendSomeData.js';
+// import { ConsoleLogEntry } from 'selenium-webdriver/bidi/logEntries.js';
 export const Home=()=>
 {
   console.log("home")
