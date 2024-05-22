@@ -20,24 +20,24 @@ export const getSociaIndex = (index) => {
 export const getCategory = (index) => {
 
     const arr = [
-        {id : 0, name : 'Lifestyle', selected : false},
-        {id : 1, name : 'Fashion', selected : false},
-        {id : 2, name : 'Beauty', selected : false},
-        {id : 3, name : 'Comendy', selected : false},
-        {id : 4, name : 'Art & Photography', selected : false},
-        {id : 5, name : 'Music & Dance', selected : false},
-        {id : 6, name : 'Animals & Pets', selected : false},
-        {id : 7, name : 'Education', selected : false},
-        {id : 8, name : 'Gaming', selected : false},
-        {id : 9, name : 'Automobiles', selected : false},
-        {id : 10, name : 'Vlogger', selected : false},
+        'Lifestyle',
+        'Fashion',
+        'Beauty',
+        'Comendy',
+        'Art & Photography',
+        'Music & Dance',
+        'Animals & Pets',
+        'Education',
+        'Gaming',
+        'Automobiles',
+        'Vlogger',
     ]
     if(index===-1)
     {
         return arr;
     }
     else{
-        return arr[index].name;
+        return arr[index];
     }
    
 }

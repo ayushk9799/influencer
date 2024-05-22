@@ -4,101 +4,88 @@ const router = express.Router();
 
 router.post("/", async (req, res, next) => {
   try {
-    let check = await User.findById(req.user._id);
+    let user = await User.findById(req.user._id);
 
-    //
-    // let check=0;
-    if (!check) {
+    if (!user) {
       next(new Error("user not found in database or try again"));
     } else {
       const data = req.body;
-     
       for (let keys in data) {
-        // if (data[keys]) {
-        //   if (typeof data[keys] === "object") {
-        //     for (let nestedKey in data[keys]) {
-        //       check[keys][nestedKey] = data[keys][nestedKey];
-        //     }
-        //   } else {
-        //     check[keys] = data[keys];
-        //   }
-        // }    //array wont get updated
+        const value = data[keys];
+        if(keys === 'yprice') {
+          if (!user.yprice) {
+            user.yprice = {};
+          }
+          if (!user.yprice.video) {
+            user.yprice.video = {};
+          }
+          if (!user.yprice.shorts) {
+            user.yprice.shorts = {};
+          }
+          user.yprice.video.price = value.video;
+          user.yprice.shorts.price = value.shorts;
+        } else if (keys === 'iprice') {
+          if (!user.iprice) {
+            user.iprice = {};
+          }
+          if (!user.iprice.reels) {
+            user.iprice.reels = { price: 0};
+          }
+          if (!user.iprice.photo) {
+            user.iprice.photo = { price: []};
+          }
+          if (!user.iprice.story) {
+            const temp = value.story;
+            const arr = [temp, temp*2, temp*3];
+            user.iprice.story = { price: arr};
+          }
+          user.iprice.reels.price = value.reels;
+          if(user.iprice.photo.price.length) {
+            user.iprice.photo.price[0] = value.photo;
+          } else {
+            const temp = value.photo;
+            const arr = [temp, temp*2, temp*3];
+            user.iprice.photo.price = arr;
+          }
 
-        check[keys]=data[keys]
+          if(user.iprice.story.price.length) {
+            user.iprice.story.price[0] = value.story;
+          } else {
+            const temp = value.story;
+            const arr = [temp, temp*2, temp*3];
+            user.iprice.story.price = arr;
+          }
+        } else {
+          user[keys] = data[keys]
+        }
       }
-
-      // if(req.body?.bio)
-      // {
-      //   check.bio=req.body?.bio
-      // }
-      // if (req.body?.gender) {
-      //     check.gender = req.body?.gender;
-      //   }
-      //   if (req.body?.region) {
-      //     check.region = req.body?.region;
-      //   }
-
-      //   if(req.body?.field)
-      //   {
-      //     check.field=req.body?.field
-      //   }
-      //   if(req.body?.profile)
-      //   {
-      //     check.profilepic=req.body?.profile
-      //   }
-
-      // if(req.body?.iaccountID) {
-      //     check.iaccountID = req.body?.iaccountID;
-      //   }
-      //   if(req.body?.ifollowers)
-      //   {
-      //     check.ifollowers=req.body?.ifollowers;
-      //   }
-      //   if(req.body?.iposts)
-      //   {
-      //     check.iposts=req.body?.iposts
-      //   }
-      //   if(req.body?.ivideoPrice ) {
-      //     check.iprice.video = req.body?.ivideo;
-      //   }
-      //   if(req.body?.iphotoPrice ) {
-      //     check.iprice.photo = req.body?.iphotoPrice;
-      //   }
-      //   if(req.body?.ireelsPrice ) {
-      //     check.iprice.reels = req.body?.ireelsPrice;
-      //   }
-
-      //   if(req.body?.yaccountID)
-      //   {
-      //     check.yaccountID=req.body?.yaccountID
-      //   }
-      //   if(req.body?.yposts)
-      //   {
-      //     check.yposts=req.body?.yposts
-      //   }
-      //   if(req.body?.iverification)
-      //   {
-      //     check.iverification=req.body?.iverification;
-      //   }
-      //   if(req.body?.yfollowers)
-      //   {
-      //     check.yfollowers=req.body?.yfollowers
-      //   }
-      //   if(req.body?.yverification)
-      //   {
-      //     check.yverification=req.body?.yverification;
-      //   }
-      //   if(req.body?.yprice)
-      //   {
-      //     check.uprice=req.body?.yprice
-      //   }
-      await check.save();
+      const temp = await user.save();
+      return res.status(200).json({ message: "saved succesfully", data: temp });
     }
-    res.status(200).json({ message: "saved succesfully", data: check });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
 });
+
+router.post("/update-price", async (req,res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    console.log('user', user);
+    const {description, key, type, price} = req.body;
+    let data;
+    if(type === 'Instagram') {
+      user.iprice[key] = {price, description};
+      data = user.iprice;
+    } else {
+      user.yprice[key] = {price : description};
+      data = user.yprice;
+    }
+    await user.save();
+    return res.status(200).json({message : 'success',  data});
+  } catch (err) {
+    return res.status(500).json({message : 'internal server error', error : err.message});
+  }
+})
 
 router.post("/bank-details", async (req,res) => {
   try {

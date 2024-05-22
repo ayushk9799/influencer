@@ -26,6 +26,12 @@ export const Navbar = ({ details }) => {
           >
             How to use
           </div>
+          {/* <div
+            className="navDetailsClass"
+            onClick={() => navigate("/user/orders")}
+          >
+            Orders
+          </div> */}
 
           {userDetails?.email ? (
             <div

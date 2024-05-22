@@ -32,14 +32,16 @@ input::-webkit-inner-spin-button {
 }
 
 .item-body {
-    border: 1px solid black;
+    border: 1px solid rgb(204, 201, 201);
     padding: 7px 0px;
     margin: 8px;
     width: 45%;
     box-sizing: border-box;
+    border-radius: 5px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     
     > div {
-        gap: 5px;
+        gap: 10px;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -48,7 +50,8 @@ input::-webkit-inner-spin-button {
     }
     .inpute-items > input {
         padding: 4px;
-        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+        border: 1px solid rgb(204, 201, 201);
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     }
 }
 

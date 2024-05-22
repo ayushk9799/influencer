@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { updateUserDetails } from "./UserSlice";
 
 const initialState = {
   currentStep: 1,
@@ -10,12 +11,13 @@ const initialState = {
 
 export const createAccount = createAsyncThunk(
   "form/update-form",
-  async (payload, { getState }) => {
+  async (payload, { getState, dispatch }) => {
     const { formData } = getState().form;
 
-    const data = await axios.post("http://localhost:3000/addData", formData, {
+    const {data} = await axios.post("http://localhost:3000/addData", formData, {
       withCredentials: true,
     });
+    dispatch(updateUserDetails(data.data));
     return data;
   }
 );
@@ -38,6 +40,7 @@ const FromSlice = createSlice({
       })
       .addCase(createAccount.fulfilled, (state, action) => {
         state.loading = false;
+        state.currentStep = 1;
       })
       .addCase(createAccount.rejected, (state, action) => {
         state.loading = false;

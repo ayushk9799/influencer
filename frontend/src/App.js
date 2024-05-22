@@ -4,7 +4,7 @@ import  Pricing  from "./Pricing";
 import { HowToUse } from "./HowToUse.js";
 import { Home } from "./Home";
 import { Login } from "./Login.js";
-import { Account } from "./Account.js";
+import  Account  from "./Account.js";
 import { ChatBox } from "./ChatBox.js";
 import CompleteProfile from "./components/CompleteProfile";
 import Profile from "./components/Profile";
