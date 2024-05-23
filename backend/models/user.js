@@ -116,6 +116,31 @@ UserSchema.pre("save", async function (next) {
   next();
 });
 
+UserSchema.pre('save', function (next) {
+  if(this.isModified('iprice') || this.isModified('yprice')) {
+    const prices = [];
+
+    // Collect all iprice values
+    if (this.iprice) {
+      if (this.iprice.reels) prices.push(this.iprice.reels.price);
+      if (this.iprice.photo && this.iprice.photo.price) prices.push(...this.iprice.photo.price);
+      if (this.iprice.story && this.iprice.story.price) prices.push(...this.iprice.story.price);
+    }
+
+    // Collect all yprice values
+    if (this.yprice) {
+      if (this.yprice.video) prices.push(this.yprice.video.price);
+      if (this.yprice.shorts) prices.push(this.yprice.shorts.price);
+    }
+
+    // Find the minimum price and set it
+    if (prices.length > 0) {
+      this.price = Math.min(...prices);
+    }
+    next();
+  }
+})
+
 
 UserSchema.pre("save", async function (next) {});
 

@@ -3,13 +3,13 @@ import "./components/profile.css";
 import { BACKEND_URL, getCategory } from "./assets/Data";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { FaInstagram, FaYoutube } from "react-icons/fa";
+import { FaInstagram, FaYoutube, FaInfoCircle } from "react-icons/fa";
 import { updateFormData } from "./redux/FormSlice";
-import { FaInfoCircle } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import { Button, Modal, Box, Alert } from "@mui/material";
 import { updateUserDetails } from "./redux/UserSlice";
 
+// this link is for test purpose
 const s3Domain = 'https://thousand-ways.s3.ap-south-1.amazonaws.com'
 
 const style = {
@@ -30,7 +30,6 @@ const Account = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
-    _id,
     name,
     bio,
     gallery,
@@ -45,8 +44,6 @@ const Account = () => {
     yprice,
     gender,
     mobileNumber,
-    uniqueID,
-    contentCreator
   } = userDetails;
 
   const [selectIndexInCard, setSelectIndexInCard] = useState({photo : 0, story : 0});
@@ -109,11 +106,14 @@ const Account = () => {
         },
         body : JSON.stringify({ description, ...modalData})
       })
-      const {data} = await response.json();
-      if(modalData.type === 'Instagram') {
-        dispatch(updateUserDetails({iprice : data}))
-      } else {
-        dispatch(updateUserDetails({yprice : data}));
+      const abc = await response.json();
+      const data = abc.data;
+      if(response.status === 200) {
+        if(modalData.type === 'Instagram') {
+          dispatch(updateUserDetails({iprice : data}))
+        } else {
+          dispatch(updateUserDetails({yprice : data}));
+        }
       }
       setOpenModal(false);
     } catch (err) {
@@ -242,8 +242,8 @@ const Account = () => {
                         }
                     </div>
                     <div className='field-container'>
-                        {iaccountID && <a target='_blank' href={`https://www.instagram.com/${iaccountID}`} className='field-element'><FaInstagram size={18} />{ifollowers}144K</a>}
-                        {yaccountID && <a target='_blank' href={`https://www.youtube.com/@${iaccountID}`} className='field-element'><FaYoutube size={20} />{yfollowers}5M</a>}
+                        {iaccountID && <a target='_blank' href={`https://www.instagram.com/${iaccountID}`} className='field-element'><FaInstagram size={18} />{ifollowers}</a>}
+                        {yaccountID && <a target='_blank' href={`https://www.youtube.com/@${iaccountID}`} className='field-element'><FaYoutube size={20} />{yfollowers}</a>}
                     </div>
                   </div>
                 </div>
