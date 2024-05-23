@@ -23,7 +23,7 @@ const Checkout = () => {
             headers : {
                 'Content-Type' : 'application/json'
             },
-            body : JSON.stringify({influencer : checkoutData._id, amount, orderSummary})
+            body : JSON.stringify({influencer : influencer._id, amount, orderSummary})
         });
         const {order} = await response1.json();
         console.log('order', order);

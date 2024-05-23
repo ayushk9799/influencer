@@ -83,6 +83,7 @@ router.post("/update-price", async (req,res) => {
     await user.save();
     return res.status(200).json({message : 'success',  data});
   } catch (err) {
+    console.log(err);
     return res.status(500).json({message : 'internal server error', error : err.message});
   }
 })

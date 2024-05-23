@@ -6,16 +6,13 @@ import {
   useImperativeHandle,
 } from "react";
 import "./DisplayData.css";
-import { getCategory } from "./assets/Data.js";
+import { BACKEND_URL, getCategory } from "./assets/Data.js";
 import { iconsArr } from "./assets/Data.js";
-import { useNavigate } from "react-router-dom";
 import { useNavigateCustom } from "./CustomNavigate";
 import { FaDollarSign } from "react-icons/fa";
 export const DisplayData = forwardRef(({ query, button }, ref) => {
-  console.log("displayData");
   const navigate = useNavigateCustom();
   const divRef = useRef(null);
-  console.log(query);
   const [data, setData] = useState([]);
 
   const [typeOfDataDisplay, settypeofDataDisplay] = useState();
@@ -25,7 +22,7 @@ export const DisplayData = forwardRef(({ query, button }, ref) => {
   const getData = async () => {
     if (button) {
       let categories = getCategory(-1);
-      let url = "http://localhost:3000/getInfluencers/search/?";
+      let url = `${BACKEND_URL}/getInfluencers/search/?`;
       if (query.fmax !== undefined) url += `&fmax=${query.fmax}`;
       if (query.fmin !== undefined) url += `&fmin=${query.fmin}`;
       if (query.region !== undefined) url += `&region=${query.region}`;
@@ -64,11 +61,10 @@ export const DisplayData = forwardRef(({ query, button }, ref) => {
     } else {
       try {
         const response = await fetch(
-          "http://localhost:3000/getInfluencers/featured/platform/instagram"
+          `${BACKEND_URL}/getInfluencers/featured/platform/instagram`
         );
         if (response.ok) {
           let data = await response.json();
-          console.log(data);
           settypeofDataDisplay("Featured");
           setData(data.data);
         } else {
@@ -80,8 +76,6 @@ export const DisplayData = forwardRef(({ query, button }, ref) => {
     }
   };
   useEffect(() => {
-    console.log("dispjnfjcn");
-
     getData();
   }, [button]);
 
@@ -91,35 +85,15 @@ export const DisplayData = forwardRef(({ query, button }, ref) => {
     if (divElement) {
       const computedStyle = window.getComputedStyle(divElement);
 
-      // Get the styles before the image has loaded
-      const widthBefore = computedStyle.getPropertyValue("width");
-      const heightBefore = computedStyle.getPropertyValue("height");
-
       // Listen for the image load event
       const img = divElement.querySelector("img");
       img.addEventListener("load", () => {
         const computedStyleAfterLoad = window.getComputedStyle(divElement);
-
-        // Get the styles after the image has loaded
-        const widthAfter = computedStyleAfterLoad.getPropertyValue("width");
-        const heightAfter = computedStyleAfterLoad.getPropertyValue("height");
       });
     }
 
     // Clean up the event listener on component unmount
   }, [divRef.current]);
-  const findLowest = (num1, num2, num3) => {
-    const value1 = num1 === undefined ? Infinity : num1;
-    const value2 = num2 === undefined ? Infinity : num2;
-    const value3 = num3 === undefined ? Infinity : num3;
-
-    const lowestValue = Math.min(value1, value2, value3);
-    if (lowestValue === Infinity) {
-      return undefined;
-    }
-
-    return lowestValue;
-  };
 
   const handleInfluncerClick = (item) => {
     navigate(`/influencer/${item.uniqueID}`, { state: { account: item } });
@@ -163,11 +137,7 @@ export const DisplayData = forwardRef(({ query, button }, ref) => {
                   </div>
                   <div className="pricing">
                     <FaDollarSign />
-                    {findLowest(
-                      item.iprice?.video,
-                      item.iprice?.photo,
-                      item.yprice?.video
-                    )}
+                    {item.price}
                   </div>
                 </div>
 

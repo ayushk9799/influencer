@@ -1,16 +1,14 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./profile.css";
-import { getCategory, getIcons, s3Domain } from "../assets/Data";
+import { getCategory, s3Domain } from "../assets/Data";
 import {  useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { FaInstagram, FaYoutube } from "react-icons/fa";
+import { FaInstagram, FaYoutube, FaInfoCircle } from "react-icons/fa";
 import { useNavigateCustom } from "../CustomNavigate";
+import { Button } from "@mui/material";
 
 const Profile = () => {
   const location = useLocation();
-console.log(location)
   const item = location.state?.account;
- console.log(item)
   const {
     _id,
     name,
@@ -18,7 +16,6 @@ console.log(location)
     gallery,
     profilePic,
     field,
-    region,
     iaccountID,
     ifollowers,
     iprice,
@@ -29,6 +26,7 @@ console.log(location)
   } = item;
 
   const navigate = useNavigateCustom();
+  const [selectIndexInCard, setSelectIndexInCard] = useState({photo : 0, story : 0});
 
   // for swipe detection
   const [startX, setStartX] = useState(0);
@@ -59,18 +57,67 @@ console.log(location)
     navigate(`/chat/${uniqueID}`, { state: { account: _id } });
   };
 
-  const handleContinue = (index, productName, amount) => {
-      
+  const handleContinue = (index, type, key, price) => {
       if(index === 4) {
           navigate("/custom-offer", {state : {influencer : _id, profilePic, name}});
       }else {
+        let amount, temp = 1;
+        if(key === 'story' || key === 'photo') {
+          temp = selectIndexInCard[key] + 1;
+          amount = price[selectIndexInCard[key]]
+        } else {
+          amount = price;
+        }
         const orderSummary = {
-          accountType : index===0 ? 'instagram' : 'youtube',
-          details : productName,
+          accountType : type === 0 ? 'instagram' : 'youtube',
+          details : `${temp} ${type?'Youtube':'Instagram'} ${key}`,
           orderType : 'main'
         }
           navigate('/user/checkout', {state : {influencer : item, amount, orderSummary}});
       }
+  }
+
+  // type={0: 'Instagram', 1:'Youtube'}, data=iprice, yprice
+  const priceItem = (data, type) => {
+    const elementValue = [];
+    if (!data) {
+      return;
+    }
+    for (const key in data) {
+      const { price, description } = data[key];
+      const element = <div className="price-item-card" key={key}>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+            {!type ? <FaInstagram size={25} /> : <FaYoutube size={25} />}
+            <p style={{ fontSize: '20px' }}>{type ? 'Instagram' : 'Youtube'} {key}</p>
+          </div>
+          {Array.isArray(price) ? (
+            <div style={{ fontSize: '24px', fontWeight: 'bold' }}>${price[selectIndexInCard[key]]}</div>
+          ) : (
+            <div style={{ fontSize: '24px', fontWeight: 'bold' }}>${price}</div>
+          )}
+        </div>
+        {Array.isArray(price) ? (
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <p style={{ fontSize: '18px', letterSpacing: '1px' }}>Quantity</p>
+            <div className="item-quantity">
+              <div onClick={() => setSelectIndexInCard({ ...selectIndexInCard, [key]: 0 })} style={selectIndexInCard[key] === 0 ? {backgroundColor : '#1976d2', color : 'white', fontWeight : 'bold'} : {}}>1</div>
+              <div onClick={() => setSelectIndexInCard({ ...selectIndexInCard, [key]: 1 })} style={selectIndexInCard[key] === 1 ? {backgroundColor : '#1976d2', color : 'white', fontWeight : 'bold'} : {}}>2</div>
+              <div onClick={() => setSelectIndexInCard({ ...selectIndexInCard, [key]: 2 })} style={selectIndexInCard[key] === 2 ? {backgroundColor : '#1976d2', color : 'white', fontWeight : 'bold'} : {}}>3</div>
+            </div>
+          </div>
+        ) : (
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <p style={{ fontSize: '18px', letterSpacing: '1px' }}>Duration</p>
+            <div className="item-quantity">Upto 60sec</div>
+          </div>
+        )}
+        <div style={{ opacity: 0.9, textAlign: 'justify' }}>{description}</div>
+        <Button style={{ width: '100%', textTransform: 'capitalize' }} onClick={() => handleContinue(1, type, key, price)} variant="contained">continue</Button>
+      </div>
+      elementValue.push(element);
+    }
+    return elementValue
   }
     
   return (
@@ -93,59 +140,34 @@ console.log(location)
                     <p className='name'>{name}</p>
                     <div className='category-container'>
                         {
-                            field?.length!==0 && field.map((val) => (
-                                <div key={val}>
-                                    {getCategory(val)}
-                                </div>
-                            ))
+                          field?.length!==0 && field.map((val) => (
+                              <div key={val}>
+                                  {getCategory(val)}
+                              </div>
+                          ))
                         }
                     </div>
                     <div className='field-container'>
                         {iaccountID && <a target='_blank' href={`https://www.instagram.com/${iaccountID}`} className='field-element'><FaInstagram size={18} />{ifollowers}</a>}
                         {yaccountID && <a target='_blank' href={`https://www.youtube.com/@${iaccountID}`} className='field-element'><FaYoutube size={20} />{yfollowers}</a>}
                     </div>
-                    <div onClick={()=>handleChat()}>Chat</div>
+                    {/* <div onClick={()=>handleChat()}>Chat</div> */}
                 </div>
             </div>
             <p className="profile-bio">{bio}</p>
             <div className='price-box'>
-                <p>Packages</p> 
-                {iprice && (
-                    <div>
-                        <div className='price-items'>
-                            <FaInstagram />
-                            <p>Instagram post</p>
-                            <p>₹{iprice.photo}</p>
-                            <button onClick={() => handleContinue(0, "1 Instagram post", iprice.photo)}>Continue</button>
-                        </div>
-                        <div className='price-items'>
-                            <FaInstagram />
-                            <p>Instagram Reels</p>
-                            <p>₹{iprice.video}</p>
-                            <button onClick={() => handleContinue(0, "1 Instagram Reels", iprice.video)}>Continue</button>
-                        </div>
-                    </div>
-                )}
-                {yprice && (
-                    <div>
-                        <div className='price-items'>
-                            <FaYoutube />
-                            <p>Youtube Short</p>
-                            <p>₹{yprice.photo}</p>
-                            <button onClick={() => handleContinue(1, "1 Youtube Short", yprice.photo)}>Continue</button>
-                        </div>
-                        <div className='price-items'>
-                            <FaYoutube />
-                            <p>Youtube video</p>
-                            <p>₹{yprice.video}</p>
-                            <button onClick={() => handleContinue(1,"1 Youtube video", yprice.video)}>Continue</button>
-                        </div>
-                    </div>
-                )}
-                <div className='price-items'>
-                    <p>Do you want to send custom offer</p>
-                    <button onClick={() => handleContinue(4, 0)}>Make Custom Offer</button>
+                <div className="profile-packages">
+                  <p>Packages</p> 
+                  <FaInfoCircle />
                 </div>
+                <div className="price-items-container">
+                  {priceItem(iprice, 0)}
+                  {priceItem(yprice, 1)}
+                </div>
+            </div>
+            <div className="custom-offer">
+              <p>Do you want to send custom offer</p>
+              <Button style={{textTransform : 'capitalize'}} onClick={()=>handleContinue(4)} variant="contained">Custom offer</Button>
             </div>
           </div>
       )}
