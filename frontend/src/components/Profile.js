@@ -133,11 +133,11 @@ const Profile = () => {
             {/* profile */}
             <div className='profile-div'>
                 <div className='image-div'>
-                    <img  src={`${profilePic}`} alt='image' style={{height : '100px', width : '100px'}} />
+                    <img  src={`${profilePic}`} alt='image'  />
                 </div>
                 
-                <div>
-                    <p className='name'>{name}</p>
+                <div className="profilenames">
+                    <div className='name'>{name}</div>
                     <div className='category-container'>
                         {
                           field?.length!==0 && field.map((val) => (
@@ -151,10 +151,10 @@ const Profile = () => {
                         {iaccountID && <a target='_blank' href={`https://www.instagram.com/${iaccountID}`} className='field-element'><FaInstagram size={18} />{ifollowers}</a>}
                         {yaccountID && <a target='_blank' href={`https://www.youtube.com/@${iaccountID}`} className='field-element'><FaYoutube size={20} />{yfollowers}</a>}
                     </div>
-                    {/* <div onClick={()=>handleChat()}>Chat</div> */}
+                  
                 </div>
             </div>
-            <p className="profile-bio">{bio}</p>
+            <div className="profile-bio">{bio}</div>
             <div className='price-box'>
                 <div className="profile-packages">
                   <p>Packages</p> 

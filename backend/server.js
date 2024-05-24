@@ -18,7 +18,6 @@ import { User } from "./models/user.js";
 import searchRouter from "./routes/searchRouter.js";
 import AddData from "./routes/AddData.js";
 import ChatRooms from "./models/chatroom.js";
-import { error } from "console";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
