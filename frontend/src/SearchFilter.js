@@ -4,7 +4,7 @@ import { RangeSelector } from "./RangeSelector";
 import { DisplayData } from "./DisplayData";
 import { RxCross1 } from "react-icons/rx";
 import { FaSearch } from "react-icons/fa";
-
+import { getCategory } from "./assets/Data";
 export const SearchFilter = () => {
   const dropDownRef = useRef(null);
   const fieldref = useRef(null);
@@ -26,7 +26,7 @@ export const SearchFilter = () => {
   const socialMediaOptions = ["Instagram", "YouTube", "All"];
   const [selectedSocialMediaOptions, setselectedSocialMediaOptions] =
     useState(null);
-  const fieldOptions = ["Dancing", "Tech", "Gaming", "hello", "fashion"];
+  const fieldOptions = getCategory(-1);
   const [followerVisibilty, setFollowerVisibilty] = useState(null);
   const CountryOptions = [
     "All",

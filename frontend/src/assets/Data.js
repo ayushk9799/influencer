@@ -23,15 +23,20 @@ export const getCategory = (index) => {
     const arr = [
         'Lifestyle',
         'Fashion',
-        'Beauty',
-        'Comendy',
-        'Art & Photography',
-        'Music & Dance',
-        'Animals & Pets',
-        'Education',
-        'Gaming',
+        'Art',
+        'Photography',
+        'Music',
+        'Dance',
+        'Pets',
+        'Entertainment',
+        'Tech',
         'Automobiles',
-        'Vlogger',
+        'Vlogs',
+        'Gaming',
+        'Education',
+        'Fitness',
+        'Sports',
+        'Makeup'
     ]
     if(index===-1)
     {

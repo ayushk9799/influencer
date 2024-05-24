@@ -18,7 +18,7 @@ export const Navbar = ({ details }) => {
         <div id="nameandlogo">Influencer Chat</div>
         <div id="navbardetails">
           <div className="navDetailsClass">
-            <span onClick={() => navigate("/pricing")}>Pricing</span>
+            <span onClick={() => navigate("/")}>Home</span>
           </div>
           <div className="navDetailsClass">
             <span onClick={() => navigate("/how-to-use")}>How to use</span>

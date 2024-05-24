@@ -43,13 +43,12 @@ function App() {
       <Routes>
         <Route path="/" Component={Home}></Route>
         <Route path="/how-to-use" Component={HowToUse}></Route>
-        <Route path="/pricing" Component={ Pricing} ></Route>
-
         {isAuthenticated ? (
           <Route path="/myAccount" Component={Account}></Route>
         ) : (
           <Route path="/login" Component={Login}></Route>
         )}
+        //
         <Route path="/influencer/:userID" Component={Profile}></Route>
         <Route path="/chat/:uniqueID" Component={ChatBox}></Route>
         <Route path="/complete-profile" Component={CompleteProfile} />

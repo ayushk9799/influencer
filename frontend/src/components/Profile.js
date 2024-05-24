@@ -77,8 +77,10 @@ const Profile = () => {
     if (!data) {
       return;
     }
+    console.log(data)
     for (const key in data) {
       const { price, description } = data[key];
+     if(price){
       const element = <div className="price-item-card" key={key}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
@@ -110,6 +112,8 @@ const Profile = () => {
         <Button style={{ width: '100%', textTransform: 'capitalize' }} onClick={() => handleContinue(1, type, key, price)} variant="contained">continue</Button>
       </div>
       elementValue.push(element);
+     }
+      
     }
     return elementValue
   }

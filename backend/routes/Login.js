@@ -20,8 +20,9 @@ router.get("/google", (req, res) => {
   res.redirect(302, authorizeUrl);
 });
 
-router.get("/google/callback", async (req, res) => {
+router.get("/google/callback", async (req, res,next) => {
   try {
+    
     const code = req.query.code;
 
     const { tokens } = await oAuth2Client.getToken(code);
@@ -31,36 +32,43 @@ router.get("/google/callback", async (req, res) => {
       idToken: id_token,
       audience: CLIENT_ID,
     });
-
+    
     const payload = ticket.getPayload();
-
-    let jwtaccesstoken;
+    
+     let jwtaccesstoken;
     const checkUSer = await User.findOne({ email: payload.email });
+  let redirectRoute;
     let newUser;
     if (checkUSer) {
       jwtaccesstoken = await jwt.sign(
         { _id: checkUSer._id },
         "influencerChataccess"
       );
+      redirectRoute="http://localhost:3001"
     } else {
-      newUser = new User({
-        email: payload.email,
-        name: payload.name,
-        profilePic: payload.picture,
-      });
-      await newUser.save();
-
+     
+        console.log("new")
+        newUser = new User({
+          email: payload.email,
+          name: payload.name,
+          profilePic: payload.picture,
+        });
+        await newUser.save();
+        
       jwtaccesstoken = await jwt.sign(
         { _id: newUser._id },
         "influencerChataccess"
       );
+
+      redirectRoute="http://localhost:3001/myAccount"
     }
     res.cookie("jwtaccesstoken", jwtaccesstoken, {
       maxAge: 6 * 30 * 24 * 60 * 60 * 1000,
     });
-    res.redirect("http://localhost:3001/myAccount");
+    res.redirect(redirectRoute);
   } catch (error) {
-    res.json({ error: error.message });
+    // res.json({ error: error.message });
+    next(error)
   }
 });
 export default router;
