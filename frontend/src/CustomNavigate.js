@@ -1,16 +1,14 @@
 import {useNavigate,useLocation} from 'react-router-dom';
 export const useNavigateCustom=()=>
 {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
 
   const navigateWithCheck = (path,state) => {
-     console.log(location.pathname);
-     console.log(path)
     if (location.pathname !== path) {
       navigate(path,state);
     } else {
-      console.log('You are already on this route');
+      // console.log('You are already on this route');
     }
   };
 

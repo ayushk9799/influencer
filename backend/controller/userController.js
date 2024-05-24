@@ -17,22 +17,19 @@ export const getMyData=async(req,res)=>{
     }
 }
 
-// for uploading file to s3 storage
-export const uploadFiles = async (req, res) => {}
 
 // get razorpay payment public key
 export const getPaymentKey = (req,res) => {
-    console.log('key', process.env.RAZORPAY_API_KEY);
-    res.status(200).json({key : process.env.RAZORPAY_API_KEY});
+    return res.status(200).json({key : process.env.RAZORPAY_API_KEY});
 }
 
 // user checkout form or payment
 export const paymentCheckout = async (req, res) => {
     try {
       const data = req.body;
-      console.log(data);
       const {amount, influencer} = data;
-      const user = req.user;
+      const user = await User.findById(req.user._id);
+
       const option = {
         amount : Number(amount * 100),
         currency : 'INR',
@@ -47,9 +44,9 @@ export const paymentCheckout = async (req, res) => {
       const docs = await Order.create(values);
       user.orders.push(docs._id);
       await user.save();
-      res.status(200).json({order});
+      return res.status(200).json({order});
     } catch (err) {
-      res.status(404).json({message : "unable to create order"});
+      return res.status(404).json({message : "unable to create order"});
     }
 }
 
@@ -57,14 +54,12 @@ export const paymentCheckout = async (req, res) => {
 export const paymentVerification =  async(req, res) => {
     try {
       const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
-      console.log('body', req.body);
       const body = razorpay_order_id + "|" + razorpay_payment_id;
       const expectedSignature = crypto.createHmac("sha256", process.env.RAZORPAY_APT_SECRET).update(body.toString()).digest("hex");
       const isAuthentic = expectedSignature === razorpay_signature;
       // database update
       if(isAuthentic) {
         const order = await Order.findOne({orderID : razorpay_order_id});
-        // console.log('order',order);
         if(order) {
           const influecerData = await User.findById(order.influencer);
           order.buyerPaymentDetails = {paymentID :  razorpay_payment_id, signatureID : razorpay_signature};
@@ -73,7 +68,6 @@ export const paymentVerification =  async(req, res) => {
           await order.save();
           await influecerData.save();
         } else {
-          // console.log('Order not created');
           return res.status(404).json({message : 'order not created'});
         }
       } else {
@@ -115,7 +109,6 @@ export const getOrderDetails = async (req, res) =>  {
         }
       } else {
         order = await Order.findById(orderID).populate({path : 'influencer', select : 'name profilePic uniqueID'});
-        console.log(order.buyer, user._id);
         if(order.buyer.toString() !== user._id.toString()) {
           return res.status(404).json({message : 'Order id not exist'});
         }
@@ -125,52 +118,6 @@ export const getOrderDetails = async (req, res) =>  {
       return res.status(404).json({message : 'orderID not exist'});
     }
   } catch (error) {
-    return res.status(500).json({message:"Internal Server Error"})
-  }
-}
-
-// only influecner can accept client order
-export const influencerWorkAcceptance = async (req, res) => {
-  try {
-    const params = req.params;
-    const user = req.user;
-    const order = await Order.findById(params.orderID);
-    // console.log('order', order);
-    if(order.influencer.toString() === user._id.toString() && user.contentCreator) {
-      const temp = {
-        status : 'accepted',
-        date : new Date()
-      }
-      order.workAccepted = temp;
-      const data = await order.save();
-      return res.status(200).json({orderStatus : data.orderStatus, workAccepted : data.workAccepted});
-    } else {
-      return res.status(404).json({message : 'something went wrong'});
-    }
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json({message:"Internal Server Error"})
-  }
-}
-
-// only client can approve influencer payment
-export const clientWorkApproval = async (req, res) => {
-  try {
-    const params = req.params;
-    const user = req.user;
-    const order = await Order.findById(params.orderID);
-    if(order.buyer.toString() === user._id.toString() && !user.contentCreator) {
-      const temp = {
-        status : 'accepted',
-        date : new Date()
-      }
-      order.workApproval = temp;
-      const data = await order.save();
-      return res.status(200).json({orderStatus : data.orderStatus, workApproval : data.workApproval});
-    } else {
-      return res.status(404).json({message : 'something went wrong'});
-    }
-  } catch (err) {
     return res.status(500).json({message:"Internal Server Error"})
   }
 }
