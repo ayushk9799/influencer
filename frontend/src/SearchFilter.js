@@ -15,7 +15,6 @@ export const SearchFilter = () => {
   const [searchJsx, setsearchJsx] = useState(null);
   const [searchButton, setsearchButton] = useState(false);
   const query = useRef({});
-  console.log("query")
   const searchinner = (
     <img
       src="iconSvg.svg"

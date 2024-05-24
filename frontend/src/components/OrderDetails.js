@@ -391,11 +391,11 @@ const OrderDetails = () => {
                 <div className='profile-xyz'>
                     <div className='order-item-info'>
                         <Link to={`#`} target='_blank' className='order-item-img'>
-                            <img src={`${s3Domain}/${orderDetails?.buyer?.profilePic}`} alt={orderDetails?.buyer?.name} />
+                        <img src={userDetails?.contentCreator ? `${orderDetails?.buyer?.profilePic}` : `${orderDetails?.influencer?.profilePic}`} alt={orderDetails?.buyer?.name} />
                         </Link>
                         <div>
-                            <h4>{orderDetails?.buyer?.name}</h4>
-                            <p>{orderDetails?.orderSummary?.summary}</p>
+                            <h4>{userDetails.contentCreator ? orderDetails?.buyer?.name : orderDetails?.influencer?.name}</h4>
+                            <p>{orderDetails?.orderSummary?.details}</p>
                         </div>
                     </div>
                     <div className='button-container-orders'>
@@ -421,11 +421,11 @@ const OrderDetails = () => {
                         </div>
                         <div>
                             <p>Summary : </p>
-                            <p>{orderDetails?.orderSummary?.summary}</p>
+                            <p>{orderDetails?.orderSummary?.details}</p>
                         </div>
                         <div>
                             <p>Offer details : </p>
-                            <p>{orderDetails?.orderSummary?.details}</p>
+                            <p>{orderDetails?.orderSummary?.summary}</p>
                         </div>
                     </div>
                   

@@ -39,7 +39,6 @@ export const Navbar = ({ details }) => {
               <div id="accountDetails"  onClick={() => navigate("/myAccount")}>
                 <img
                   src={`${userDetails.profilePic}`}
-                  referrerpolicy="no-referrer"
                 ></img>
               </div>
             </div>
