@@ -1,16 +1,14 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import { BACKEND_URL, getCategory } from "../assets/Data";
+import { BACKEND_URL } from "../assets/Data";
 import {Button} from '@mui/material'
 import WorkingStep from './subcomponents/WorkingStep'
-import { FaInstagram, FaYoutube } from "react-icons/fa";
 
 const Checkout = () => {
     const location = useLocation();
     const checkoutData = location?.state;
     const {influencer, amount, orderSummary} = checkoutData;
     const {profilePic, iaccountID,name,field,ifollowers,yaccountID,yfollowers, bio} = influencer;
-    // console.log('checkout',location);
     const handlePay = async() => {
       try {
         // fetchig razorpay key
@@ -26,7 +24,6 @@ const Checkout = () => {
             body : JSON.stringify({influencer : influencer._id, amount, orderSummary})
         });
         const {order} = await response1.json();
-        console.log('order', order);
 
         const options = {
           key,

@@ -35,7 +35,6 @@ const Page4 = () => {
 
   return (
     <div className="containery">
-      {/* <h1 className='header1'>Select the Category that match your content</h1> */}
       <FormHeader heading={"Your content categories"} />
       <p>Select categories that match with your content.</p>
       <div className="button-container">
