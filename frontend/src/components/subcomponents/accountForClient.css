@@ -1,0 +1,27 @@
+.c-account-container {
+    display: flex;
+    gap: 10px;
+    >div {
+        flex : 1;
+        border: 1px solid black;
+        height: 300px;
+    }
+    .c-account-header {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid black;
+        padding: 5px;
+    }
+    .c-account-main {
+        height: 100%;
+    }
+}
+
+@media (max-width : 600px) {
+    .c-account-container {
+        display: block;
+        >div {
+            margin : 10px ;
+        }
+    }
+}

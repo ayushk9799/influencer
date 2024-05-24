@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./components/profile.css";
-import { BACKEND_URL, getCategory } from "./assets/Data";
+import { BACKEND_URL, formatFollowers, getCategory } from "./assets/Data";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FaInstagram, FaYoutube, FaInfoCircle } from "react-icons/fa";
@@ -8,6 +8,7 @@ import { updateFormData } from "./redux/FormSlice";
 import { IoMdClose } from "react-icons/io";
 import { Button, Modal, Box, Alert } from "@mui/material";
 import { updateUserDetails } from "./redux/UserSlice";
+import AccountForClient from "./components/subcomponents/AccountForClient";
 
 // this link is for test purpose
 const s3Domain = 'https://thousand-ways.s3.ap-south-1.amazonaws.com'
@@ -44,6 +45,7 @@ const Account = () => {
     yprice,
     gender,
     mobileNumber,
+    contentCreator
   } = userDetails;
 
   const [selectIndexInCard, setSelectIndexInCard] = useState({photo : 0, story : 0});
@@ -62,7 +64,6 @@ const Account = () => {
   const handleTouchEnd = (event) => {
     const touch = event.changedTouches[0];
     const dist = touch.pageX - startX;
-    // setDist(dist);
     if (Math.abs(dist) >= 30) {
       const len = gallery.length;
       if (dist < 0) {
@@ -93,7 +94,6 @@ const Account = () => {
     setDescription(data?.description);
     const temp = type ? 'Instagram':'Youtube';
     setModalData({key, type : temp, price : data?.price});
-    // console.log('clicked', type, key, data);
   }
 
   const handleSubmitButton = async() => {
@@ -166,7 +166,7 @@ const Account = () => {
     
   return (
     <div className='profile-main'>
-        {name && (
+        {contentCreator ? (
           <div className='container' >
             <Modal open={openModal} onClose={() => {setOpenModal(false)}} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
               <Box sx={{ ...style, width: 400 }}>
@@ -242,8 +242,8 @@ const Account = () => {
                         }
                     </div>
                     <div className='field-container'>
-                        {iaccountID && <a target='_blank' href={`https://www.instagram.com/${iaccountID}`} className='field-element'><FaInstagram size={18} />{ifollowers}</a>}
-                        {yaccountID && <a target='_blank' href={`https://www.youtube.com/@${iaccountID}`} className='field-element'><FaYoutube size={20} />{yfollowers}</a>}
+                        {iaccountID && <a target='_blank' href={`https://www.instagram.com/${iaccountID}`} className='field-element'><FaInstagram size={18} />{formatFollowers(ifollowers)}</a>}
+                        {yaccountID && <a target='_blank' href={`https://www.youtube.com/@${iaccountID}`} className='field-element'><FaYoutube size={20} />{formatFollowers(yfollowers)}</a>}
                     </div>
                   </div>
                 </div>
@@ -262,9 +262,10 @@ const Account = () => {
                   {priceItem(iprice, 1)}
                   {priceItem(yprice, 0)}
                 </div>
-               
             </div>
           </div>
+      ) : (
+        <AccountForClient />
       )}
       
     </div>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./profile.css";
-import { getCategory, s3Domain } from "../assets/Data";
+import { formatFollowers, getCategory, s3Domain } from "../assets/Data";
 import {  useLocation } from "react-router-dom";
 import { FaInstagram, FaYoutube, FaInfoCircle } from "react-icons/fa";
 import { useNavigateCustom } from "../CustomNavigate";
@@ -22,7 +22,6 @@ const Profile = () => {
     yaccountID,
     yfollowers,
     yprice,
-    uniqueID,
   } = item;
 
   const navigate = useNavigateCustom();
@@ -40,7 +39,6 @@ const Profile = () => {
   const handleTouchEnd = (event) => {
     const touch = event.changedTouches[0];
     const dist = touch.pageX - startX;
-    // setDist(dist);
     if (Math.abs(dist) >= 30) {
       const len = gallery.length;
       if (dist < 0) {
@@ -51,10 +49,6 @@ const Profile = () => {
         );
       }
     }
-  };
-
-  const handleChat = () => {
-    navigate(`/chat/${uniqueID}`, { state: { account: _id } });
   };
 
   const handleContinue = (index, type, key, price) => {
@@ -89,7 +83,7 @@ const Profile = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
             {!type ? <FaInstagram size={25} /> : <FaYoutube size={25} />}
-            <p style={{ fontSize: '20px' }}>{type ? 'Instagram' : 'Youtube'} {key}</p>
+            <p style={{ fontSize: '20px' }}>{!type ? 'Instagram' : 'Youtube'} {key}</p>
           </div>
           {Array.isArray(price) ? (
             <div style={{ fontSize: '24px', fontWeight: 'bold' }}>${price[selectIndexInCard[key]]}</div>
@@ -148,10 +142,9 @@ const Profile = () => {
                         }
                     </div>
                     <div className='field-container'>
-                        {iaccountID && <a target='_blank' href={`https://www.instagram.com/${iaccountID}`} className='field-element'><FaInstagram size={18} />{ifollowers}</a>}
-                        {yaccountID && <a target='_blank' href={`https://www.youtube.com/@${iaccountID}`} className='field-element'><FaYoutube size={20} />{yfollowers}</a>}
+                        {iaccountID && <a target='_blank' href={`https://www.instagram.com/${iaccountID}`} className='field-element'><FaInstagram size={18} />{formatFollowers(ifollowers)}</a>}
+                        {yaccountID && <a target='_blank' href={`https://www.youtube.com/@${iaccountID}`} className='field-element'><FaYoutube size={20} />{formatFollowers(yfollowers)}</a>}
                     </div>
-                    {/* <div onClick={()=>handleChat()}>Chat</div> */}
                 </div>
             </div>
             <p className="profile-bio">{bio}</p>

@@ -2,17 +2,14 @@ import React, {useEffect} from 'react'
 import "./order.css"
 import { useSelector, useDispatch } from 'react-redux'
 import { getOrder } from '../redux/UserSlice';
-import {  s3Domain } from '../assets/Data';
 import {Link} from 'react-router-dom'
 
 const Order = () => {
     const dispatch = useDispatch();
     const {userDetails, orders} = useSelector((state)=> state.user);
-    // const value = orders[0];
     useEffect(()=>{
         dispatch(getOrder())
     },[]);
-    console.log(orders);
   return (
     <div className='container-all-order'>
         <h3>Your Order</h3>
@@ -41,7 +38,7 @@ const Order = () => {
                     <div className='order-item-bottom'>
                        <div className='order-item-info'>
                             <div className='order-item-img'>
-                                <img src={`${s3Domain}/${value?.buyer?.profilePic}`} alt={value?.buyer?.name} />
+                                <img src={`${value?.buyer?.profilePic}`} alt={value?.buyer?.name} />
                             </div>
                             <div>
                                 <h4>{value?.buyer?.name}</h4>
@@ -59,7 +56,12 @@ const Order = () => {
             ))}
         </div>
         ) : (
-            <h3>No Order</h3>
+            <div style={{width : '100%', height : '70vh', display : 'flex', alignItems : 'center', justifyContent : 'center',}}>
+                <div style={{display : 'flex', flexDirection : 'column', alignItems : 'center'}}>
+                    <h3>No Order</h3>
+                    <Link to={'/'} className='profile-buttons' style={{paddingInline : '25px', fontWeight : 'bold', letterSpacing : 0.9, height : '30px'}} variant='contained'>Find influencer</Link>
+                </div>
+            </div>
         )}
     </div>
   )

@@ -58,19 +58,7 @@ const Page3 = () => {
     }
     setLoader(true);
 
-    // const form = new FormData();
-    // if (profileImage) {
-    //   form.append("profile", profileImage);
-    // }
-
-    // if (coverImages) {
-    //   for (let i = 0; i < coverImages.length; i++) {
-    //     form.append(`files`, coverImages[i]);
-    //   }
-    // }
-
     if (deletedKeys.length > 0) {
-      // form.append("deletedKeys", JSON.stringify(deletedKeys));
       try {
         const { data, status } = await axios.get(
           `http://localhost:3000/user/delete?delete=${deletedKeys.join(",")}`,
@@ -87,11 +75,7 @@ const Page3 = () => {
         `http://localhost:3000/user/presigned?total=${
           profileImage ? coverImages.length + 1 : coverImages.length
         }`,
-        // form,
         {
-          // headers: {
-          //   "Content-Type": "multipart/form-data",
-          // },
           withCredentials: true,
         }
       );
