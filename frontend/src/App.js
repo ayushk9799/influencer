@@ -9,7 +9,7 @@ import { ChatBox } from "./ChatBox.js";
 import CompleteProfile from "./components/CompleteProfile";
 import Profile from "./components/Profile";
 import Checkout from "./components/Checkout";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserData } from "./redux/UserSlice.js";
 import CustomOffer from "./components/CustomOffer.js";
@@ -20,7 +20,6 @@ import OrderDetails from "./components/OrderDetails.js";
 function App() {
   const { isAuthenticated } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  console.log("app")
   const getData = async () => {
     try {
       const response = await fetch("http://localhost:3000/user/getMyData", {

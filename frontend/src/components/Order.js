@@ -12,25 +12,22 @@ const Order = () => {
     },[]);
   return (
     <div className='container-all-order'>
-        <h3>Your Order</h3>
-        {userDetails?.orders?.length > 0 ? (
+         {userDetails?.orders?.length > 0 ? (
             <div className='order-container1'>
+            <h3>Your Order</h3>
             {orders &&orders.map((value, index)=>(
                 <div className='order-item' key={index}>
                     <div className='order-item-top'>
-                        <div>
+                        <div className='order-item-top-element'>
                             <p>ORDER PLACED</p>
                             <p>{new Date(value?.createdAt).toLocaleString()}</p>
                         </div>
-                        <div>
+                        <div className='order-item-top-element'>
                             <p>TOTAL AMOUNT</p>
                             <p>${value?.amount}</p>
                         </div>
-                        <div>
-                            <p>WORK PROGRESS</p>
-                            <p>Client is waiting for collaboration</p>
-                        </div>
-                        <div>
+                       
+                        <div className='order-ids'>
                             <p>ORDER_ID # {value?.orderID}</p>
                             <a href='#'>Invoice</a>
                         </div>
@@ -38,31 +35,29 @@ const Order = () => {
                     <div className='order-item-bottom'>
                        <div className='order-item-info'>
                             <div className='order-item-img'>
-                                <img src={`${value?.buyer?.profilePic}`} alt={value?.buyer?.name} />
+                                <img src={userDetails?.contentCreator ? `${value?.buyer?.profilePic}` : `${value?.influencer?.profilePic}`} alt={value?.buyer?.name} />
                             </div>
                             <div>
-                                <h4>{value?.buyer?.name}</h4>
-                                <p>{value?.orderSummary?.summary}</p>
+                                <h4>{userDetails?.contentCreator ? value?.buyer?.name : value?.influencer?.name}</h4>
+                                <p>{value?.orderSummary?.details}</p>
                             </div>
                         </div>
                         <div className='order-item-button'>
-                            <Link to={`/user/orders/${value._id}`} state={{orderDetails : value}}>View order details</Link>
-                            <button>Chat with influencer</button>
-                            <button>Get Support</button>
+                            <Link to={`/user/orders/${value._id}`} className='profile-buttons' state={{orderDetails : value}}>View order details</Link>
+                            <Link className='profile-buttons' to={"#"}>Chat with influencer</Link>
                         </div>
                     </div>
-                   
                 </div>
             ))}
         </div>
         ) : (
             <div style={{width : '100%', height : '70vh', display : 'flex', alignItems : 'center', justifyContent : 'center',}}>
-                <div style={{display : 'flex', flexDirection : 'column', alignItems : 'center'}}>
+                <div style={{display : 'flex', flexDirection : 'column', alignItems : 'center',}}>
                     <h3>No Order</h3>
                     <Link to={'/'} className='profile-buttons' style={{paddingInline : '25px', fontWeight : 'bold', letterSpacing : 0.9, height : '30px'}} variant='contained'>Find influencer</Link>
                 </div>
             </div>
-        )}
+        )} 
     </div>
   )
 }

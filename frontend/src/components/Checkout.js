@@ -24,7 +24,7 @@ const Checkout = () => {
             body : JSON.stringify({influencer : influencer._id, amount, orderSummary})
         });
         const {order} = await response1.json();
-
+        console.log('order',order);
         const options = {
           key,
           amount: order.amount,
@@ -48,7 +48,9 @@ const Checkout = () => {
         };
         const razor = new window.Razorpay(options);
         razor.open();
-    } catch (err) {}
+    } catch (err) {
+      console.log('error',err);
+    }
   };
   return (
     <div className="checkout-container-predefined">

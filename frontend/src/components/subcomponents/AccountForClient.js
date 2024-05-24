@@ -1,52 +1,73 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, {useEffect} from "react";
+import { useDispatch, useSelector } from "react-redux";
 import './accountForClient.css'
 import { Link } from "react-router-dom";
+import { getOrder } from "../../redux/UserSlice";
 
 const AccountForClient = () => {
-  const { userDetails } = useSelector((state) => state.user);
-  const { name, profilePic, orders } = userDetails;
+  const { userDetails, orders } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(getOrder())
+  },[]);
   return (
     <div style={{width : '1080px'}}>
         <div style={{ display: "flex", justifyContent : 'center', margin : '10px 0px' }}>
           <div style={{display : 'flex', flexDirection : 'column', alignItems : 'center'}} >
             <div className="image-div">
                 <img
-                src={profilePic}
-                alt="image"
-                style={{ height: "100px", width: "100px" }}
+                    src={userDetails?.profilePic}
+                    alt="image"
+                    style={{ height: "100px", width: "100px" }}
                 />
             </div>
-            <div>
-                <h3 style={{fontSize : '20px'}}>{name}</h3>
+            <div style={{margin : '5px 0px'}}>
+                <h3 style={{fontSize : '20px'}}>{userDetails?.name}</h3>
             </div>
           </div>
         </div>
         <div className="c-account-container">
             <div>
                 <div className="c-account-header">
-                    <h4>Orders</h4>
-                    <Link to={'/user/orders'} >all orders</Link>
-                </div>
-                <div className="c-account-main">abc</div>
-            </div>
-            <div>
-                <div className="c-account-header">
-                    <h4>Transactions</h4>
-                    <Link >All Transactions</Link>
+                    <h4>Collaboration</h4>
+                    <Link to={'/user/orders'} >View all</Link>
                 </div>
                 <div className="c-account-main">
-                    {orders?.length ? (
-                        <div>
-                        </div>
+                    {userDetails?.orders?.length ? (
+                        orders.map((value, index) => (
+                            <div className="c-order-details-element" key={index}>
+                                <div className='order-item-info'>
+                                    <div className='order-item-img'>
+                                        <img src={userDetails?.contentCreator ? `${value?.buyer?.profilePic}` : `${value?.influencer?.profilePic}`} alt={value?.buyer?.name} />
+                                    </div>
+                                    <div>
+                                        <h4>{userDetails?.contentCreator ? value?.buyer?.name : value?.influencer?.name}</h4>
+                                        <p>{value?.orderSummary?.details}</p>
+                                    </div>
+                                </div>
+                                <div style={{display:'flex', alignItems:'center', fontSize:'24px'}}>${value.amount}</div>
+                            </div>
+                        ))
                     ) : (
-                        <div style={{display : 'flex', justifyContent : 'center', alignContent : 'center', height : '100%',}}>
+                        <div style={{display : 'flex', justifyContent : 'center', alignContent : 'center'}}>
                             <div style={{display : 'flex', flexDirection : 'column', alignItems : 'center'}}>
                                 <h3>No Order</h3>
-                                <Link to={'/'} className='profile-buttons' style={{paddingInline : '25px', fontWeight : 'bold', letterSpacing : 0.9, height : '30px'}} variant='contained'>Find influencer</Link>
+                                <Link to={'/'} className='profile-buttons' style={{paddingInline : '25px', fontWeight : 'bold', letterSpacing : 0.9, height : '30px'}}>Find influencer</Link>
                             </div>
                         </div>
                     )}
+                </div>
+            </div>
+            <div>
+                <div className="c-account-header">
+                    <h4>Fevorite influencer</h4>
+                    <Link >View all</Link>
+                </div>
+                <div className="c-account-main">
+                    <div style={{display : 'flex', flexDirection : 'column',  alignItems : 'center', justifyContent : 'center', height : "150px"}}>
+                        <p>No data found</p>
+                        <p style={{fontSize : '13px', opacity : 0.7}}>Once you select fevorite influencer data will show.</p>
+                    </div>
                 </div>
             </div>
         </div>

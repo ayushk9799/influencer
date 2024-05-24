@@ -138,11 +138,8 @@ UserSchema.pre('save', function (next) {
     if (prices.length > 0) {
       this.price = Math.min(...prices);
     }
-    
   }
   next();
 })
-
-
 
 export const User = mongoose.model("user", UserSchema);

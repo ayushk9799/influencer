@@ -3,18 +3,35 @@
     gap: 10px;
     >div {
         flex : 1;
-        border: 1px solid black;
+        border : 1px solid #D5D9D9;
         height: 300px;
     }
     .c-account-header {
         display: flex;
         justify-content: space-between;
-        border-bottom: 1px solid black;
+        align-items: center;
+        border : 1px solid #D5D9D9;
         padding: 5px;
+        height: 50px;
     }
     .c-account-main {
-        height: 100%;
+        height: 245px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow-y: scroll;
+        scrollbar-width: thin;
     }
+}
+
+.c-order-details-element {
+    display: flex;
+    justify-content: space-between;
+    border : 1px solid #D5D9D9;
+    width: 95%;
+    margin: 8px;
+    padding: 10px;
+    border-radius: 8px;
 }
 
 @media (max-width : 600px) {

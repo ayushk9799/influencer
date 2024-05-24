@@ -207,8 +207,8 @@ export const DisplayData = forwardRef(({ query, button }, ref) => {
                     )}
                   </div>
                   <div className="fieldContainer" style={{ width: "100%" }}>
-                    {item.field.map((fieldIndex) => (
-                      <div className="fields">{getCategory(fieldIndex)}</div>
+                    {item.field.map((fieldIndex, index) => (
+                      <div className="fields" key={index}>{getCategory(fieldIndex)}</div>
                     ))}
                   </div>
                 </div>

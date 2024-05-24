@@ -1,14 +1,13 @@
 
-.containe-all-order {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
-    padding: 10px;
+.container-all-order {
+    display: flex;
+    justify-content: center;
 }
 
 .order-container1 {
     font-family: Roboto;
+    width: 1080px;
+    margin: 0px 10px;
 }
 
 .order-item  {
@@ -16,7 +15,7 @@
     box-sizing: border-box;
     overflow: hidden;
     border-radius: 7px;
-    margin: 5px 0px;
+    margin: 10px 0px;
     .order-item-top {
         display: flex;
         flex-direction: row;
@@ -24,23 +23,23 @@
         border-bottom: 1px solid #D5D9D9;
         background-color: #F0F2F2 !important;
         box-sizing: border-box;
-        padding: 5px;
-        > div {
+        padding: 10px;
+        .order-item-top-element {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            flex-direction: column; 
+            text-align: center;
         }
     }
     .order-item-bottom {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        padding: 5px;
+        padding: 10px;
         .order-item-button {
             display: flex;
             flex-direction: column  ;
-            gap: 10px;
+            /* gap: 10px; */
+            justify-content: space-around;
         }
     }
 
@@ -60,6 +59,18 @@
     img {
         height: 70px;
         width: 70px;
+    }
+}
+.order-ids {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+
+@media (max-width : 700px) {
+    .order-ids {
+        display: none;
     }
 }
 
