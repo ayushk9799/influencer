@@ -6,7 +6,7 @@ import {
   useImperativeHandle,
 } from "react";
 import "./DisplayData.css";
-import { BACKEND_URL, getCategory } from "./assets/Data.js";
+import { BACKEND_URL, formatFollowers, getCategory } from "./assets/Data.js";
 import { iconsArr } from "./assets/Data.js";
 import { useNavigateCustom } from "./CustomNavigate";
 import { FaDollarSign } from "react-icons/fa";
@@ -172,7 +172,7 @@ export const DisplayData = forwardRef(({ query, button }, ref) => {
                             alignItems: "center", // Add this line
                           }}
                         >
-                          {iconsArr[0]} {item.ifollowers} Followers
+                          {iconsArr[0]} {formatFollowers(item.ifollowers)} Followers
                         </a>
                       </div>
                     ) : (
@@ -199,7 +199,7 @@ export const DisplayData = forwardRef(({ query, button }, ref) => {
                             alignItems: "center", // Add this line
                           }}
                         >
-                          {iconsArr[1]} {item.yfollowers} Followers
+                          {iconsArr[1]} {formatFollowers(item.yfollowers)} Followers
                         </a>
                       </div>
                     ) : (

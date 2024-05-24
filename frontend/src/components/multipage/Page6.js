@@ -14,7 +14,6 @@ const Page6 = () => {
     const [yaccountID, setYaccountID] = useState(formData?.yaccountID || "");
     const dispatch = useDispatch();
     
-
     const handleAdd = (index) => {
         buttonRef.current[index].style.display = 'none'
         buttonRef.current[index+1].style.display = 'flex'
@@ -22,26 +21,18 @@ const Page6 = () => {
         alertRef.current.style.display = 'none'
     }
 
-    
     const handleSubmit = () => {
         if(!iaccountID && !yaccountID) {
             alertRef.current.style.display = 'flex';
             return;
         }
         let temp = {iaccountID, yaccountID};
-        // if(iaccountID) {
-        //     temp = {...temp, ...{iaccountID}};
-        // }
-        // if(yaccountID) {
-        //     temp = {...temp, ...{yaccountID}};
-        // }
         dispatch(updateFormData(temp));
         dispatch(setCurrentStep(currentStep+1));
     }
 
   return (
     <div className='containerz'>
-        {/* <FormHeader heading={'Add Your Social Channel'} /> */}
         <h3>Add Your Social Channel</h3>
         <p>Add your social media account i.e influencer account</p>
         <div className='social-container'>
@@ -67,28 +58,6 @@ const Page6 = () => {
                     <input ref={ref => inputRef.current[1] = ref} placeholder='User id' value={yaccountID} onChange={(e) => setYaccountID(e.target.value)} />
                </div>
             </div>
-            {/* Facebook */}
-            {/* <div onClick={() => handleAdd(4)} >
-               <div className='button-main' ref={ref => buttonRef.current[4] = ref}>
-                    <FaFacebook size={25} />
-                    <p>Add Facebook</p>
-               </div>
-               <div className='button-inputes' ref={ref => buttonRef.current[5] = ref}>
-                <FaFacebook size={25} />
-                <input ref={ref => inputRef.current[2] = ref} placeholder='User id' value={userData[2]?.id} onChange={(e) => handleTextChange(e.target.value, 2)} />
-               </div>
-            </div> */}
-            {/* Twitter */}
-            {/* <div onClick={() => handleAdd(6)}>
-               <div className='button-main' ref={ref => buttonRef.current[6] = ref}>
-                    <FaTwitter size={25} />
-                    <p>Add Twitter</p>
-               </div>
-               <div className='button-inputes' ref={ref => buttonRef.current[7] = ref}>
-                <FaTwitter size={25} />
-                <input ref={ref => inputRef.current[3] = ref} placeholder='User id' value={userData[3]?.id} onChange={(e) => handleTextChange(e.target.value, 3)} />
-               </div>
-            </div> */}
         </div>
         <div className='alert-box1' ref={alertRef} >
             <p>Must add at least 1 field.</p>
