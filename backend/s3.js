@@ -5,13 +5,7 @@ import {
   } from '@aws-sdk/client-s3'
   import {v4} from 'uuid';
   import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-  const s3 = new S3Client({
-    region: 'ap-south-1',
-    credentials: {
-      accessKeyId: process.env.RAZORPAY_API_KEY,
-      secretAccessKey: process.env.RAZORPAY_APT_SECRET,
-    },
-  });
+  
   const s3Client = new S3Client({
     credentials: {
       accessKeyId: 'AKIAVRUVSJHVE4EOT5UB',
@@ -20,24 +14,6 @@ import {
     region: 'ap-south-1'
   });
 
-  //most probably ot be deleted (handles uplaod from client to server to s3)
-export  const uploadToS3 = async (file, id) => {
-    const command = new PutObjectCommand({
-      Bucket: process.env.AWS_BUCKET_NAME,
-      Key: id,
-      Body: file.buffer,
-      ContentType: file.mimetype,
-    });
-  
-    try {
-      await s3.send(command);
-      return true;
-    } catch (err) {
-      return false;
-    }
-  };
-
-  //presigned URl implemnetation will work in both public and private (private not tested ,bucket policy i dont know)
 export const presignedUrl=async (total)=>
 {
   const keys=[];

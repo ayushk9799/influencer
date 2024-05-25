@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Mongoose, Schema } from "mongoose";
 
 const UserSchema = new Schema({
   email: {
@@ -67,7 +67,7 @@ const UserSchema = new Schema({
       description: String,
     },
   },
-
+ favourites:[{type:Schema.Types.ObjectId,ref:"user"}],
   yaccountID: {
     type: String,
   },

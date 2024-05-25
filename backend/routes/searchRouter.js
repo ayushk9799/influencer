@@ -56,7 +56,8 @@ router.get("/search", async (req, res) => {
       query.field = { $in: field.split(',') };
     }
   console.log(query)
-    const users = await User.find(query);
+    const users = await User.find(query).select(
+      "-email -mobileNumber -favourites -bankDetails -orders");
     res.json({ data: users });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -70,7 +71,7 @@ router.get("/search", async (req, res) => {
 
 router.get("/featured/platform/instagram", async (req, res) => {
   const data = await User.find({ iaccountID: { $exists: true } }).select(
-    "-email"
+    "-email -mobileNumber -favourites -bankDetails -orders"
   );
   res.json({ data: data });
 });

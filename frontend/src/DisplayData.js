@@ -10,15 +10,26 @@ import { BACKEND_URL, formatFollowers, getCategory } from "./assets/Data.js";
 import { iconsArr } from "./assets/Data.js";
 import { useNavigateCustom } from "./CustomNavigate";
 import { FaDollarSign } from "react-icons/fa";
+import { AiFillHeart } from "react-icons/ai";
+import { useSelector } from "react-redux";
 export const DisplayData = forwardRef(({ query, button }, ref) => {
   const navigate = useNavigateCustom();
+  const {userDetails}=useSelector((state)=>state.user)
+console.log(userDetails)
   const divRef = useRef(null);
   const [data, setData] = useState([]);
-
+   const [favourite,setfavourite]=useState({})
   const [typeOfDataDisplay, settypeofDataDisplay] = useState();
   useImperativeHandle(ref, () => ({
     getData,
   }));
+
+  useEffect(()=>
+  {
+    let object={};
+    userDetails?.favourites?.map((favourite)=>object[favourite]=true);
+    setfavourite((prev)=>({...prev,...object}))
+  },[userDetails])
   const getData = async () => {
     if (button) {
       let categories = getCategory(-1);
@@ -94,8 +105,38 @@ export const DisplayData = forwardRef(({ query, button }, ref) => {
 
     // Clean up the event listener on component unmount
   }, [divRef.current]);
+const handleFavouriteDatabase=async(id,conditions)=>
+{
 
-  const handleInfluncerClick = (item) => {
+let url;
+  if(conditions){
+
+url=`http://localhost:3000/user/favourite/create/${id}`;
+  }
+  else{
+    url=`http://localhost:3000/user/favourite/remove/${id}`
+  }
+  try{
+    await fetch(url,{credentials:"include"})
+
+  }
+  catch(error)
+  {
+    console.log(error)
+  }
+}
+const handleFavourite=async(event,id)=>
+{
+  event.preventDefault();
+  event.stopPropagation();
+  
+setfavourite((previouState)=>({...previouState,[id]:!favourite[id]}));
+
+await handleFavouriteDatabase(id,!favourite[id]);
+}
+console.log(favourite)
+  const handleInfluncerClick = (event,item) => {
+    event.preventDefault();
     navigate(`/influencer/${item.uniqueID}`, { state: { account: item } });
   };
   return (
@@ -118,8 +159,9 @@ export const DisplayData = forwardRef(({ query, button }, ref) => {
               <div
                 key={index}
                 className="grid-item"
-                onClick={() => handleInfluncerClick(item)}
+                onClick={(event) => handleInfluncerClick(event,item)}
               >
+               <div className="heart" onClick={(event)=>handleFavourite(event,item._id)}> <AiFillHeart size={25} color={favourite[item._id]?"red":"white"}/></div>
                 <div className="nameRegionImage">
                   <div style={{ width: "100%", height: "320px" }} ref={divRef}>
                     {" "}

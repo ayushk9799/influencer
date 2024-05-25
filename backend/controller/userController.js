@@ -16,8 +16,45 @@ export const getMyData=async(req,res)=>{
         res.status(500).json({message:"Internal Server Error"});
     }
 }
-
-
+export const removefavourite=async(req,res,next)=>
+{
+  try{
+    const {id}=req.params;
+    if(req.user)
+    {
+      await User.updateOne(
+        { _id: req.user._id },
+        { $pull: { favourites: id } }
+      );
+     res.status(200).json({message:"done"})
+    }
+  }
+  catch(error)
+  {
+    next(error)
+  }
+}
+export const setfavourite=async(req,res,next)=>
+{
+  try{
+    const {id}=req.params;
+       if(req.user)
+       {
+        const user=await User.findById(req.user._id);
+        if(user)
+        {
+          user.favourites.push(id)
+          await user.save();
+        }
+        
+       }
+       res.status(200).json({message:"done"})
+  }
+  catch(error)
+  {
+next(error)
+  }
+}
 // get razorpay payment public key
 export const getPaymentKey = (req,res) => {
     return res.status(200).json({key : process.env.RAZORPAY_API_KEY});
@@ -73,7 +110,7 @@ export const paymentVerification =  async(req, res) => {
       } else {
         return res.redirect(`${process.env.FRONTEND_URL}/payment-failed`);
       }
-      return res.redirect(`${process.env.FRONTEND_URL}/payment-success?reference=${razorpay_payment_id}`);
+      return res.redirect(`${process.env.FRONTEND_URL}/user/orders`);
     } catch(err) {
       return res.status(404).json({message : err.message});
     }
@@ -94,7 +131,24 @@ export const getOrders = async(req,res)=>{
         res.status(500).json({message:"Internal Server Error"})
     }
 }
-
+export const getFavourites=async(req,res)=>
+{
+  try{
+    if(req.user._id)
+    {
+     const favourites= await User.findById(req.user._id).populate({path:"favourites",select:"name profilePic uniqueID"}).select('favourites')
+    
+   res.status(200).json({favourites:favourites})
+    }
+    else{
+      next(error)
+    }
+  }
+  catch(error)
+  {
+next(error)
+  }
+}
 // get order details of a order
 export const getOrderDetails = async (req, res) =>  {
   try {

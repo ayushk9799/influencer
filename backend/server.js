@@ -86,11 +86,14 @@ app.use("/user", authenticationCheck, UserRouter);
 app.use("/getInfluencers", searchRouter);
 app.use("/addData", authenticationCheck, AddData);
 
-app.get("/influencer", async (req, res) => {
+app.get("/influencers", async (req, res) => {
   try {
+    
     const data = await User.findOne({
       uniqueID: { $exists: true, $eq: req.query.uniqueID },
-    });
+    }).select(
+      "-email -mobileNumber -favourites -bankDetails -orders"
+    );
 
     res.status(200).json({ data: data });
   } catch (error) {

@@ -1,13 +1,32 @@
-import React, {useEffect} from "react";
+import React, {useEffect,useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import './accountForClient.css'
 import { Link } from "react-router-dom";
 import { getOrder } from "../../redux/UserSlice";
+import { BACKEND_URL } from "../../assets/Data";
+import { useNavigateCustom } from "../../CustomNavigate";
 
 const AccountForClient = () => {
   const { userDetails, orders } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const navigate=useNavigateCustom()
+console.log(userDetails)
+  const [favourites,setfavourite]=useState([]);
+const getFavourites=async()=>
+{
+    try{
+        const response=await fetch(`${BACKEND_URL}/user/favourite/get`,{credentials:"include"});
+        const {favourites}=await response.json();
+        setfavourite(favourites.favourites)
+    }
+    catch(error)
+    {
+        console.log(error)
+    }
+}
+console.log(favourites)
   useEffect(()=>{
+getFavourites()
     dispatch(getOrder())
   },[]);
   return (
@@ -60,14 +79,30 @@ const AccountForClient = () => {
             </div>
             <div>
                 <div className="c-account-header">
-                    <h4>Fevorite influencer</h4>
+                    <h4>Favourite Influencers</h4>
                     <Link >View all</Link>
                 </div>
                 <div className="c-account-main">
-                    <div style={{display : 'flex', flexDirection : 'column',  alignItems : 'center', justifyContent : 'center', height : "150px"}}>
-                        <p>No data found</p>
-                        <p style={{fontSize : '13px', opacity : 0.7}}>Once you select fevorite influencer data will show.</p>
-                    </div>
+                        {userDetails?.favourites.length>0?(favourites.map((favourites,index)=>
+                        (
+                            <div className="c-order-details-element" key={index} onClick={()=>navigate(`/influencer/${favourites.uniqueID}`,{state:{uniqueID:favourites.uniqueID}})}>
+                            <div className='order-item-info'>
+                                <div className='order-item-img'>
+                                    <img src={favourites.profilePic} alt={favourites.name} />
+                                </div>
+                                <div>
+                                    <h4>{favourites.name}</h4>
+                                    <p>{}</p>
+                                </div>
+                            </div>
+                            
+                        </div>
+                             
+                        ))):<><p>No data found</p>
+                        <p style={{fontSize : '13px', opacity : 0.7}}>Once you select favourite influencer data will show.</p></>}
+                        
+                        
+                  
                 </div>
             </div>
         </div>

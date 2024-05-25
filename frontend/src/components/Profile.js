@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import "./profile.css";
-import { formatFollowers, getCategory, s3Domain } from "../assets/Data";
+import { BACKEND_URL, formatFollowers, getCategory, s3Domain } from "../assets/Data";
 import {  useLocation } from "react-router-dom";
 import { FaInstagram, FaYoutube, FaInfoCircle } from "react-icons/fa";
 import { useNavigateCustom } from "../CustomNavigate";
@@ -8,7 +8,34 @@ import { Button } from "@mui/material";
 
 const Profile = () => {
   const location = useLocation();
-  const item = location.state?.account;
+  const [item, setItem] = useState(location.state?.account);
+  const navigate = useNavigateCustom();
+  const [selectIndexInCard, setSelectIndexInCard] = useState({photo : 0, story : 0});
+
+  // for swipe detection
+  const [startX, setStartX] = useState(0);
+  const [coverIndexMobile, setCoverIndexMobile] = useState(0);
+
+  useEffect(() => {
+    const getInfluencersData = async () => {
+      if (!item) {
+        try {
+          const response = await fetch(`${BACKEND_URL}/influencers?uniqueID=${location.state?.uniqueID}`);
+          const { data } = await response.json();
+          setItem(data);
+          console.log(data);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+    getInfluencersData();
+  }, [item, location.state?.uniqueID]);
+
+  if (!item) {
+    return <div>Loading...</div>;
+  }
+
   const {
     _id,
     name,
@@ -23,14 +50,9 @@ const Profile = () => {
     yfollowers,
     yprice,
   } = item;
+ 
 
-  const navigate = useNavigateCustom();
-  const [selectIndexInCard, setSelectIndexInCard] = useState({photo : 0, story : 0});
-
-  // for swipe detection
-  const [startX, setStartX] = useState(0);
-  const [coverIndexMobile, setCoverIndexMobile] = useState(0);
-
+  
   const handleTouchStart = (event) => {
     const touch = event.touches[0];
     setStartX(touch.pageX);

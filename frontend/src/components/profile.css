@@ -78,7 +78,10 @@
     overflow: hidden;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
-
+.image-div>img{
+    height: 100px;
+    width: 100px;
+}
 .category-container {
     display: flex;
   

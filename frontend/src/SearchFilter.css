@@ -30,9 +30,9 @@
 }
 
 .dropbtn::after {
-  content: attr(title); /* Display the value of the title attribute */
+  content: attr(title); 
   position: absolute;
-  top: -30px; /* Adjust the position of the tooltip */
+  top: -30px; 
   left: 50%;
   transform: translateX(-50%);
   background-color: #333;
@@ -43,7 +43,7 @@
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s, visibility 0.3s;
-  z-index: 1;
+  z-index: 50;
 }
 
 .dropbtn:hover::after {
@@ -68,7 +68,7 @@
     background-color: white;
     /* display: flex; */
     position: absolute;
-    z-index: 1;
+    z-index: 100;
     width: 100%;
     box-sizing: border-box;
 }
