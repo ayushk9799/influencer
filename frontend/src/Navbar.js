@@ -2,7 +2,6 @@ import { useNavigateCustom } from "./CustomNavigate";
 import "./Navbar.css";
 import { useState } from "react";
 import { HorizontalNav } from "./HorizontalNav";
-import { s3Domain } from "./assets/Data";
 import { useSelector } from "react-redux";
 
 export const Navbar = ({ details }) => {
@@ -15,7 +14,7 @@ export const Navbar = ({ details }) => {
   return (
     <>
       <div id="navbarcontainer">
-        <div id="nameandlogo">Influencer Chat</div>
+        <div id="nameandlogo">EazzyCollab</div>
         <div id="navbardetails">
           <div className="navDetailsClass">
             <span onClick={() => navigate("/")}>Home</span>
@@ -23,13 +22,6 @@ export const Navbar = ({ details }) => {
           <div className="navDetailsClass">
             <span onClick={() => navigate("/how-to-use")}>How to use</span>
           </div>
-          {/* <div
-            className="navDetailsClass"
-            onClick={() => navigate("/user/orders")}
-          >
-            Orders
-          </div> */}
-
           {userDetails?.email ? (
             <div
               className="navDetailsClass"

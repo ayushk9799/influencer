@@ -265,13 +265,12 @@
     }
 }
 .profilenames{
-   
     display: flex;
-    
     flex-direction: column;
     justify-content: space-evenly;
     height:100px;
 }
+
 
 @media (min-width : 600px) and (max-width : 1070px) {
     .container{
@@ -342,5 +341,8 @@
 
     .custom-offer {
         width: 100%;
+    }
+    .profile-edit-button {
+        flex : 1
     }
 }   

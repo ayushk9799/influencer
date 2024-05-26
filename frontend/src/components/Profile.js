@@ -77,7 +77,6 @@ const Profile = () => {
     if (!data) {
       return;
     }
-    console.log(data)
     for (const key in data) {
       const { price, description } = data[key];
      if(price){
@@ -227,6 +226,6 @@ const getCoverImageComponents = (coverImage) => {
       </div>
     );
   } else {
-    return <div className="cover-container"></div>;
+    return <div ></div>;
   }
 };

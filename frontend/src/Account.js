@@ -230,7 +230,7 @@ const Account = () => {
                       <img  src={`${profilePic}`} alt='image' style={{height : '100px', width : '100px'}} />
                   </div>
                   
-                  <div>
+                  <div className="profilenames">
                     <p className='name'>{name}</p>
                     <div className='category-container'>
                         {
@@ -248,8 +248,8 @@ const Account = () => {
                   </div>
                 </div>
                 <div className="profile-buttons-container"> 
-                  <button className="profile-buttons" onClick={handleEditProfile}>Edit profile</button>
-                  <Link className="profile-buttons" to={'/user/orders'} >Orders</Link>
+                  <button className="profile-buttons profile-edit-button" onClick={handleEditProfile}>Edit profile</button>
+                  <Link className="profile-buttons profile-edit-button"  to={'/user/orders'} >Orders</Link>
                 </div>
             </div>
             <p className="profile-bio">{bio}</p>

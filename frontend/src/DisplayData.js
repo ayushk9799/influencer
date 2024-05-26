@@ -170,6 +170,7 @@ export const DisplayData = forwardRef(({ query, button }, ref) => {
                             color: "black",
                             display: "flex", // Add this line
                             alignItems: "center", // Add this line
+                            gap : '2px'
                           }}
                         >
                           {iconsArr[0]} {formatFollowers(item.ifollowers)} Followers
@@ -197,9 +198,10 @@ export const DisplayData = forwardRef(({ query, button }, ref) => {
                             color: "black",
                             display: "flex", // Add this line
                             alignItems: "center", // Add this line
+                            gap : '2px'
                           }}
                         >
-                          {iconsArr[1]} {formatFollowers(item.yfollowers)} Followers
+                          {iconsArr[1]} {formatFollowers(item.yfollowers)} Subscriber
                         </a>
                       </div>
                     ) : (

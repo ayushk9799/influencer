@@ -1,10 +1,11 @@
 import React, {useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import './accountForClient.css'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getOrder } from "../../redux/UserSlice";
 
 const AccountForClient = () => {
+  const navigate = useNavigate();
   const { userDetails, orders } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   useEffect(()=>{
@@ -35,7 +36,7 @@ const AccountForClient = () => {
                 <div className="c-account-main">
                     {userDetails?.orders?.length ? (
                         orders.map((value, index) => (
-                            <div className="c-order-details-element" key={index}>
+                            <div className="c-order-details-element" key={index} onClick={() => {navigate(`/user/orders/${value._id}`, {state : {orderDetails : value}})}}>
                                 <div className='order-item-info'>
                                     <div className='order-item-img'>
                                         <img src={userDetails?.contentCreator ? `${value?.buyer?.profilePic}` : `${value?.influencer?.profilePic}`} alt={value?.buyer?.name} />
