@@ -10,8 +10,14 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  position: relative;
 }
-
+.heart{
+  position: absolute;
+  z-index: 20;
+  right:10px;
+  top:10px;
+}
 .grid-item:hover{
    cursor: pointer;
 }

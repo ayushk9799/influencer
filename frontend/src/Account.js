@@ -11,22 +11,22 @@ import { updateUserDetails } from "./redux/UserSlice";
 import AccountForClient from "./components/subcomponents/AccountForClient";
 
 // this link is for test purpose
-const s3Domain = 'https://thousand-ways.s3.ap-south-1.amazonaws.com'
+const s3Domain = "https://thousand-ways.s3.ap-south-1.amazonaws.com";
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: 'background.paper',
-  border: '1px solid #000',
+  bgcolor: "background.paper",
+  border: "1px solid #000",
   boxShadow: 24,
   p: 3,
 };
 
 const Account = () => {
-  const {userDetails} = useSelector(state=>state.user);
+  const { userDetails } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -45,13 +45,16 @@ const Account = () => {
     yprice,
     gender,
     mobileNumber,
-    contentCreator
+    contentCreator,
   } = userDetails;
 
-  const [selectIndexInCard, setSelectIndexInCard] = useState({photo : 0, story : 0});
+  const [selectIndexInCard, setSelectIndexInCard] = useState({
+    photo: 0,
+    story: 0,
+  });
   const [openModal, setOpenModal] = useState(false);
   const [modalData, setModalData] = useState({});
-  const [description, setDescription] = useState('')
+  const [description, setDescription] = useState("");
   // for swipe detection
   const [startX, setStartX] = useState(0);
   const [coverIndexMobile, setCoverIndexMobile] = useState(0);
@@ -77,50 +80,67 @@ const Account = () => {
   };
 
   const handleEditProfile = () => {
-    let iValue,yValue;
-    if(iprice) {
-      iValue = {story : iprice.story?.price[0], photo : iprice.photo?.price[0], reels : iprice.reels?.price};
+    let iValue, yValue;
+    if (iprice) {
+      iValue = {
+        story: iprice.story?.price[0],
+        photo: iprice.photo?.price[0],
+        reels: iprice.reels?.price,
+      };
     }
-    if(yprice) {
-      yValue = {shorts : yprice.shorts?.price, video : yprice.video?.price}
+    if (yprice) {
+      yValue = { shorts: yprice.shorts?.price, video: yprice.video?.price };
     }
-    const temp = { name, bio, gallery, profilePic, field, region, iaccountID, ifollowers, iprice : iValue, yaccountID, gender, mobileNumber, yprice : yValue};
+    const temp = {
+      name,
+      bio,
+      gallery,
+      profilePic,
+      field,
+      region,
+      iaccountID,
+      ifollowers,
+      iprice: iValue,
+      yaccountID,
+      gender,
+      mobileNumber,
+      yprice: yValue,
+    };
     dispatch(updateFormData(temp));
-    navigate('/complete-profile');
-  }
+    navigate("/complete-profile");
+  };
 
   const handleEditPriceCardDetails = (type, key, data) => {
     setOpenModal(true);
     setDescription(data?.description);
-    const temp = type ? 'Instagram':'Youtube';
-    setModalData({key, type : temp, price : data?.price});
-  }
+    const temp = type ? "Instagram" : "Youtube";
+    setModalData({ key, type: temp, price: data?.price });
+  };
 
-  const handleSubmitButton = async() => {
+  const handleSubmitButton = async () => {
     try {
       const response = await fetch(`${BACKEND_URL}/addData/update-price`, {
-        method : 'POST',
-        credentials : 'include',
-        headers : {
-          'Content-Type' : 'application/json'
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
         },
-        body : JSON.stringify({ description, ...modalData})
-      })
+        body: JSON.stringify({ description, ...modalData }),
+      });
       const abc = await response.json();
       const data = abc.data;
-      if(response.status === 200) {
-        if(modalData.type === 'Instagram') {
-          dispatch(updateUserDetails({iprice : data}))
+      if (response.status === 200) {
+        if (modalData.type === "Instagram") {
+          dispatch(updateUserDetails({ iprice: data }));
         } else {
-          dispatch(updateUserDetails({yprice : data}));
+          dispatch(updateUserDetails({ yprice: data }));
         }
       }
       setOpenModal(false);
     } catch (err) {
-      console.log('error', err);
+      console.log("error", err);
     }
-
-  }
+  };
 
   const priceItem = (data, type) => {
     const elementValue = [];
@@ -129,41 +149,114 @@ const Account = () => {
     }
     for (const key in data) {
       const { price, description } = data[key];
-      const element = <div className="price-item-card" key={key}>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            {type ? <FaInstagram size={25} /> : <FaYoutube size={25} />}
-            <p style={{ fontSize: '20px' }}>{type ? 'Instagram' : 'Youtube'} {key}</p>
+      const element = (
+        <div className="price-item-card" key={key}>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+              {type ? <FaInstagram size={25} /> : <FaYoutube size={25} />}
+              <p style={{ fontSize: "20px" }}>
+                {type ? "Instagram" : "Youtube"} {key}
+              </p>
+            </div>
+            {Array.isArray(price) ? (
+              <div style={{ fontSize: "24px", fontWeight: "bold" }}>
+                ${price[selectIndexInCard[key]]}
+              </div>
+            ) : (
+              <div style={{ fontSize: "24px", fontWeight: "bold" }}>
+                ${price}
+              </div>
+            )}
           </div>
           {Array.isArray(price) ? (
-            <div style={{ fontSize: '24px', fontWeight: 'bold' }}>${price[selectIndexInCard[key]]}</div>
-          ) : (
-            <div style={{ fontSize: '24px', fontWeight: 'bold' }}>${price}</div>
-          )}
-        </div>
-        {Array.isArray(price) ? (
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <p style={{ fontSize: '18px', letterSpacing: '1px' }}>Quantity</p>
-            <div className="item-quantity">
-              <div onClick={() => setSelectIndexInCard({ ...selectIndexInCard, [key]: 0 })} style={selectIndexInCard[key] === 0 ? {backgroundColor : '#1976d2', color : 'white', fontWeight : 'bold'} : {}}>1</div>
-              <div onClick={() => setSelectIndexInCard({ ...selectIndexInCard, [key]: 1 })} style={selectIndexInCard[key] === 1 ? {backgroundColor : '#1976d2', color : 'white', fontWeight : 'bold'} : {}}>2</div>
-              <div onClick={() => setSelectIndexInCard({ ...selectIndexInCard, [key]: 2 })} style={selectIndexInCard[key] === 2 ? {backgroundColor : '#1976d2', color : 'white', fontWeight : 'bold'} : {}}>3</div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <p style={{ fontSize: "18px", letterSpacing: "1px" }}>Quantity</p>
+              <div className="item-quantity">
+                <div
+                  onClick={() =>
+                    setSelectIndexInCard({ ...selectIndexInCard, [key]: 0 })
+                  }
+                  style={
+                    selectIndexInCard[key] === 0
+                      ? {
+                          backgroundColor: "#1976d2",
+                          color: "white",
+                          fontWeight: "bold",
+                        }
+                      : {}
+                  }
+                >
+                  1
+                </div>
+                <div
+                  onClick={() =>
+                    setSelectIndexInCard({ ...selectIndexInCard, [key]: 1 })
+                  }
+                  style={
+                    selectIndexInCard[key] === 1
+                      ? {
+                          backgroundColor: "#1976d2",
+                          color: "white",
+                          fontWeight: "bold",
+                        }
+                      : {}
+                  }
+                >
+                  2
+                </div>
+                <div
+                  onClick={() =>
+                    setSelectIndexInCard({ ...selectIndexInCard, [key]: 2 })
+                  }
+                  style={
+                    selectIndexInCard[key] === 2
+                      ? {
+                          backgroundColor: "#1976d2",
+                          color: "white",
+                          fontWeight: "bold",
+                        }
+                      : {}
+                  }
+                >
+                  3
+                </div>
+              </div>
             </div>
+          ) : (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <p style={{ fontSize: "18px", letterSpacing: "1px" }}>Duration</p>
+              <div className="item-quantity">Upto 60sec</div>
+            </div>
+          )}
+          <div style={{ opacity: 0.9, textAlign: "justify" }}>
+            {description}
           </div>
-        ) : (
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <p style={{ fontSize: '18px', letterSpacing: '1px' }}>Duration</p>
-            <div className="item-quantity">Upto 60sec</div>
-          </div>
-        )}
-        <div style={{ opacity: 0.9, textAlign: 'justify' }}>{description}</div>
-        <Button style={{ width: '100%', textTransform: 'capitalize' }} onClick={() => handleEditPriceCardDetails(type, key, data[key])} variant="contained">Edit</Button>
-      </div>
+          <Button
+            style={{ width: "100%", textTransform: "capitalize" }}
+            onClick={() => handleEditPriceCardDetails(type, key, data[key])}
+            variant="contained"
+          >
+            Edit
+          </Button>
+        </div>
+      );
       elementValue.push(element);
     }
-    return elementValue
-  }
-    
+    return elementValue;
+  };
+
   return (
     <div className='profile-main'>
         {contentCreator ? (
@@ -267,14 +360,11 @@ const Account = () => {
       ) : (
         <AccountForClient />
       )}
-      
     </div>
   );
 };
 
 export default Account;
-
-
 
 const getCoverImageComponents = (coverImage) => {
   const size = coverImage?.length || 0;
