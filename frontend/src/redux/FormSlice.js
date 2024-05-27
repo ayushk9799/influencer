@@ -13,10 +13,11 @@ export const createAccount = createAsyncThunk(
   "form/update-form",
   async (payload, { getState, dispatch }) => {
     const { formData } = getState().form;
-
+     console.log(formData)
     const {data} = await axios.post("http://localhost:3000/addData", formData, {
       withCredentials: true,
     });
+    console.log(data.data)
     dispatch(updateUserDetails(data.data));
     return data;
   }
@@ -30,6 +31,7 @@ const FromSlice = createSlice({
       state.currentStep = action.payload;
     },
     updateFormData: (state, action) => {
+      console.log(action.payload)
       state.formData = { ...state.formData, ...action.payload };
     },
   },

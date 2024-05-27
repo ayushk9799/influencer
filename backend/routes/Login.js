@@ -60,7 +60,7 @@ router.get("/google/callback", async (req, res,next) => {
         "influencerChataccess"
       );
 
-      redirectRoute="http://localhost:3001/myAccount"
+      redirectRoute="http://localhost:3001/complete-profile"
     }
     res.cookie("jwtaccesstoken", jwtaccesstoken, {
       maxAge: 6 * 30 * 24 * 60 * 60 * 1000,

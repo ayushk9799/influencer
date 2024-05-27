@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./components/profile.css";
-import { BACKEND_URL, formatFollowers, getCategory } from "./assets/Data";
+import { BACKEND_URL, formatFollowers, getCategory,s3Domain } from "./assets/Data";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FaInstagram, FaYoutube, FaInfoCircle } from "react-icons/fa";
@@ -11,7 +11,6 @@ import { updateUserDetails } from "./redux/UserSlice";
 import AccountForClient from "./components/subcomponents/AccountForClient";
 
 // this link is for test purpose
-const s3Domain = "https://thousand-ways.s3.ap-south-1.amazonaws.com";
 
 const style = {
   position: "absolute",
@@ -27,7 +26,6 @@ const style = {
 
 const Account = () => {
   const { userDetails } = useSelector((state) => state.user);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
@@ -105,6 +103,7 @@ const Account = () => {
       gender,
       mobileNumber,
       yprice: yValue,
+      contentCreator
     };
     dispatch(updateFormData(temp));
     navigate("/complete-profile");
@@ -408,35 +407,22 @@ const Account = () => {
                 />
               </div>
 
-              <div>
-                <p className="name">{name}</p>
-                <div className="category-container">
-                  {field?.length !== 0 &&
-                    field.map((val) => <div key={val}>{getCategory(val)}</div>)}
+              <div className="profilenames">
+                    <div className='name'>{name}</div>
+                    <div className='category-container'>
+                        {
+                          field?.length!==0 && field.map((val) => (
+                              <div key={val}>
+                                  {getCategory(val)}
+                              </div>
+                          ))
+                        }
+                    </div>
+                    <div className='field-container'>
+                        {iaccountID && <a target='_blank' href={`https://www.instagram.com/${iaccountID}`} className='field-element'><FaInstagram size={18} />{formatFollowers(ifollowers)}</a>}
+                        {yaccountID && <a target='_blank' href={`https://www.youtube.com/@${iaccountID}`} className='field-element'><FaYoutube size={20} />{formatFollowers(yfollowers)}</a>}
+                    </div>
                 </div>
-                <div className="field-container">
-                  {iaccountID && (
-                    <a
-                      target="_blank"
-                      href={`https://www.instagram.com/${iaccountID}`}
-                      className="field-element"
-                    >
-                      <FaInstagram size={18} />
-                      {formatFollowers(ifollowers)}
-                    </a>
-                  )}
-                  {yaccountID && (
-                    <a
-                      target="_blank"
-                      href={`https://www.youtube.com/@${iaccountID}`}
-                      className="field-element"
-                    >
-                      <FaYoutube size={20} />
-                      {formatFollowers(yfollowers)}
-                    </a>
-                  )}
-                </div>
-              </div>
             </div>
             <div className="profile-buttons-container">
               <button className="profile-buttons" onClick={handleEditProfile}>

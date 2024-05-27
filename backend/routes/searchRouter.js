@@ -4,34 +4,34 @@ const router = express.Router();
 
 router.get("/search", async (req, res) => {
   try {
-    const { region, fmax, fmin, platforms, field } = req.query;
+    const { region, fmax, fmin, platform, field } = req.query;
     
-   let platform=platforms?.split(',')
+   let platforms=platform?.split(',')
    console.log(req.query)
     let query = {};
     if (region) {
       console.log("region")
       query.region = region;
     }
-    if (platform?.includes("Instagram") && platform?.includes("YouTube")) {
-      query={...query, $or:[{uaccountID:{$exists:true}},{iaccountID:{$exists:true}}]}
+    if (platforms?.includes("Instagram") && platforms?.includes("YouTube")) {
+      query={...query, $or:[{yaccountID:{$exists:true}},{iaccountID:{$exists:true}}]}
       if (fmax) {
-        query={...query,$or:[{ufollowers:{$lte:parseInt(fmax)}},{ifollowers:{$lte:parseInt(fmax)}}]}
+        query={...query,$or:[{yfollowers:{$lte:parseInt(fmax)}},{ifollowers:{$lte:parseInt(fmax)}}]}
       }
       if (fmin) {
-        query={...query,$or:[{ufollowers:{$gte:parseInt(fmin)}},{ifollowers:{$gte:parseInt(fmin)}}]}
+        query={...query,$or:[{yfollowers:{$gte:parseInt(fmin)}},{ifollowers:{$gte:parseInt(fmin)}}]}
       }
     }
-    else if(platform?.includes("YouTube")) {
-      query.uaccountID = { $exists: true };
+    else if(platforms?.includes("YouTube")) {
+      query.yaccountID = { $exists: true };
       if (fmax) {
-        query.ufollowers = { $lte: parseInt(fmax) };
+        query.yfollowers = { $lte: parseInt(fmax) };
       }
       if (fmin) {
-        query.ufollowers = { ...query.ufollowers, $gte: parseInt(fmin) };
+        query.yfollowers = { ...query.yfollowers, $gte: parseInt(fmin) };
       }
     }
-    else if(platform?.includes("Instagram")) {
+    else if(platforms?.includes("Instagram")) {
       query.iaccountID = { $exists: true };
       if (fmax) {
         query.ifollowers = { $lte: parseInt(fmax) };
@@ -41,14 +41,14 @@ router.get("/search", async (req, res) => {
       }
     }
     else {
-      query={...query,$or:[{uaccountID:{$exists:true}},{iaccountID:{$exists:true}}]};
+      query={...query,$or:[{yaccountID:{$exists:true}},{iaccountID:{$exists:true}}]};
       if(fmax)
       {
-        query={...query,$or:[{ufollowers:{$lte:parseInt(fmax)}},{ifollowers:{$lte:parseInt(fmax)}}]}
+        query={...query,$or:[{yfollowers:{$lte:parseInt(fmax)}},{ifollowers:{$lte:parseInt(fmax)}}]}
       }
       if(fmin)
       {
-        query={...query,$or:[{ufollowers:{$gte:parseInt(fmin)}},{ifollowers:{$gte:parseInt(fmin)}}]}
+        query={...query,$or:[{yfollowers:{$gte:parseInt(fmin)}},{ifollowers:{$gte:parseInt(fmin)}}]}
 
       }
     }

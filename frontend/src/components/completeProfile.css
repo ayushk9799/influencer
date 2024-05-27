@@ -15,7 +15,14 @@
   border-radius: 4px;
   margin-bottom: 10px;
 }
-
+.buttonprevnext{
+  padding:5px;
+  background-color: #4285F4;
+  color:white;
+  border-radius: 5px;
+  border: none;
+  margin:0px 5px 0px 0px;
+}
 .progress-bar {
   height: 10px;
   border-radius: 4px;
