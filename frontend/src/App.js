@@ -17,6 +17,7 @@ import PaymentSuccess from "./components/Payment/PaymentSuccess.js";
 import PaymentFail from "./components/Payment/PaymentFail.js";
 import Order from "./components/Order.js";
 import OrderDetails from "./components/OrderDetails.js";
+import FAQ from "./components/FAQ.js";
 function App() {
   const { isAuthenticated } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -57,6 +58,7 @@ function App() {
         <Route path="/custom-offer" Component={CustomOffer} />
         <Route path="/payment-success" Component={PaymentSuccess} />
         <Route path="/payment-failed" Component={PaymentFail} />
+        <Route path="/faq" Component={FAQ} />
       </Routes>
     </Router>
   );

@@ -1,0 +1,11 @@
+.faq-container {
+    width: 1080px;
+    padding: 10px;
+    font-family: Roboto;
+}
+
+@media (max-width : 600px) {
+    .faq-container {
+        width: 100%;
+    }
+}

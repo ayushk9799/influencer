@@ -9,8 +9,9 @@
 
 .container {
     width: 1080px;
-    padding: 5px 20px;
-    box-sizing: border-box;
+    padding: 5px 10px;
+    border-left: 1px dashed  rgb(236, 233, 233);    
+    border-right: 1px dashed rgb(236, 233, 233);
 }
 
 
@@ -272,6 +273,14 @@
     flex-direction: column;
     justify-content: space-evenly;
     height:100px;
+}
+
+.item-description {
+    opacity: 0.9;
+    text-align: justify;
+    :first-letter {
+        text-transform: capitalize;
+    }
 }
 
 

@@ -129,7 +129,9 @@ const Profile = () => {
             <div className="item-quantity">Upto 60sec</div>
           </div>
         )}
-        <div style={{ opacity: 0.9, textAlign: 'justify' }}>{description}</div>
+        <div className="item-description">
+          <p>{description}</p>
+        </div>
         <Button style={{ width: '100%', textTransform: 'capitalize' }} onClick={() => handleContinue(1, type, key, price)} variant="contained">continue</Button>
       </div>
       elementValue.push(element);

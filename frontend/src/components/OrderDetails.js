@@ -420,8 +420,8 @@ const OrderDetails = () => {
                         </div>
                     </div>
                     <div className='button-container-orders'>
-                        <Link to={'#'} className='button-design'>{userDetails?.contentCreator ? 'Chat with client' : 'Chat with influencer' }</Link>
-                        <Link to={'#'} className='button-design'>Get support</Link>
+                        <Link to={'#'} className='profile-buttons'>{userDetails?.contentCreator ? 'Chat with client' : 'Chat with influencer' }</Link>
+                        <Link to={'#'} className='profile-buttons'>Get support</Link>
                     </div>
                 </div>
                 <div className='order-summary'>
@@ -453,13 +453,14 @@ const OrderDetails = () => {
                 </div>
             </div>
            <div className='status-container'>
-            <div className='eg'>
-                <div>
-                    <p>Offer sent</p>
-                    <p>Collaboration</p>
-                    <p>Approved</p>
-                    <p>Completed</p>
-                </div>
+                <h4>Order status</h4>
+                <div className='eg'>
+                    <div>
+                        <p>Offer sent</p>
+                        <p>Collaboration</p>
+                        <p>Approved</p>
+                        <p>Completed</p>
+                    </div>
                 </div>
                 <div className='status-card'>
                     <FaCheckCircle className='status-icon' size={25}/>
@@ -481,12 +482,12 @@ const OrderDetails = () => {
                 </div>
 
                 <div className='eg'>
-                <div>
-                    <p >{getDateFormatted(orderDetails?.createdAt)}</p>
-                    <p>{getDateFormatted(orderDetails?.workAccepted?.date)}</p>
-                    <p>{getDateFormatted(orderDetails?.workApproval?.date)}</p>
-                    <p>{getDateFormatted(orderDetails?.influencerPaymentDetails?.date)}</p>
-                </div>
+                    <div>
+                        <p >{getDateFormatted(orderDetails?.createdAt)}</p>
+                        <p>{getDateFormatted(orderDetails?.workAccepted?.date)}</p>
+                        <p>{getDateFormatted(orderDetails?.workApproval?.date)}</p>
+                        <p>{getDateFormatted(orderDetails?.influencerPaymentDetails?.date)}</p>
+                    </div>
                 </div>
            </div>
 
@@ -495,21 +496,23 @@ const OrderDetails = () => {
                     <div className='order-summary-top'>
                         <p>{userDetails?.contentCreator ? 'Client' : 'Your'} payment details</p>
                     </div>
-                    <div>
-                        <p>Payment Status :</p>
-                        <p style={{textTransform : 'capitalize'}}>{orderDetails?.buyerPaymentStatus}</p>
-                    </div>
-                    <div>
-                        <p>Payment Id :</p>
-                        <p>{orderDetails?.buyerPaymentDetails?.paymentID}</p>
-                    </div>
-                    <div>
-                        <p>Transaction type :</p>
-                        <p>UPI</p>
-                    </div>
-                    <div>
-                        <p>Transaction date :</p>
-                        <p>{new Date(orderDetails?.createdAt).toLocaleString()}</p>
+                    <div className='payment-element-buyer'>
+                        <div>
+                            <p>Payment Status :</p>
+                            <p style={{textTransform : 'capitalize'}}>{orderDetails?.buyerPaymentStatus}</p>
+                        </div>
+                        <div>
+                            <p>Payment Id :</p>
+                            <p>{orderDetails?.buyerPaymentDetails?.paymentID}</p>
+                        </div>
+                        <div>
+                            <p>Transaction type :</p>
+                            <p>UPI</p>
+                        </div>
+                        <div>
+                            <p>Transaction date :</p>
+                            <p>{new Date(orderDetails?.createdAt).toLocaleString()}</p>
+                        </div>
                     </div>
                 </div>
                 <div className='payment-container-influencer'>
@@ -520,9 +523,9 @@ const OrderDetails = () => {
                     {orderDetails?.influencerPaymentDetails ? (
                         <div> </div>
                     ) : (
-                        <div style={{display : 'flex', flexDirection : 'column',  alignItems : 'center', justifyContent : 'center', height : "150px"}}>
+                        <div style={{display : 'flex', flexDirection : 'column',  alignItems : 'center', justifyContent : 'center', height : "150px", padding : '5px 20px'}}>
                             <p>No data found</p>
-                            <p style={{fontSize : '13px', opacity : 0.7}}>Payment will be sent to influencer onces client approve your work.</p>
+                            <p style={{fontSize : '13px', opacity : 0.7, textAlign : 'center'}}>Payment will be sent to influencer onces client approve your work.</p>
                         </div>
                     )}
                 </div>

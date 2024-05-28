@@ -240,8 +240,8 @@ const Account = () => {
               <div className="item-quantity">Upto 60sec</div>
             </div>
           )}
-          <div style={{ opacity: 0.9, textAlign: "justify" }}>
-            {description}
+          <div className="item-description">
+              <p>{description}</p>
           </div>
           <Button
             style={{ width: "100%", textTransform: "capitalize" }}

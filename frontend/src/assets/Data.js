@@ -106,3 +106,77 @@ export const formatFollowers = (value) => {
         return value.toString();
     }
 }
+
+export const FaqArrayForInfluencer = [
+    {
+        question : 'How does EazzyCollab works?',
+        answer : 'Create your personal page and list your services for Instagram, and YouTube. Then, share your custom link in your bio and social media. Brands can now discover you and purchase your services, and you can easily manage brand deals and get paid for your work directly through the platform.'
+    },
+    {
+        question : 'How do I get paid?',
+        answer : 'Payments are made directly through our website. We use Dots to pay you out. Once you complete an order, you will be able to choose from over 5 methods including PayPal, CashApp or Venmo to receive your money.'
+    },
+    {
+        question : 'How much does it cost?',
+        answer : 'There is no up-front cost. We take a 15% transaction fee when you make a sale.'
+    },
+    {
+        question : 'Is my payment guaranteed?',
+        answer : 'Yes, we collect the payment from the buyer and hold it until the order is complete. This ensures that both sides are protected during every transaction.'
+    },
+    {
+        question : 'Can I decline orders?',
+        answer : 'Yes, you are able to accept or decline an order. This gives you the freedom to only work with brands that align with you.'
+    },
+    {
+        question : 'What platforms does EassyCollab support?',
+        answer : 'Currently you can list your services for Instagram and Youtube.'
+    },
+    {
+        question : 'Are you an agency?',
+        answer : 'No, we are not an agency. We are a platform for you to advertise your services, and manage your own brand deals.'
+    },
+    {
+        question : 'Are there binding contracts?',
+        answer : 'No, we do not ask you to sign any contracts. We are a self-serve platform, you are free to manage your own deals without our involvement. We simply provide the platform for you to advertise your services to brands.'
+    },
+]
+
+export const FaqArrayForBrands = [
+    {
+        question : 'How does EazzyCollab work?',
+        answer : 'Start by searching through thousands of vetted Instagram, TikTok, and YouTube influencers. Once you find the influencers you want to work with, safely purchase their services through Collabstr. We hold your payment until the work is completed. Once the work is completed, receive your high-quality content from the influencers directly through the platform.'
+    },
+    {
+        question : 'What is EazzyCollab?',
+        answer : 'Collabstr is a marketplace to find and hire influencers on Instagram, TikTok, and YouTube. You can easily search through thousands of content creators and pay them directly through Collabstr.'
+    },
+    {
+        question : 'How are influencers vetted before joining Collabstr?',
+        answer : 'We verify the identity of each influencer that is listed on the platform. We also do a full audit of their social media to look for signs of fake followers & engagement. We also take into consideration their previous brand deals.'
+    },
+    {
+        question : 'How does shipping work?',
+        answer : 'Once you place an order, the influencer will send you their shipping info through the chat. You can then use your preferred shipping carrier to send them the product.'
+    },
+    {
+        question : 'How do I send custom offers?',
+        answer : `If you have a request that doesn't fit an influencers existing packages you can send them a custom offer. To do this, click the "Send custom offer" button on the influencers profile and follow the steps.`
+    },
+    {
+        question : 'How long does an influencer have to accept my order?',
+        answer : 'Influencers are given 72 hours to accept new orders before they automatically expire.'
+    },
+    {
+        question : 'What if an influencer declines my order?',
+        answer : 'We do not charge you until an influencer accepts your order. So if your order gets declined no action is required from you.'
+    },
+    {
+        question : 'How do I know I will receive the work I paid for?',
+        answer : 'Collabstr holds your money until the work is completed and approved by you. You will have up to 48 hours once the work has been submitted to ask for a revision or open a dispute with Collabstr.'
+    },
+    {
+        question : 'What types of payment do you accept?',
+        answer : 'We use Stripe as our payment processor, this allows us to accept all major credit & debit cards.'
+    },
+]

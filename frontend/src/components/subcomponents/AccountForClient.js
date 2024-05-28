@@ -7,7 +7,6 @@ import { BACKEND_URL } from "../../assets/Data";
 import { useNavigateCustom } from "../../CustomNavigate";
 
 const AccountForClient = () => {
-  const navigate = useNavigate();
   const { userDetails, orders } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate=useNavigateCustom()
@@ -84,7 +83,7 @@ getFavourites()
                     <Link >View all</Link>
                 </div>
                 <div className="c-account-main">
-                        {userDetails?.favourites.length>0?(favourites.map((favourites,index)=>
+                        {userDetails?.favourites?.length>0?(favourites.map((favourites,index)=>
                         (
                             <div className="c-order-details-element" key={index} onClick={()=>navigate(`/influencer/${favourites.uniqueID}`,{state:{uniqueID:favourites.uniqueID}})}>
                             <div className='order-item-info'>
