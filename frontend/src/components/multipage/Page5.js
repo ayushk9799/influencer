@@ -9,8 +9,9 @@ import FormHeader from '../subcomponents/FormHeader';
 
 const Page5 = () => {
     const {formData, currentStep} = useSelector(state => state.form);
-    const [iprice, setIprice] = useState(formData?.iprice || {reels : undefined, story : undefined, photo : undefined}); // {video : 123, photo : 3232}
-    const [yprice, setYprice] = useState(formData?.yprice || {shorts : undefined, video : undefined});
+    const {userDetails}=useSelector((state)=>state.user)
+    const [iprice, setIprice] = useState(userDetails?.iprice || {reels : {price:0}, story : {price:0}, photo : {price:0}}); // {video : 123, photo : 3232}
+    const [yprice, setYprice] = useState(userDetails?.yprice || {shorts : {price:0}, video : {price:0}});
     const dispatch = useDispatch();
 
     const handleSubmit = (e) => {
@@ -18,6 +19,7 @@ const Page5 = () => {
         let temp = {};
         if(formData.iaccountID) {
             temp = {...temp, ...{iprice}};
+            console.log(temp)
         }
         if(formData.yaccountID) {
             temp = {...temp, ...{yprice}};
@@ -39,15 +41,15 @@ const Page5 = () => {
                     </div>
                     <div className='inpute-items'>
                         <p>Story</p>
-                        <input  placeholder='Price(INR)' value={iprice.story} onChange={(e) => setIprice({...iprice, ...{story : e.target.value }})} type='number'  />
+                        <input  placeholder='Price(INR)' value={Array.isArray(iprice.story?.price)?iprice.story.price[0]:iprice.story.price} onChange={(e) => setIprice({...iprice, ...{story : {price:e.target.value} }})} type='number'  />
                     </div>
                     <div className='inpute-items'>
                         <p>Photo</p>
-                        <input  placeholder='Price(INR)' value={iprice.photo} onChange={(e) => setIprice({...iprice, ...{photo : e.target.value }})} type='number' />
+                        <input  placeholder='Price(INR)' value={Array.isArray(iprice.photo?.price)?iprice.photo.price[0]:iprice.photo.price} onChange={(e) => setIprice({...iprice, ...{photo : {price:e.target.value} }})} type='number' />
                     </div>
                     <div className='inpute-items'>
                         <p>Reels</p>
-                        <input  placeholder='Price(INR)' value={iprice.reels} onChange={(e) => setIprice({...iprice, ...{reels : e.target.value }})} type='number'  />
+                        <input  placeholder='Price(INR)' value={iprice.reels?.price} onChange={(e) => setIprice({...iprice, ...{reels :{price: e.target.value} }})} type='number'  />
                     </div>
                 </div>
                 <div className='item-body' style={{display : formData.yaccountID ? 'block' : 'none'}}>
@@ -57,11 +59,11 @@ const Page5 = () => {
                     </div>
                     <div className='inpute-items'>
                         <p>Shorts</p>
-                        <input placeholder='Price(INR)' value={yprice.shorts} onChange={(e) => setYprice({...yprice, ...{shorts : e.target.value }})} type='number' />
+                        <input placeholder='Price(INR)' value={yprice.shorts?.price} onChange={(e) => setYprice({...yprice, ...{shorts : e.target.value }})} type='number' />
                     </div>
                     <div className='inpute-items'>
                         <p>{'Video'}</p>
-                        <input placeholder='Price(INR)' value={yprice.video} onChange={(e) => setYprice({...yprice, ...{video : e.target.value }})} type='number'  />
+                        <input placeholder='Price(INR)' value={yprice.video?.price} onChange={(e) => setYprice({...yprice, ...{video : e.target.value }})} type='number'  />
                     </div>
                 </div>
             </div>

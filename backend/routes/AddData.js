@@ -4,57 +4,89 @@ const router = express.Router();
 
 router.post("/", async (req, res, next) => {
   try {
+    console.log("post")
     let user = await User.findById(req.user._id);
 
     if (!user) {
       next(new Error("user not found in database or try again"));
     } else {
       const data = req.body;
+      console.log("data")
+      console.log(data)
       for (let keys in data) {
         const value = data[keys];
         if(keys === 'yprice') {
-          if (!user.yprice) {
-            user.yprice = {};
+        
+          if(value.video)
+          {
+            user.yprice.video={price:value.video.price,description:"deconcon"}
           }
-          if (!user.yprice.video) {
-            user.yprice.video = {};
+          else{
+            user.yprice.video={price:0,description:"hello"}
           }
-          if (!user.yprice.shorts) {
-            user.yprice.shorts = {};
+         
+          if(value.shorts)
+          {
+            user.yprice.shorts={price:value.shorts.price,description:"deconcon"}
           }
-          user.yprice.video.price = value.video;
-          user.yprice.shorts.price = value.shorts;
-        } else if (keys === 'iprice') {
-          if (!user.iprice) {
-            user.iprice = {};
-          }
-          if (!user.iprice.reels) {
-            user.iprice.reels = { price: 0};
-          }
-          if (!user.iprice.photo) {
-            user.iprice.photo = { price: []};
-          }
-          if (!user.iprice.story) {
-            const temp = value.story;
-            const arr = [temp, temp*2, temp*3];
-            user.iprice.story = { price: arr};
-          }
-          user.iprice.reels.price = value.reels;
-          if(user.iprice.photo.price.length) {
-            user.iprice.photo.price[0] = value.photo;
-          } else {
-            const temp = value.photo;
-            const arr = [temp, temp*2, temp*3];
-            user.iprice.photo.price = arr;
+          else{
+            user.yprice.shorts={price:0,description:"hello"}
           }
 
-          if(user.iprice.story.price.length) {
-            user.iprice.story.price[0] = value.story;
-          } else {
-            const temp = value.story;
-            const arr = [temp, temp*2, temp*3];
+        } else if (keys === 'iprice') {
+          
+          if (value.reels) {
+            user.iprice.reels={price:value.reels?.price?0:value.reels?.price,description:"descrption money involved"}
+          }
+          else{
+            user.iprice.reels={price:0,description:"descrption money involved"}
+          }
+        
+          if (value.photo) {
+            if(Array.isArray(value.photo.price))
+            {
+              if(value.photo.price?.length){
+              
+               
+                user.iprice.photo.price=value.photo.price;
+       
+              }
+
+            }
+          else{
+            const temp = value.photo.price;
+            const arr = [temp*1, temp*2, temp*3];
+            user.iprice.photo.price = arr;
+          }
+          }
+          else{
+           user.iprice.photo.price=[0,0,0];
+           user.iprice.photo.description="hello"
+
+          }
+          if (value.story) {
+
+            if(Array.isArray(value.story.price))
+            {
+              if(value.story.price?.length)
+              {
+                user.iprice.story.price=value.photo.price;
+  
+              }
+            }
+           
+          else{
+            const temp = value.story.price;
+            const arr = [temp*1, temp*2, temp*3];
+            console.log(arr)
             user.iprice.story.price = arr;
           }
+          }
+          else{
+            user.iprice.story.price = [0,0,0]
+            user.iprice.story.description="hello"
+          }
+        
         } else {
           user[keys] = data[keys]
         }
@@ -63,6 +95,7 @@ router.post("/", async (req, res, next) => {
       return res.status(200).json({ message: "saved succesfully", data: temp });
     }
   } catch (error) {
+    console.log(error)
     res.status(404).json({ message: error.message });
   }
 });

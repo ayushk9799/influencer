@@ -39,6 +39,7 @@ console.log(userDetails)
       if (query.region !== undefined) url += `&region=${query.region}`;
       if (query.platform !== undefined) {
         let platform = query.platform;
+        console.log(platform)
         if (query.platform === "All") {
           platform = ["Instagram", "YouTube"];
         }
@@ -47,9 +48,9 @@ console.log(userDetails)
       if (query.field !== undefined) {
         let indexedFields = [];
         for (let value of query.field) {
-          for (let category of categories) {
-            if (category.name === value) {
-              indexedFields.push(category.id);
+          for (let i=0 ;i<categories.length; i++) {
+            if (categories[i]===value) {
+              indexedFields.push(i);
             }
           }
         }
@@ -57,6 +58,8 @@ console.log(userDetails)
         url += `&field=${indexedFields}`;
       }
       try {
+        console.log(query)
+        console.log(url)
         const response = await fetch(url);
         if (response.ok) {
           let data = await response.json();

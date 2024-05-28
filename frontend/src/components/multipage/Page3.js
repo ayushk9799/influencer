@@ -65,6 +65,7 @@ const Page3 = () => {
           { withCredentials: true }
         );
         if (status === 200) {
+          console.log(localGallery)
           dispatch(updateFormData({ gallery: localGallery }));
         }
       } catch (error) {}

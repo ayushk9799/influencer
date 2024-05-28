@@ -7,11 +7,13 @@ import { setCurrentStep, updateFormData } from '../../redux/FormSlice';
 
 const Page6 = () => {
     const {formData, currentStep} = useSelector(state=>state.form);
+    const {userDetails}=useSelector((state)=>state.user)
     const buttonRef = useRef([]);
     const inputRef = useRef([]); // for focusing input when clicked on add
     const alertRef = useRef();
-    const [iaccountID, setIaccountID] = useState(formData?.iaccountID || "");
-    const [yaccountID, setYaccountID] = useState(formData?.yaccountID || "");
+    console.log(formData)
+    const [iaccountID, setIaccountID] = useState(userDetails?.iaccountID || "");
+    const [yaccountID, setYaccountID] = useState(userDetails?.yaccountID || "");
     const dispatch = useDispatch();
     
     const handleAdd = (index) => {
@@ -36,7 +38,7 @@ const Page6 = () => {
         <h3>Add Your Social Channel</h3>
         <p>Add your social media account i.e influencer account</p>
         <div className='social-container'>
-            {/* Instagram */}
+            
             <div onClick={() => {handleAdd(0)}}  >
                <div className='button-main' ref={ref => buttonRef.current[0] = ref} style={{display : !iaccountID ? 'flex' : 'none'}} >
                     <FaInstagram size={25} />   

@@ -5,6 +5,7 @@ import Page3 from "./multipage/Page3";
 import Page4 from "./multipage/Page4";
 import Page5 from "./multipage/Page5";
 import Page6 from "./multipage/Page6";
+import { Page7 } from "./multipage/Page7";
 
 import { useSelector, useDispatch } from "react-redux";
 import { setCurrentStep } from "../redux/FormSlice";
@@ -13,15 +14,19 @@ const Home = () => {
   const {currentStep} = useSelector((state) => state.form);
   const dispatch = useDispatch();
   const PageDisplay = () => {
-    if (currentStep === 1) {
+    if(currentStep===1)
+    {
+   return <Page7/>
+    }
+    else if (currentStep ===2 ) {
       return <Page6 />; // 6
-    } else if (currentStep === 2) {
+    } else if (currentStep ===3 ) {
       return <Page5 />;
-    } else if (currentStep === 3) {
-      return <Page4 />;
     } else if (currentStep === 4) {
+      return <Page4 />;
+    } else if (currentStep ===5 ) {
       return <Page3 />
-    } else if (currentStep === 5) {
+    } else if (currentStep ===6 ) {
       return <Page1 />
     }
   };
@@ -41,18 +46,21 @@ const Home = () => {
 
   return (
     <div className="main-container">
-      <div>
+      <div style={{margin:"5px"}}>
         <button
           disabled={currentStep === 1}
           onClick={() => dispatch(setCurrentStep(currentStep - 1))}
+          className="buttonprevnext"
+
         >
-          prev
+          Prev
         </button>
         <button
           disabled={currentStep === 5}
           onClick={() => dispatch(setCurrentStep(currentStep + 1))}
+          className="buttonprevnext"
         >
-          next
+          Next
         </button>
       </div>
       <div className="progress-bar-container">
