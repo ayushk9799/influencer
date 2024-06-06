@@ -148,13 +148,13 @@ const Profile = () => {
             {/* cover */}
             {getCoverImageComponents(gallery)}
             <div className='cover-container-mobile' onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
-                <img src={`${s3Domain}/${gallery[coverIndexMobile]}`} />
+                <img src={`${s3Domain}/${gallery[coverIndexMobile]}`} alt="Covers" />
                 <div className='cover-indicator'>{coverIndexMobile+1}/{gallery.length}</div>
             </div>
             {/* profile */}
             <div className='profile-div'>
                 <div className='image-div'>
-                    <img  src={`${profilePic}`} alt='image'  />
+                    <img  src={profilePic} alt='profile Picture'  />
                 </div>
                 
                 <div className="profilenames">

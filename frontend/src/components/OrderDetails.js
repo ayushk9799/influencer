@@ -12,7 +12,7 @@ import {Alert, Modal, Box, Button} from '@mui/material';
 import {updateUserDetails} from '../redux/UserSlice';
 import WorkingStep from './subcomponents/WorkingStep';
 
-const style = {
+export const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
