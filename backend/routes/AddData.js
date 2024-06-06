@@ -36,7 +36,7 @@ router.post("/", async (req, res, next) => {
         } else if (keys === 'iprice') {
           
           if (value.reels) {
-            user.iprice.reels={price:value.reels?.price?0:value.reels?.price,description:"descrption money involved"}
+            user.iprice.reels={price:(value.reels?.price)?value.reels?.price:0,description:"descrption money involved"}
           }
           else{
             user.iprice.reels={price:0,description:"descrption money involved"}

@@ -12,7 +12,8 @@ import { useNavigateCustom } from "./CustomNavigate";
 import { FaDollarSign } from "react-icons/fa";
 import { AiFillHeart } from "react-icons/ai";
 import { useSelector } from "react-redux";
-export const DisplayData = forwardRef(({ query, button }, ref) => {
+import { useLocation } from "react-router-dom";
+export const DisplayData = () => {
   const navigate = useNavigateCustom();
   const {userDetails}=useSelector((state)=>state.user)
 console.log(userDetails)
@@ -20,10 +21,9 @@ console.log(userDetails)
   const [data, setData] = useState([]);
    const [favourite,setfavourite]=useState({})
   const [typeOfDataDisplay, settypeofDataDisplay] = useState();
-  useImperativeHandle(ref, () => ({
-    getData,
-  }));
-
+  const location=useLocation();
+ const query=location?.state?.query;
+console.log(query)
   useEffect(()=>
   {
     let object={};
@@ -31,7 +31,7 @@ console.log(userDetails)
     setfavourite((prev)=>({...prev,...object}))
   },[userDetails])
   const getData = async () => {
-    if (button) {
+    if (query) {
       let categories = getCategory(-1);
       let url = `${BACKEND_URL}/getInfluencers/search/?`;
       if (query.fmax !== undefined) url += `&fmax=${query.fmax}`;
@@ -91,7 +91,7 @@ console.log(userDetails)
   };
   useEffect(() => {
     getData();
-  }, [button]);
+  }, [query]);
 
   useEffect(() => {
     const divElement = divRef.current;
@@ -263,4 +263,4 @@ console.log(favourite)
       </div>
     </>
   );
-});
+}

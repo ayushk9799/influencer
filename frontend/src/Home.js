@@ -1,3 +1,4 @@
+import { DisplayData } from "./DisplayData.js";
 import "./Home.css";
 import { SearchFilter } from "./SearchFilter.js";
 
@@ -15,6 +16,7 @@ export const Home = () => {
         </div>
       </div>
       <SearchFilter />
+      <DisplayData/>
     </>
   );
 };

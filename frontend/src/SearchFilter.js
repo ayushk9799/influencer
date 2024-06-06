@@ -5,6 +5,7 @@ import { DisplayData } from "./DisplayData";
 import { RxCross1 } from "react-icons/rx";
 import { FaSearch } from "react-icons/fa";
 import { getCategory } from "./assets/Data";
+import { useNavigateCustom } from "./CustomNavigate";
 export const SearchFilter = () => {
   const dropDownRef = useRef(null);
   const fieldref = useRef(null);
@@ -12,15 +13,10 @@ export const SearchFilter = () => {
   const countryRef = useRef(null);
   const followerRef = useRef(null);
   const DisplayDataRef = useRef(null);
+  const navigate=useNavigateCustom();
   const [searchJsx, setsearchJsx] = useState(null);
   const [searchButton, setsearchButton] = useState(false);
   const query = useRef({});
-  const searchinner = (
-    <img
-      src="iconSvg.svg"
-      style={{ width: 18, height: 18, borderRadius: 4 }}
-    ></img>
-  );
   const [followerrange, setFollowerRange] = useState(["0", "1M+"]);
   const socialMediaOptions = ["Instagram", "YouTube", "All"];
   const [selectedSocialMediaOptions, setselectedSocialMediaOptions] =
@@ -80,8 +76,10 @@ export const SearchFilter = () => {
     }
   };
   const handleSearch = () => {
-    DisplayDataRef.current.getData();
-    setsearchButton(true);
+    // DisplayDataRef.current.getData();
+    // setsearchButton(true);
+navigate('/influencer/search',{state:{query:query?.current}})
+
   };
   const handleResize = () => {
     if (window.innerWidth < 700) {
@@ -317,11 +315,11 @@ export const SearchFilter = () => {
           </div>
         </div>
       </div>
-      <DisplayData
+      {/* <DisplayData
         query={query.current}
         button={searchButton}
         ref={DisplayDataRef}
-      ></DisplayData>
+      ></DisplayData> */}
     </>
   );
 };

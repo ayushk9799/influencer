@@ -108,11 +108,33 @@ const UserSchema = new Schema({
 });
 
 UserSchema.pre("save", async function (next) {
-  if (this.iaccountID) {
+
+ 
+
+  if (this.iaccountID && this.iaccountID!=="") {
     this.uniqueID = this.iaccountID;
-  } else if (this.yaccountID) {
+  } else if (this.yaccountID && this.yaccountID!=="") {
     this.uniqueID = this.yaccountID;
   }
+  if(this.iaccountID==="" && this.yaccountID==="")
+  {
+     this.uniqueID=undefined;
+     this.iaccountID=undefined;
+     this.yaccountID=undefined;
+  }
+  else if(this.yaccountID==="")
+  {
+     this.yaccountID=undefined;
+  }
+  else if(this.iaccountID==="")
+  {
+     this.iaccountID=undefined;
+  }
+
+
+ 
+
+  
   next();
 });
 
@@ -120,22 +142,26 @@ UserSchema.pre('save', function (next) {
   
   if(this.isModified('iprice') || this.isModified('yprice')) {
     const prices = [];
-
+       console.log("mdoifie")
     // Collect all iprice values
+   
     if (this.iprice) {
-      if (this.iprice.reels) prices.push(this.iprice.reels.price);
-      if (this.iprice.photo && this.iprice.photo.price) prices.push(...this.iprice.photo.price);
-      if (this.iprice.story && this.iprice.story.price) prices.push(...this.iprice.story.price);
+      
+      if (this.iprice.reels?.price) prices.push(this.iprice.reels.price);
+      if ( this.iprice.photo?.price[0]) prices.push(...this.iprice.photo.price);
+      if (this.iprice.story?.price[0]) prices.push(...this.iprice.story.price);
     }
 
     // Collect all yprice values
     if (this.yprice) {
-      if (this.yprice.video) prices.push(this.yprice.video.price);
-      if (this.yprice.shorts) prices.push(this.yprice.shorts.price);
+      if (this.yprice.video?.price) prices.push(this.yprice.video.price);
+      if (this.yprice.shorts?.price) prices.push(this.yprice.shorts.price);
     }
 
     // Find the minimum price and set it
     if (prices.length > 0) {
+      console.log(Math.min(...prices))
+      console.log(prices)
       this.price = Math.min(...prices);
     }
   }
