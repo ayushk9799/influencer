@@ -1,26 +1,8 @@
-
-
 .order-container {
-    padding: 0px;
-    margin: 0px;
-    height: 100%;
-    width: 100%;
-    font-family: Roboto;
     display: flex;
-    flex: 1;
     justify-content: center;
     background-color: #f0f0f0;
-    box-sizing: border-box;
-    .order-main {
-        height: 100%;
-        width: 1200px;
-        background-color: white;
-        border: 1px solid #e4e7ed;
-        box-sizing: border-box;
-        padding: 15px;
-        margin: 5px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
+
     .alert-success {
         position: fixed;
         width: 400px;
@@ -33,6 +15,16 @@
         animation: alertDiv 5s ease-in-out;
     }
 
+}
+
+.order-main {
+    height: 100%;
+    width: 1200px;
+    background-color: white;
+    border: 1px solid #e4e7ed;
+    padding: 15px;
+    margin: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .modal-container {
@@ -80,20 +72,11 @@
 .order-top-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    box-sizing: border-box;
     .profile-xyz {
-        box-sizing: border-box;
         .button-container-orders {
-            font-size: 14px;
+            display: flex;
+            gap: 15px;
         }
-        .button-design {
-            border: 1px solid black;
-            margin-right: 5px;
-            padding: 4px;
-            text-decoration: none;
-            color: black;
-        }
-
     }
     .order-summary {
         border: 1px solid #e4e7ed;
@@ -108,7 +91,7 @@
     border-bottom: 1px solid #D5D9D9;
     background-color: #F0F2F2 !important;
     box-sizing: border-box;
-    padding: 5px;
+    padding: 5px 10px;
     > div {
         display: flex;
         flex-direction: column;
@@ -118,33 +101,37 @@
 }
 
 .order-summary-bottom  {
-    padding: 5px;
-    div {
+    padding: 5px 20px;
+    > div {
         display: grid;
         grid-template-columns: 1fr 1fr;
+        margin-bottom: 5px;
    }
 }
 
 .order-bottom-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    height: 200px;
+    margin-top: 10px;
+    display: flex;    
     gap: 10px;
-    box-sizing: border-box;
-    
+
     .payment-container-buyer {
-        height: 190px;
+        flex: 1;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        box-sizing: border-box;
-        /* padding: 5px; */
-        >div {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-        }
     }
     .payment-container-influencer {
-        height: 190px;
+        flex: 1;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .payment-element-buyer {
+        padding: 5px 20px;
+        >div {
+            margin-bottom: 5px;
+            display: flex;
+            >p {
+                flex : 1;
+            }
+        }
     }
 }
 
@@ -167,9 +154,9 @@
     }
 }
 
-
 .status-container {
-    margin: 30px 0px;
+    margin: 10px 0px;
+    font-family: Roboto;
 }
 
 .status-card {
@@ -201,6 +188,21 @@
         cursor: pointer;
         :hover {
             opacity: 0.7;
+        }
+    }
+}
+
+.eg {
+    display: flex;
+    justify-content: center;
+    font-size: 12px;
+    >div {
+        width: 435px;
+        display: flex;
+        justify-content: space-between;
+        >p {
+            width: 80px;
+            text-align: center;
         }
     }
 }
@@ -256,30 +258,40 @@
    }
 }
 
-.eg {
-    display: flex;
-    justify-content: center;
-    font-size: 12px;
-    >div {
-        width: 435px;
-        display: flex;
-        justify-content: space-between;
-        >p {
-            width: 80px;
-            text-align: center;
-        }
-    }
-}
+
 
 @media (max-width : 730px) {
     .order-main {
         width: 100%;
+        margin: 0px;
+        padding: 10px;
     }
     .order-top-container {
-        display: inline;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        .profile-xyz {
+            display: flex;
+            justify-content: space-between;
+        }
+        .button-container-orders {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+        }
+    }
+    .status-container {
+        margin-bottom: 20px;
+    }
+    .eg:first-of-type {
+        margin-top: 10px;
+        >div {
+            >p {
+                width: fit-content;
+            }
+        }
     }
     .order-bottom-container {
-        display: block;
+        flex-direction: column;
     }
 }
-

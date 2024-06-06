@@ -99,7 +99,6 @@ const Profile = () => {
     if (!data) {
       return;
     }
-    console.log(data)
     for (const key in data) {
       const { price, description } = data[key];
      if(price){
@@ -130,7 +129,9 @@ const Profile = () => {
             <div className="item-quantity">Upto 60sec</div>
           </div>
         )}
-        <div style={{ opacity: 0.9, textAlign: 'justify' }}>{description}</div>
+        <div className="item-description">
+          <p>{description}</p>
+        </div>
         <Button style={{ width: '100%', textTransform: 'capitalize' }} onClick={() => handleContinue(1, type, key, price)} variant="contained">continue</Button>
       </div>
       elementValue.push(element);
@@ -147,13 +148,13 @@ const Profile = () => {
             {/* cover */}
             {getCoverImageComponents(gallery)}
             <div className='cover-container-mobile' onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
-                <img src={`${s3Domain}/${gallery[coverIndexMobile]}`} />
+                <img src={`${s3Domain}/${gallery[coverIndexMobile]}`} alt="Covers" />
                 <div className='cover-indicator'>{coverIndexMobile+1}/{gallery.length}</div>
             </div>
             {/* profile */}
             <div className='profile-div'>
                 <div className='image-div'>
-                    <img  src={`${profilePic}`} alt='image'  />
+                    <img  src={profilePic} alt='profile Picture'  />
                 </div>
                 
                 <div className="profilenames">
@@ -249,6 +250,6 @@ const getCoverImageComponents = (coverImage) => {
       </div>
     );
   } else {
-    return <div className="cover-container"></div>;
+    return <div ></div>;
   }
 };

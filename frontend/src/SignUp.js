@@ -1,7 +1,10 @@
-export const SignUp=()=>
-{
-    return <div>
+import React from 'react'
+import "./signUp.css"
 
-        signUP
-    </div>
+const SignUp = () => {
+  return (
+    <div className='sign-up-container'>SignUp</div>
+  )
 }
+
+export default SignUp

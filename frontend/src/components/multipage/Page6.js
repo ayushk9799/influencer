@@ -3,26 +3,17 @@ import "./page6.css"
 import { FaInstagram, FaYoutube} from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { setCurrentStep, updateFormData } from '../../redux/FormSlice';
+import {OutlinedInput, InputAdornment, InputLabel, FormControl} from '@mui/material'
 // import FormHeader from '../subcomponents/FormHeader';
 
 const Page6 = () => {
-    const {formData, currentStep} = useSelector(state=>state.form);
-    const {userDetails}=useSelector((state)=>state.user)
-    const buttonRef = useRef([]);
-    const inputRef = useRef([]); // for focusing input when clicked on add
+    const {currentStep} = useSelector(state=>state.form);
+    const {userDetails}=useSelector((state)=>state.user);
     const alertRef = useRef();
-    console.log(formData)
     const [iaccountID, setIaccountID] = useState(userDetails?.iaccountID || "");
     const [yaccountID, setYaccountID] = useState(userDetails?.yaccountID || "");
     const dispatch = useDispatch();
     
-    const handleAdd = (index) => {
-        buttonRef.current[index].style.display = 'none'
-        buttonRef.current[index+1].style.display = 'flex'
-        inputRef.current[index/2].focus();
-        alertRef.current.style.display = 'none'
-    }
-
     const handleSubmit = () => {
         if(!iaccountID && !yaccountID) {
             alertRef.current.style.display = 'flex';
@@ -38,28 +29,30 @@ const Page6 = () => {
         <h3>Add Your Social Channel</h3>
         <p>Add your social media account i.e influencer account</p>
         <div className='social-container'>
-            
-            <div onClick={() => {handleAdd(0)}}  >
-               <div className='button-main' ref={ref => buttonRef.current[0] = ref} style={{display : !iaccountID ? 'flex' : 'none'}} >
-                    <FaInstagram size={25} />   
-                    <p>Add Instagram</p>
-               </div>
-               <div className='button-inputes' ref={ref => buttonRef.current[1] = ref} style={{display : iaccountID ? 'flex' : 'none'}}>
-                    <FaInstagram size={25} />
-                    <input ref={ref => inputRef.current[0] = ref} placeholder='User id' value={iaccountID} onChange={(e) => setIaccountID(e.target.value)} />
-               </div>
-            </div>
-            {/* Youtube */}
-            <div onClick={() => {handleAdd(2)}}>
-               <div className='button-main' ref={ref => buttonRef.current[2] = ref} style={{display : !yaccountID ? 'flex' : 'none'}}>
-                    <FaYoutube  size={25} />
-                    <p>Add Youtube</p>
-               </div>
-               <div className='button-inputes' ref={ref => buttonRef.current[3] = ref} style={{display : yaccountID ? 'flex' : 'none'}} >
-                    <FaYoutube  size={25} />
-                    <input ref={ref => inputRef.current[1] = ref} placeholder='User id' value={yaccountID} onChange={(e) => setYaccountID(e.target.value)} />
-               </div>
-            </div>
+            <FormControl fullWidth style={{marginBottom:'30px'}} >
+                <InputLabel htmlFor="outlined-adornment-amount">Instagram User Id</InputLabel>
+                <OutlinedInput
+                    id="outlined-adornment-amount"
+                    value={iaccountID}
+                    onChange={(e) => setIaccountID(e.target.value)}
+                    startAdornment={<InputAdornment position="start"><FaInstagram size={28} /></InputAdornment>}
+                    fullWidth
+                    placeholder='eg: instagram_01'
+                    label='Instagram user id'
+                />
+            </FormControl>
+            <FormControl fullWidth>
+                <InputLabel htmlFor="outlined-adornment-youtube">Youtube User Id</InputLabel>
+                <OutlinedInput
+                    id="outlined-adornment-youtube"
+                    value={yaccountID}
+                    onChange={(e) => setYaccountID(e.target.value)}
+                    startAdornment={<InputAdornment position="start"><FaYoutube size={28} /></InputAdornment>}
+                    fullWidth
+                    placeholder='eg : @youtube_2'
+                    label='Youtube user id'
+                />
+            </FormControl>
         </div>
         <div className='alert-box1' ref={alertRef} >
             <p>Must add at least 1 field.</p>
