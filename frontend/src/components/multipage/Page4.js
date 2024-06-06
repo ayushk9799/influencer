@@ -44,6 +44,7 @@ const Page4 = () => {
             sx={{ m: 0.5 }}
             onClick={() => handler(index)}
             variant={categories.has(index) ? "contained" : "outlined"}
+            style={{textTransform:'capitalize'}}
           >
             {value}
           </Button>

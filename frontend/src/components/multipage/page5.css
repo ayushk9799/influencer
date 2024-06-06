@@ -11,7 +11,6 @@ input::-webkit-inner-spin-button {
     flex-direction: column;
     align-items: center;
     box-sizing: border-box;
-    padding: 7px;
     >p {
         text-align: center;
     }
@@ -29,13 +28,14 @@ input::-webkit-inner-spin-button {
     box-sizing: border-box;
     justify-content: center;
     flex-wrap: wrap;
+    gap: 10px;
 }
 
 .item-body {
     border: 1px solid rgb(204, 201, 201);
-    padding: 7px 0px;
-    margin: 8px;
-    width: 45%;
+    padding: 15px 0px;
+    margin: 15px 0px;
+    width: 47%;
     box-sizing: border-box;
     border-radius: 5px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -47,6 +47,9 @@ input::-webkit-inner-spin-button {
         align-items: center;
         justify-content: center;
         padding: 5px 0px;
+    }
+    .inpute-items > p {
+        font-size: 20px;
     }
     .inpute-items > input {
         padding: 4px;

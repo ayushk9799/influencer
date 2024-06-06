@@ -1,56 +1,65 @@
 .container1 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    >h2 {
-        font-size: 36px;   
-        font-family: Roboto, sans-serif;
-    }
-    >p {
-        font-size: 16px;
-        word-wrap: break-word;
-        font-family: 'Open-sans', sans-serif;
-        letter-spacing: 0.7px;
-        opacity: 0.9;
-    }
-}
-
-.main {
-    display: flex;
-    justify-content: space-around;
-    padding: 7px;
-    .arrow {
-       margin-top: 25px;
-    }
-}
-
-.abc {
-    background-color: #4762c9;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-}
-
-.element {
-  width: 350px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* border: 1px solid black; */
+  margin-top: 10px;
+  width: 100%;
+  padding: 30px 10px;
+  background-color: #F5F5F5 ;
+  > h2 {
+    font-size: 25px;
+    font-family: Roboto, sans-serif;
+  }
+  > p {
+    font-size: 14px;
+    word-wrap: break-word;
+    font-family: "Open-sans", sans-serif;
+    letter-spacing: 0.7px;
+    opacity: 0.9;
+    text-align: center;
+  }
+}
+
+.main {
+  display: flex;
+  justify-content: space-around;
+  padding: 7px;
+  .arrow {
+    margin-top: 25px;
+  }
+}
+
+.abc {
+  background-color: #4762c9;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.element {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin: 10px;
   text-align: center;
-  >p {
+  > p {
     font-family: Roboto;
+    font-size: 14px;
+    text-align: justify;
   }
-  >h5 {
+  > h5 {
     opacity: 0.7;
   }
 }
 
-@media (max-width : 600px) {
+@media (max-width: 1000px) {
+  .container1 {
+    margin-top: 20px;
+  }
   .main {
     width: 100%;
     display: flex;
@@ -60,9 +69,13 @@
   .arrow {
     transform: rotate(90deg);
     margin-top: 0px;
+    margin-bottom: 5px;
   }
   .element {
-    /* background-color: gray; */
+    width: 95%;
     margin: 0px;
+    > p {
+      text-align: center;
+    }
   }
-} 
+}

@@ -1,22 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react'
-import {useParams, useLocation, Link} from 'react-router-dom'
+import {useParams, useLocation, Link, useNavigate} from 'react-router-dom'
 import "./orderDetails.css"
 import { FaCheckCircle} from "react-icons/fa";
 import {AiTwotoneBank} from 'react-icons/ai'
-import { IoIosCloseCircle } from "react-icons/io";
+import { IoIosCloseCircle, IoMdClose } from "react-icons/io";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { FiEdit  } from "react-icons/fi";
 import { BACKEND_URL, getDateFormatted, s3Domain } from '../assets/Data';
 import { useDispatch, useSelector } from 'react-redux';
 import {Alert, Modal, Box, Button} from '@mui/material';
 import {updateUserDetails} from '../redux/UserSlice';
-
 import WorkingStep from './subcomponents/WorkingStep';
 
-
-// import { BACKEND_URL } from '../assets/Data';
-
-const style = {
+export const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
@@ -31,6 +27,7 @@ const style = {
 const OrderDetails = () => {
     const location = useLocation();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const {userDetails} = useSelector(state=>state.user);
     const [orderDetails, setOrderDetails] = useState(location?.state?.orderDetails);
     const [second, setSecond] = useState(1); // time for showing animation
@@ -52,20 +49,49 @@ const OrderDetails = () => {
 
     // const {orderDetails} = location.state;
 
+    const fetchOrderDetails = async () => {
+        const response = await fetch(`${BACKEND_URL}/user/orders/${orderID}`, {
+            credentials: "include",
+        });
+        const { order } = await response.json();
+        if(response.status === 200) {
+            setOrderDetails(order);
+        } else  {
+            navigate('/user/orders', {replace : true})
+        }
+        return;
+    }
+
+    console.log('state',location.state);
+
+    // get order data - direct refresh situation
+    useEffect(() => {
+        if(!location?.state) {
+            fetchOrderDetails();
+        }
+    }, []);
+
     // order status bar animation
     useEffect(() => {
         const iconsElement = document.querySelectorAll('.status-icon');
         const statusBar = document.querySelectorAll('.status-bar > div');
         if(orderDetails && orderDetails.orderStatus[0]) {
-            iconsElement[0].style.color = '#1877F2';
+            if(orderDetails.orderStatus[0] === 'success') {
+                iconsElement[0].style.color = '#1877F2';
+            } else if(orderDetails.orderStatus[0] === 'failed') {
+                iconsElement[0].style.color = 'red';
+                return;
+            } else {
+                return;
+            }
         }
         const timer = setInterval(() => {
-            if(orderDetails.orderStatus[second]) {
+            if(orderDetails.orderStatus[second] === 'success') {
                 iconsElement[second].style.color = '#1877F2';
                 statusBar[second-1].style.width = '100px';
                 statusBar[second-1].style.backgroundColor = '#1877F2';
                 setSecond(pre=>pre+1);
-            }else if(orderDetails?.workAccepted?.status === 'rejected' || orderDetails?.workApproval?.status === 'rejected') {
+            }else if(orderDetails.orderStatus[second] === 'failed') {
                 iconsElement[second].style.color = 'red';
                 statusBar[second-1].style.width = '100px';
                 statusBar[second-1].style.backgroundColor = 'red';
@@ -97,6 +123,8 @@ const OrderDetails = () => {
         }, 1000);
         return () => clearInterval(timer);
     }, [second, orderDetails]);
+
+    console.log('order', orderDetails);
 
 
     // send event of client and influencer to server
@@ -171,23 +199,10 @@ const OrderDetails = () => {
         }
     }
 
-    // get order data - direct refresh situation
-    // useEffect(() => {
-    //     const fetchOrderDetails = async () => {
-    //         const response = await fetch(`${BACKEND_URL}/user/orders/${orderID}`, {
-    //             credentials: "include",
-    //         });
-    //         const { order } = await response.json();
-    //         return order;
-    //     }
-    //     if(location?.state) {
-    //         setOrderDetails(fetchOrderDetails());
-    //     }
-    // }, []);
     
     // manage all event of influencer acceptence of work
     const modalSubComponent1 = () => {
-        if(orderDetails.workAccepted.status === 'pending') {
+        if(orderDetails?.workAccepted?.status === 'pending') {
             if(userDetails.contentCreator) {
                 return <div>
                     <div className='checkbox'>
@@ -200,10 +215,10 @@ const OrderDetails = () => {
                 </div>
             } else {
                 return <div className='sub-component-1'>
-                    <p>Influencer has not accepted offer yet. Please wait for 48h. If they not accept offer, Influencer chat will refund your amount.</p>
+                    <p>Influencer has not accepted offer yet. Please wait for 48h. If they not accept offer, EazzyCollab will refund your amount.</p>
                 </div>
             }
-        } else if(orderDetails.workAccepted.status === 'accepted') {
+        } else if(orderDetails?.workAccepted?.status === 'success') {
             if(userDetails.contentCreator) {
                 return <div className='sub-component-1'>
                     <p>You have successfully accepted offer for collaboration.</p>
@@ -214,7 +229,7 @@ const OrderDetails = () => {
                     <Link>Chat with influencer</Link>
                 </div>
             }
-        } else if(orderDetails.workAccepted.status === 'rejected') {
+        } else if(orderDetails?.workAccepted?.status === 'failed') {
             return <div className='sub-component-1'>
                 <p>Influencer has rejected collaboration offer for following reason.</p>
                 {/* below text are not showing good-improvement required */}
@@ -233,9 +248,9 @@ const OrderDetails = () => {
     
     // manage all scenario of client approval
     const modalSubComponent2 = () => {
-        if(orderDetails.workApproval.status === 'pending') {
+        if(orderDetails?.workApproval?.status === 'pending') {
             if(userDetails.contentCreator) {
-               if(orderDetails?.orderStatus[1]) {
+               if(orderDetails?.orderStatus[1] === 'pending') {
                 return <div className='sub-component-1'>
                     <p>Client has not approved your work yet <br/> Please wait for approval.</p>
                     <Button variant='outlined' >Chat with Client</Button>
@@ -246,7 +261,7 @@ const OrderDetails = () => {
                 </div>
                }
             } else {
-                if(orderDetails?.orderStatus[1]) {
+                if(orderDetails?.orderStatus[1] === 'success') {
                     return <div>
                         <div className='checkbox'>
                             <div><input type="radio" name="acceptReject" value="accepted" checked={selectedOption === "accepted"} onChange={handleOptionChange}/>Approve</div>
@@ -263,17 +278,17 @@ const OrderDetails = () => {
                 }
 
             }
-        } else if(orderDetails.workApproval.status === 'accepted') {
+        } else if(orderDetails?.workApproval?.status === 'success') {
             if(userDetails.contentCreator) {
                 return <div className='sub-component-1'>
-                    <p>Client has successfully <b>approved</b> your work.<br/>Please wait for some time influencer chat will initiate payment.</p>
+                    <p>Client has successfully <b>approved</b> your work.<br/>Please wait for some time EazzyCollab will initiate payment.</p>
                 </div>
             } else {
                 return <div className='sub-component-1'>
-                    <p>Your have successfully <b>approved</b> his work. So, Influencer chat is initiating payment to influencer.</p>
+                    <p>Your have successfully <b>approved</b> his work. So, EazzyCollab is initiating payment to influencer.</p>
                 </div>
             }
-        } else if(orderDetails.workApproval.status === 'rejected') {
+        } else if(orderDetails?.workApproval?.status === 'failed') {
             if(userDetails.contentCreator) {
                 return <div className='sub-component-1'>
                     <p>Client has rejected your work for following reason.</p>
@@ -317,7 +332,10 @@ const OrderDetails = () => {
         <Modal open={openModal1} onClose={() => {setopenModal1(false); setApproveAgain(false)}} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
             <Box sx={{ ...style, width: 400 }}>
                 <div className='modal-container'>
-                    <h2 id="child-modal-title">Collaboration offer</h2>
+                    <div style={{display:'flex',justifyContent:'space-between', marginBottom : '0px'}}>
+                        <h2 id="child-modal-title">Collaboration offer</h2>
+                        <IoMdClose size={25} onClick={() => setopenModal1(false)} className="modal-close-button" />
+                    </div>
                     <p id="child-modal-description">
                         {userDetails?.contentCreator ? (
                             `${orderDetails?.buyer?.name} has sent offer for collaboration to you.`
@@ -332,9 +350,12 @@ const OrderDetails = () => {
         <Modal open={openModal2} onClose={() => {setOpenModal2(false); setApproveAgain(false)}} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
             <Box sx={{ ...style, width: 400 }}>
                 <div className='modal-container'>
-                    <h2 id="child-modal-title">Work Approval</h2>
+                    <div style={{display:'flex',justifyContent:'space-between', marginBottom : '0px'}}>
+                        <h2 id="child-modal-title">Work Approval</h2>
+                        <IoMdClose size={25} onClick={() => setOpenModal2(false)} className="modal-close-button" />
+                    </div>
                     <p id="child-modal-description">
-                        Onces influencer will be completed work. Client approves his work, so that Influencer chat can initiate payment to influencer.
+                        Onces influencer will be completed work. Client approves his work, so that EazzyCollab can initiate payment to influencer.
                     </p>
                     {modalSubComponent2()}
                 </div>
@@ -348,7 +369,7 @@ const OrderDetails = () => {
                         {userDetails?.bankDetails && (<FiEdit onClick={() => setApproveAgain(pre=>!pre)} style={{cursor : 'pointer'}} />)}
                     </div>
                     <p id="child-modal-description">
-                        Add your bank account details for recieving payments from Influencer Chat.
+                        Add your bank account details for recieving payments from EazzyCollab.
                     </p>
                     {userDetails?.bankDetails && !approveAgain ? (
                         <div className='bank-details'>
@@ -399,8 +420,8 @@ const OrderDetails = () => {
                         </div>
                     </div>
                     <div className='button-container-orders'>
-                        <Link to={'#'} className='button-design'>{userDetails?.contentCreator ? 'Chat with client' : 'Chat with influencer' }</Link>
-                        <Link to={'#'} className='button-design'>Get support</Link>
+                        <Link to={'#'} className='profile-buttons'>{userDetails?.contentCreator ? 'Chat with client' : 'Chat with influencer' }</Link>
+                        <Link to={'#'} className='profile-buttons'>Get support</Link>
                     </div>
                 </div>
                 <div className='order-summary'>
@@ -417,7 +438,7 @@ const OrderDetails = () => {
                     <div className='order-summary-bottom'>
                         <div>
                             <p>Social media handle : </p>
-                            <p>{orderDetails?.orderSummary?.accountType}</p>
+                            <p style={{textTransform : 'capitalize'}}>{orderDetails?.orderSummary?.accountType}</p>
                         </div>
                         <div>
                             <p>Summary : </p>
@@ -432,13 +453,14 @@ const OrderDetails = () => {
                 </div>
             </div>
            <div className='status-container'>
-            <div className='eg'>
-                <div>
-                    <p>Offer sent</p>
-                    <p>Collaboration</p>
-                    <p>Approved</p>
-                    <p>Completed</p>
-                </div>
+                <h4>Order status</h4>
+                <div className='eg'>
+                    <div>
+                        <p>Offer sent</p>
+                        <p>Collaboration</p>
+                        <p>Approved</p>
+                        <p>Completed</p>
+                    </div>
                 </div>
                 <div className='status-card'>
                     <FaCheckCircle className='status-icon' size={25}/>
@@ -460,32 +482,37 @@ const OrderDetails = () => {
                 </div>
 
                 <div className='eg'>
-                <div>
-                    <p >{getDateFormatted(orderDetails?.createdAt)}</p>
-                    <p>{getDateFormatted(orderDetails?.workAccepted?.date)}</p>
-                    <p>{getDateFormatted(orderDetails?.workApproval?.date)}</p>
-                    <p>{getDateFormatted(orderDetails?.influencerPaymentDetails?.date)}</p>
-                </div>
+                    <div>
+                        <p >{getDateFormatted(orderDetails?.createdAt)}</p>
+                        <p>{getDateFormatted(orderDetails?.workAccepted?.date)}</p>
+                        <p>{getDateFormatted(orderDetails?.workApproval?.date)}</p>
+                        <p>{getDateFormatted(orderDetails?.influencerPaymentDetails?.date)}</p>
+                    </div>
                 </div>
            </div>
 
             <div className='order-bottom-container'>
                 <div className='payment-container-buyer'>
                     <div className='order-summary-top'>
-                        <p>Buyer payment details</p>
-                        <a href='#'>Invoice</a>
+                        <p>{userDetails?.contentCreator ? 'Client' : 'Your'} payment details</p>
                     </div>
-                    <div>
-                        <p>Payment Id :</p>
-                        <p>{orderDetails?.buyerPaymentDetails?.paymentID}</p>
-                    </div>
-                    <div>
-                        <p>Transaction type :</p>
-                        <p>UPI</p>
-                    </div>
-                    <div>
-                        <p>Transaction date :</p>
-                        <p>{new Date(orderDetails?.createdAt).toLocaleString()}</p>
+                    <div className='payment-element-buyer'>
+                        <div>
+                            <p>Payment Status :</p>
+                            <p style={{textTransform : 'capitalize'}}>{orderDetails?.buyerPaymentStatus}</p>
+                        </div>
+                        <div>
+                            <p>Payment Id :</p>
+                            <p>{orderDetails?.buyerPaymentDetails?.paymentID}</p>
+                        </div>
+                        <div>
+                            <p>Transaction type :</p>
+                            <p>UPI</p>
+                        </div>
+                        <div>
+                            <p>Transaction date :</p>
+                            <p>{new Date(orderDetails?.createdAt).toLocaleString()}</p>
+                        </div>
                     </div>
                 </div>
                 <div className='payment-container-influencer'>
@@ -496,9 +523,9 @@ const OrderDetails = () => {
                     {orderDetails?.influencerPaymentDetails ? (
                         <div> </div>
                     ) : (
-                        <div style={{display : 'flex', flexDirection : 'column',  alignItems : 'center', justifyContent : 'center', height : "150px"}}>
+                        <div style={{display : 'flex', flexDirection : 'column',  alignItems : 'center', justifyContent : 'center', height : "150px", padding : '5px 20px'}}>
                             <p>No data found</p>
-                            <p style={{fontSize : '13px', opacity : 0.7}}>Payment will be sent to influencer onces client approve your work.</p>
+                            <p style={{fontSize : '13px', opacity : 0.7, textAlign : 'center'}}>Payment will be sent to influencer onces client approve your work.</p>
                         </div>
                     )}
                 </div>

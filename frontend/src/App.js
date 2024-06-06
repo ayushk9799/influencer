@@ -18,6 +18,8 @@ import PaymentFail from "./components/Payment/PaymentFail.js";
 import Order from "./components/Order.js";
 import OrderDetails from "./components/OrderDetails.js";
 import { DisplayData } from "./DisplayData.js";
+import FAQ from "./components/FAQ.js";
+import SignUp from "./SignUp.js";
 function App() {
   const { isAuthenticated } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -47,8 +49,8 @@ function App() {
           <Route path="/myAccount" Component={Account}></Route>
         ) : (
           <Route path="/login" Component={Login}></Route>
-        )}
-        //
+          )}
+        <Route path="/sign-up" Component={SignUp}></Route>
         <Route path="/influencer/:userID" Component={Profile}></Route>
         <Route path='/influencer/search' Component={DisplayData}></Route>
         <Route path="/chat/:uniqueID" Component={ChatBox}></Route>
@@ -59,6 +61,7 @@ function App() {
         <Route path="/custom-offer" Component={CustomOffer} />
         <Route path="/payment-success" Component={PaymentSuccess} />
         <Route path="/payment-failed" Component={PaymentFail} />
+        <Route path="/faq" Component={FAQ} />
       </Routes>
     </Router>
   );

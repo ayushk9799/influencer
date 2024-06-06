@@ -36,10 +36,10 @@ const OrderSchema = new Schema({
         enum : ['pending', 'failed', 'success'],
         default : 'pending'
     },
-    workAccepted : { // by influencer
+    workAccepted : { // by influencer [success='accepted', failed='rejected']
         status : {
             type : String,
-            enum : ['pending', 'accepted', 'rejected'],
+            enum : ['pending', 'success', 'failed'],
             default : 'pending'
         },
         message : {
@@ -49,10 +49,10 @@ const OrderSchema = new Schema({
             type : Date
         }
     },
-    workApproval : { // by buyer
+    workApproval : { // by buyer [success='accepted', failed='rejected']
         status : {
             type : String,
-            enum : ['pending', 'accepted', 'rejected'],
+            enum : ['pending', 'success', 'failed'],
             default : 'pending'
         },
         message : {
@@ -68,8 +68,8 @@ const OrderSchema = new Schema({
         default : 'pending'
     },
     orderStatus : {
-        type: [Boolean],
-        default: [false, false, false, false]
+        type: [String],
+        default: ['pending', 'pending', 'pending', 'pending']
     },
     orderID : {
         type : String,
@@ -101,23 +101,17 @@ const OrderSchema = new Schema({
 
 OrderSchema.pre('save', function(next) {
     // Check if the fields of interest have been modified
-    if (this.isModified('buyerPaymentStatus') || this.isModified('workAccepted') || this.isModified('workApproval') || this.isModified('influencerPaymentStatus')) {
-        // Initialize orderStatus array
-        // this.orderStatus = [false, false, false, false];
-
-        // Set the orderStatus based on the conditions of the fields
-        if (this.buyerPaymentStatus === 'success') {
-            this.orderStatus[0] = true;
-        }
-        if (this.workAccepted.status === 'accepted') {
-            this.orderStatus[1] = true;
-        }
-        if (this.workApproval.status === 'accepted') {
-            this.orderStatus[2] = true;
-        }
-        if (this.influencerPaymentStatus === 'success') {
-            this.orderStatus[3] = true;
-        }
+    if(this.isModified('buyerPaymentStatus')) {
+        this.orderStatus[0] = this.buyerPaymentStatus;
+    }
+    if(this.isModified('workAccepted')) {
+        this.orderStatus[1] = this.workAccepted.status;
+    }
+    if(this.isModified('workApproval')) {
+        this.orderStatus[2] = this.workApproval.status;
+    }
+    if(this.isModified('influencerPaymentStatus')) {
+        this.orderStatus[3] = this.influencerPaymentStatus;
     }
     next();
 });

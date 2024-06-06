@@ -114,10 +114,10 @@ const handleFavouriteDatabase=async(id,conditions)=>
 let url;
   if(conditions){
 
-url=`http://localhost:3000/user/favourite/create/${id}`;
+url=`${BACKEND_URL}/user/favourite/create/${id}`;
   }
   else{
-    url=`http://localhost:3000/user/favourite/remove/${id}`
+    url=`${BACKEND_URL}/user/favourite/remove/${id}`
   }
   try{
     await fetch(url,{credentials:"include"})
@@ -166,7 +166,7 @@ console.log(favourite)
               >
                <div className="heart" onClick={(event)=>handleFavourite(event,item._id)}> <AiFillHeart size={25} color={favourite[item._id]?"red":"white"}/></div>
                 <div className="nameRegionImage">
-                  <div style={{ width: "100%", height: "320px" }} ref={divRef}>
+                  <div style={{ width: "100%", height: "320px", overflow:'hidden' }} ref={divRef}>
                     {" "}
                     <img
                       src="https://picsum.photos/200/300"
@@ -215,6 +215,7 @@ console.log(favourite)
                             color: "black",
                             display: "flex", // Add this line
                             alignItems: "center", // Add this line
+                            gap : '2px'
                           }}
                         >
                           {iconsArr[0]} {formatFollowers(item.ifollowers)} Followers
@@ -242,9 +243,10 @@ console.log(favourite)
                             color: "black",
                             display: "flex", // Add this line
                             alignItems: "center", // Add this line
+                            gap : '2px'
                           }}
                         >
-                          {iconsArr[1]} {formatFollowers(item.yfollowers)} Followers
+                          {iconsArr[1]} {formatFollowers(item.yfollowers)} Subscriber
                         </a>
                       </div>
                     ) : (

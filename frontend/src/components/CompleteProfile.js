@@ -46,12 +46,20 @@ const Home = () => {
 
   return (
     <div className="main-container">
+      <div className="content-container">
+        <div className="progress-bar-container">
+          <div
+            className="progress-bar"
+            style={{ width: `${(100 * currentStep) / 5}%` }}
+          ></div>
+        </div>
+        <div >{PageDisplay()}</div>
+      </div>
       <div style={{margin:"5px"}}>
         <button
           disabled={currentStep === 1}
           onClick={() => dispatch(setCurrentStep(currentStep - 1))}
           className="buttonprevnext"
-
         >
           Prev
         </button>
@@ -63,13 +71,6 @@ const Home = () => {
           Next
         </button>
       </div>
-      <div className="progress-bar-container">
-        <div
-          className="progress-bar"
-          style={{ width: `${(100 * currentStep) / 5}%` }}
-        ></div>
-      </div>
-      <div className="content-container">{PageDisplay()}</div>
     </div>
   );
 };
