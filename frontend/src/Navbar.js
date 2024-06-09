@@ -1,11 +1,14 @@
 import { useNavigateCustom } from "./CustomNavigate";
 import "./Navbar.css";
 import { useState } from "react";
+// import {useLocation} from 'react-router-dom';
 import { HorizontalNav } from "./HorizontalNav";
 import { useSelector } from "react-redux";
-import { Button, Modal, Box } from "@mui/material";
+import { Button, Modal } from "@mui/material";
 import { FcGoogle } from "react-icons/fc";
-import { FaCheck } from "react-icons/fa";
+import { FaCheck, FaRegCheckCircle  } from "react-icons/fa";
+// import { BACKEND_URL } from "./assets/Data";
+// import { updateUserDetails } from "./redux/UserSlice";
 const CLIENT_ID =
   "708505773923-9fuh2eqg0lr8sgl86p7dsuh2v0pjuslt.apps.googleusercontent.com"; // Replace with your Google Cloud Platform project's client ID
 const REDIRECT_URI = "http://localhost:3000/auth/google/callback";
@@ -15,7 +18,14 @@ export const Navbar = ({ details }) => {
   const { userDetails } = useSelector((state) => state.user);
   const [modalOpen, setModalOpen] = useState(false);
   const [buttonClicked, setButtonClicked] = useState('');
-  const [modalAsk, setModalAsk] = useState(true);
+  // const [modalAsk, setModalAsk] = useState(false);
+  // const [typeOfUserSelect, setTypeOfUserSelect] = useState('');
+  // const selectedBrandRef = useRef();
+  // const selectedInfluencerRef = useRef();
+  // const dispatch = useDispatch();
+  const navigate = useNavigateCustom();
+  // const location = useLocation();
+  
 
   const handleSignIn = async () => {
     // Create authorization code flow URL
@@ -33,10 +43,42 @@ export const Navbar = ({ details }) => {
     window.location.href = authorizationUrl.toString();
   };
 
+  // const handleTypeSelect = (type) => {
+  //   setTypeOfUserSelect(type);
+  //   if(type === 'brand') {
+  //     selectedInfluencerRef.current.style.boxShadow = 'none'
+  //     selectedInfluencerRef.current.style.border = '1px solid rgb(204, 201, 201)'
+  //     selectedBrandRef.current.style.boxShadow = 'rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px'
+  //     selectedBrandRef.current.style.border = '2px solid #1976d2'
+  //   } else {
+  //     selectedBrandRef.current.style.boxShadow = 'none'
+  //     selectedBrandRef.current.style.border = '1px solid rgb(204, 201, 201)'
+  //     selectedInfluencerRef.current.style.boxShadow = ' rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px';
+  //     selectedInfluencerRef.current.style.border = '2px solid #1976d2'
+  //   }
+  // }
+
+  // const handleSubmitType = async () => {
+  //   try {
+  //     const temp = {contentCreator : typeOfUserSelect==='brand' ? false : true}
+  //     const response = await fetch(`${BACKEND_URL}/addData`, {
+  //       method : 'POST',
+  //       credentials : 'include',
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body : JSON.stringify(temp)
+  //     });
+  //     const {data} = await response.json();
+  //     dispatch(updateUserDetails({contentCreator : data.contentCreator}));
+  //   } catch (err) {
+  //     console.log('some problem');
+  //   }
+  // }
+
   const handleChange = () => {
     setMenuButton(!menuButton);
   };
-  const navigate = useNavigateCustom();
   return (
     <div className="navbar-main-container">
       <Modal open={modalOpen} onClose={()=>{setModalOpen(false);setButtonClicked('');}} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
@@ -70,23 +112,31 @@ export const Navbar = ({ details }) => {
         </div>
       </Modal>
       {/* modal for asking who are your brand or influencer */}
-      <Modal open={modalAsk}>
+      {/* <Modal open={modalAsk}>
         <div className="modal-container-div modal-container-ask">
-          <h3>Your account created successfully</h3>
+          <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:'5px'}}>
+            <FaRegCheckCircle size={22} color="green" />
+            <h3>Your account created successfully</h3>
+          </div>
           <h4>Who are you?</h4>
+          <p>For what purpose you have join EazzyCollab</p>
           <div className="who-container">
-            <div>
-              <h5>Brand</h5>
-            </div>
-            <div>
+            <div onClick={()=>handleTypeSelect('influencer')} ref={selectedInfluencerRef}>
               <h5>Influencer</h5>
+              <img src={require('./assets/content.jpg')} />
+              <p style={{fontSize:'12px'}}>looking for brand</p>
+            </div>
+            <div onClick={()=> handleTypeSelect('brand')} ref={selectedBrandRef}>
+              <h5>Brand</h5>
+              <img src={require('./assets/brand.jpg')} />
+              <p style={{fontSize:'12px'}}>looking for content creator</p>
             </div>
           </div>
-          <div>
-            <Button variant="outlined">Next</Button>
+          <div >
+            <Button disabled={typeOfUserSelect?.length===0} onClick={handleSubmitType} style={{width:'150px',textTransform:'capitalize',fontSize:'16px'}} variant="contained">Next</Button>
           </div>
         </div>
-      </Modal>
+      </Modal> */}
       <div id="navbarcontainer">
         <div id="nameandlogo">EazzyCollab</div>
         <div id="navbardetails">
@@ -99,7 +149,6 @@ export const Navbar = ({ details }) => {
           {userDetails?.email ? (
             <div
               className="navDetailsClass"
-             
               id="account"
             >
               <div id="accountDetails"  onClick={() => navigate("/myAccount")}>

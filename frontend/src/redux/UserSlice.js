@@ -23,6 +23,12 @@ export const getOrder = createAsyncThunk('user/get-orders', async () => {
     return orders;
 });
 
+// for checking which form data is changed and update that value to form-data
+// export const updateForm = createAsyncThunk('user/update-form', (payload, {getState, dispatch}) => {
+//     const {userDetails} = getState().user;
+   
+// })
+
 const UserSlice = createSlice({
     name : 'user',
     initialState,
