@@ -4,7 +4,6 @@ import { FaInstagram, FaYoutube} from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { setCurrentStep, updateFormData } from '../../redux/FormSlice';
 import {OutlinedInput, InputAdornment, InputLabel, FormControl} from '@mui/material'
-// import FormHeader from '../subcomponents/FormHeader';
 
 const Page6 = () => {
     const {currentStep} = useSelector(state=>state.form);

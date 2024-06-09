@@ -8,15 +8,15 @@ import { useNavigateCustom } from "../../CustomNavigate";
 const Page1 = () => {
   // State variables for form fields
   const navigate = useNavigateCustom();
-  const { formData } = useSelector((state) => state.form);
+  const { userDetails } = useSelector((state) => state.user);
 
-  const [region, setRegion] = useState(formData?.region || "");
-  const [name, setName] = useState(formData?.name || "");
-  const [gender, setGender] = useState(formData?.gender || "");
+  const [region, setRegion] = useState(userDetails?.region || "");
+  const [name, setName] = useState(userDetails?.name || "");
+  const [gender, setGender] = useState(userDetails?.gender || "");
   const [mobileNumber, setMobileNumber] = useState(
-    formData?.mobileNumber || ""
+    userDetails?.mobileNumber || ""
   );
-  const [bio, setBio] = useState(formData?.bio || "");
+  const [bio, setBio] = useState(userDetails?.bio || "");
   const dispatch = useDispatch();
 
   // Function to handle form submission

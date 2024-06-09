@@ -7,16 +7,17 @@ import FormHeader from "../subcomponents/FormHeader";
 import { getCategory } from "../../assets/Data.js";
 const Page4 = () => {
   const dispatch = useDispatch();
-  const { formData, currentStep } = useSelector((state) => state.form);
+  const { currentStep } = useSelector((state) => state.form);
+  const {userDetails} = useSelector(state=>state.user);
   const [categories, setCategories] = useState(new Set());
 
   useEffect(() => {
-    const data = formData["field"];
+    const data = userDetails?.field;
     if (data) {
       const s = new Set([...data]);
       setCategories(s);
     }
-  }, [formData]);
+  }, [userDetails]);
 
   const handler = (index) => {
     const s = new Set(categories);

@@ -1,4 +1,4 @@
-import mongoose, { Mongoose, Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const UserSchema = new Schema({
   email: {
@@ -67,7 +67,7 @@ const UserSchema = new Schema({
       description: String,
     },
   },
- favourites:[{type:Schema.Types.ObjectId,ref:"user"}],
+  favourites: [{ type: Schema.Types.ObjectId, ref: "user" }],
   yaccountID: {
     type: String,
   },
@@ -108,47 +108,33 @@ const UserSchema = new Schema({
 });
 
 UserSchema.pre("save", async function (next) {
-
- 
-
-  if (this.iaccountID && this.iaccountID!=="") {
+  if (this.iaccountID && this.iaccountID !== "") {
     this.uniqueID = this.iaccountID;
-  } else if (this.yaccountID && this.yaccountID!=="") {
+  } else if (this.yaccountID && this.yaccountID !== "") {
     this.uniqueID = this.yaccountID;
   }
-  if(this.iaccountID==="" && this.yaccountID==="")
-  {
-     this.uniqueID=undefined;
-     this.iaccountID=undefined;
-     this.yaccountID=undefined;
-  }
-  else if(this.yaccountID==="")
-  {
-     this.yaccountID=undefined;
-  }
-  else if(this.iaccountID==="")
-  {
-     this.iaccountID=undefined;
+  if (this.iaccountID === "" && this.yaccountID === "") {
+    this.uniqueID = undefined;
+    this.iaccountID = undefined;
+    this.yaccountID = undefined;
+  } else if (this.yaccountID === "") {
+    this.yaccountID = undefined;
+  } else if (this.iaccountID === "") {
+    this.iaccountID = undefined;
   }
 
-
- 
-
-  
   next();
 });
 
-UserSchema.pre('save', function (next) {
-  
-  if(this.isModified('iprice') || this.isModified('yprice')) {
+UserSchema.pre("save", function (next) {
+  if (this.isModified("iprice") || this.isModified("yprice")) {
     const prices = [];
-       console.log("mdoifie")
+    // console.log("mdoifie");
     // Collect all iprice values
-   
+
     if (this.iprice) {
-      
       if (this.iprice.reels?.price) prices.push(this.iprice.reels.price);
-      if ( this.iprice.photo?.price[0]) prices.push(...this.iprice.photo.price);
+      if (this.iprice.photo?.price[0]) prices.push(...this.iprice.photo.price);
       if (this.iprice.story?.price[0]) prices.push(...this.iprice.story.price);
     }
 
@@ -160,12 +146,12 @@ UserSchema.pre('save', function (next) {
 
     // Find the minimum price and set it
     if (prices.length > 0) {
-      console.log(Math.min(...prices))
-      console.log(prices)
+      // console.log(Math.min(...prices));
+      // console.log(prices);
       this.price = Math.min(...prices);
     }
   }
   next();
-})
+});
 
 export const User = mongoose.model("user", UserSchema);

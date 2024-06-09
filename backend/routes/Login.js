@@ -44,7 +44,7 @@ router.get("/google/callback", async (req, res,next) => {
         { _id: checkUSer._id },
         "influencerChataccess"
       );
-      redirectRoute="http://localhost:3001"
+      redirectRoute=process.env.FRONTEND_URL
     } else {
      
         console.log("new")
@@ -60,7 +60,7 @@ router.get("/google/callback", async (req, res,next) => {
         "influencerChataccess"
       );
 
-      redirectRoute="http://localhost:3001/complete-profile"
+      redirectRoute=`${process.env.FRONTEND_URL}/complete-profile/1`
     }
     res.cookie("jwtaccesstoken", jwtaccesstoken, {
       maxAge: 6 * 30 * 24 * 60 * 60 * 1000,
