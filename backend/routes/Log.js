@@ -71,4 +71,17 @@ router.get("/google/callback", async (req, res,next) => {
     next(error)
   }
 });
+
+
+router.get('/logout',async(req,res,next)=>
+{
+      try{
+        res.clearCookie('jwtaccesstoken');
+        res.redirect('http://localhost:3001')
+      }
+      catch(error)
+      {
+        next(error)
+      }
+})
 export default router;

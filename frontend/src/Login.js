@@ -5,10 +5,8 @@ const CLIENT_ID =
 const REDIRECT_URI = "http://localhost:3000/auth/google/callback";
 
 export const Login = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userEmail, setUserEmail] = useState(null);
+  
 
-  useEffect(() => {}, []);
 
   const handleSignIn = async () => {
     // Create authorization code flow URL

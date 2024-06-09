@@ -93,21 +93,7 @@ console.log(query)
     getData();
   }, [query]);
 
-  useEffect(() => {
-    const divElement = divRef.current;
-
-    if (divElement) {
-      const computedStyle = window.getComputedStyle(divElement);
-
-      // Listen for the image load event
-      const img = divElement.querySelector("img");
-      img.addEventListener("load", () => {
-        const computedStyleAfterLoad = window.getComputedStyle(divElement);
-      });
-    }
-
-    // Clean up the event listener on component unmount
-  }, [divRef.current]);
+ 
 const handleFavouriteDatabase=async(id,conditions)=>
 {
 
@@ -169,7 +155,7 @@ console.log(favourite)
                   <div style={{ width: "100%", height: "320px", overflow:'hidden' }} ref={divRef}>
                     {" "}
                     <img
-                      src="https://picsum.photos/200/300"
+                      src={item.profilePic}
                       alt="Profile Pic"
                     />
                   </div>

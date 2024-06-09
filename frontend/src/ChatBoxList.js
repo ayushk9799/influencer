@@ -32,6 +32,9 @@ export const ChatBoxList = () => {
     const handleResize = () => {};
     handleResize();
     window.addEventListener("resize", handleResize);
+    return ()=>{
+      window.removeEventListener('resize',handleResize)
+    }
   }, []);
   return (
     <div id="chatboxlistcontainer">

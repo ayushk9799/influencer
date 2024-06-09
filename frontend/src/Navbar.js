@@ -9,29 +9,29 @@ import { FaCheck } from "react-icons/fa";
 const CLIENT_ID =
   "708505773923-9fuh2eqg0lr8sgl86p7dsuh2v0pjuslt.apps.googleusercontent.com"; // Replace with your Google Cloud Platform project's client ID
 const REDIRECT_URI = "http://localhost:3000/auth/google/callback";
+export const handleSignIn = async () => {
+  // Create authorization code flow URL
+  const authorizationUrl = new URL(
+    "https://accounts.google.com/o/oauth2/v2/auth"
+  );
+  authorizationUrl.searchParams.set("client_id", CLIENT_ID);
+  authorizationUrl.searchParams.set("redirect_uri", REDIRECT_URI);
+  authorizationUrl.searchParams.set("scope", "profile email");
+  authorizationUrl.searchParams.set("response_type", "code");
+  authorizationUrl.searchParams.set("access_type", "offline");
+  authorizationUrl.searchParams.set("prompt", "consent");
 
+  // Redirect user to Google's authorization endpoint
+  window.location.href = authorizationUrl.toString();
+};
 export const Navbar = ({ details }) => {
   const [menuButton, setMenuButton] = useState(false);
   const { userDetails } = useSelector((state) => state.user);
   const [modalOpen, setModalOpen] = useState(false);
   const [buttonClicked, setButtonClicked] = useState('');
-  const [modalAsk, setModalAsk] = useState(true);
+  const [modalAsk, setModalAsk] = useState(false);
 
-  const handleSignIn = async () => {
-    // Create authorization code flow URL
-    const authorizationUrl = new URL(
-      "https://accounts.google.com/o/oauth2/v2/auth"
-    );
-    authorizationUrl.searchParams.set("client_id", CLIENT_ID);
-    authorizationUrl.searchParams.set("redirect_uri", REDIRECT_URI);
-    authorizationUrl.searchParams.set("scope", "profile email");
-    authorizationUrl.searchParams.set("response_type", "code");
-    authorizationUrl.searchParams.set("access_type", "offline");
-    authorizationUrl.searchParams.set("prompt", "consent");
-
-    // Redirect user to Google's authorization endpoint
-    window.location.href = authorizationUrl.toString();
-  };
+  
 
   const handleChange = () => {
     setMenuButton(!menuButton);
@@ -42,10 +42,10 @@ export const Navbar = ({ details }) => {
       <Modal open={modalOpen} onClose={()=>{setModalOpen(false);setButtonClicked('');}} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <div className="modal-container-div modal-container-login">
           <div className="left-login-modal">
-            <h3>EazzyCollab offers</h3>
-            <div><FaCheck/>Over 1000+ influencer</div>
-            <div><FaCheck/>Over 50+ brands</div>
-            <div><FaCheck/>Smooth payment</div>
+            <h3 className="offers">EazzyCollab offers</h3>
+            <div className="offers"><FaCheck/>Over 1000+ influencer</div>
+            <div className="offers"><FaCheck/>Over 50+ brands</div>
+            <div className="offers"><FaCheck/>Smooth payment</div>
           </div>
           <div className="right-login-modal">
             {buttonClicked === 'join' ? (

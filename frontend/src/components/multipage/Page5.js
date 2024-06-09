@@ -11,10 +11,10 @@ import {OutlinedInput, InputAdornment} from '@mui/material'
 const Page5 = () => {
     const {formData, currentStep} = useSelector(state => state.form);
     const {userDetails}=useSelector((state)=>state.user)
-    const [iprice, setIprice] = useState(userDetails?.iprice || {reels : {price:0}, story : {price:0}, photo : {price:0}}); // {video : 123, photo : 3232}
-    const [yprice, setYprice] = useState(userDetails?.yprice || {shorts : {price:0}, video : {price:0}});
+    const [iprice, setIprice] = useState(formData?.iprice || {reels : {price:0}, story : {price:0}, photo : {price:0}}); // {video : 123, photo : 3232}
+    const [yprice, setYprice] = useState(formData?.yprice || {shorts : {price:0}, video : {price:0}});
     const dispatch = useDispatch();
-
+  console.log(formData)
     const handleSubmit = (e) => {
         e.preventDefault();
         let temp = {};
@@ -49,7 +49,7 @@ const Page5 = () => {
                             startAdornment={<InputAdornment position="start">$</InputAdornment>}
                             style={{width:'150px',height:'30px'}}
                             value={Array.isArray(iprice.story?.price)?iprice.story.price[0]:iprice.story.price} 
-                            onChange={(e) => setIprice({...iprice, ...{story : {price:e.target.value} }})}
+                            onChange={(e) => setIprice({...iprice, ...{story : {price:Number(e.target.value)} }})}
                             type='number'
                         />
                     </div>

@@ -88,10 +88,10 @@ navigate('/influencer/search',{state:{query:query?.current}})
       setsearchJsx(<FaSearch size={25}/>);
     }
   };
-  window.addEventListener("resize", handleResize);
 
   useEffect(() => {
     handleResize();
+    window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -222,7 +222,7 @@ navigate('/influencer/search',{state:{query:query?.current}})
               ))}
             </div>
           </div>
-          <div className="dropdown" onClick={handleClickCountry}>
+          {/* <div className="dropdown" onClick={handleClickCountry}>
             <div className="dropbtn">
               {!(selectedCountryOptions.length === 0)
                 ? selectedCountryOptions + " "
@@ -256,7 +256,7 @@ navigate('/influencer/search',{state:{query:query?.current}})
                 ))}
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div className="dropdown" onClick={handleClickFollowers}>
             <div className="dropbtn">

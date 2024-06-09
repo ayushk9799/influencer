@@ -186,8 +186,8 @@ const Profile = () => {
                 </div>
             </div>
             <div className="custom-offer">
-              <p>Do you want to send custom offer</p>
-              <Button style={{textTransform : 'capitalize'}} onClick={()=>handleContinue(4)} variant="contained">Custom offer</Button>
+              <div>Do you want to send custom offer</div>
+              <Button style={{textTransform : 'capitalize'}} onClick={()=>handleContinue(4)} variant="contained">Send</Button>
             </div>
           </div>
       )}

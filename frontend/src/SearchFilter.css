@@ -8,14 +8,14 @@
 #searchFilter
 {
     display: grid;
-    grid-template-columns: repeat(4,minmax(0,1fr)) auto;
+    grid-template-columns: repeat(3,minmax(0,1fr)) auto;
     grid-column-gap:5px;
     width:1000px;
 }
 
 .dropbtn
 {
-    border:1px solid rgb(0, 0, 0);
+    border:1px solid rgb(124, 124, 124);
     border-radius: 10px;
     font-size: 20px;
     padding:5px 0px 5px 5px;
@@ -238,7 +238,8 @@
     justify-content: center;
     align-items: center;
     height: 25px;
-    border-radius: 20px;
+    
+    font-size:16px;
    
   }
   

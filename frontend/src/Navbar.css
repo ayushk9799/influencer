@@ -93,7 +93,7 @@
   border-radius: 10px;
 }
 .modal-container-login {
-  width: 800px;
+  width: min(80%,800px);
   display: grid;
   padding: 20px;
   height: 450px;
@@ -205,5 +205,57 @@
   }
   #nameandlogo {
     font-size: 20px;
+  }
+  .modal-container-login {
+    width: 90%;
+    height: auto;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+  }
+ 
+
+  .left-login-modal, .right-login-modal {
+    height: auto;
+    padding: 10px;
+   
+  }
+
+  .left-login-modal {
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+  }
+  .left-login-modal{
+    display: none;
+  }
+
+  .right-login-modal {
+    padding: 10px 15px;
+  }
+
+  .modal-container-ask {
+    width: 90%;
+    height: auto;
+    padding: 15px;
+  }
+
+  .who-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .who-container > div {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    padding: 20px;
+  }
+
+  #google-button {
+    padding: 8px;
+  }
+
+  #google-button > p {
+    font-size: 14px;
   }
 }

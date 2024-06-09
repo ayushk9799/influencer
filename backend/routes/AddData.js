@@ -6,7 +6,7 @@ router.post("/", async (req, res, next) => {
   try {
     console.log("post")
     let user = await User.findById(req.user._id);
-
+   console.log(user)
     if (!user) {
       next(new Error("user not found in database or try again"));
     } else {
@@ -76,7 +76,7 @@ router.post("/", async (req, res, next) => {
             }
            
           else{
-            const temp = value.story.price;
+            const temp = Number(value.story.price);
             const arr = [temp*1, temp*2, temp*3];
             console.log(arr)
             user.iprice.story.price = arr;

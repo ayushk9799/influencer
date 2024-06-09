@@ -81,13 +81,13 @@ const Account = () => {
     let iValue, yValue;
     if (iprice) {
       iValue = {
-        story: iprice.story?.price[0],
-        photo: iprice.photo?.price[0],
-        reels: iprice.reels?.price,
+        story:{ price:iprice.story?.price[0],description:iprice.story?.description},
+        photo: {price:iprice.photo?.price[0],description:iprice.photo?.description},
+        reels:{price: iprice.reels?.price,description:iprice.reels?.description}
       };
     }
     if (yprice) {
-      yValue = { shorts: yprice.shorts?.price, video: yprice.video?.price };
+      yValue = { shorts: {price:yprice.shorts?.price,description:yprice.shorts?.dwscription}, video: {price:yprice.video?.price,description:yprice.video?.description} };
     }
     const temp = {
       name,
@@ -105,6 +105,7 @@ const Account = () => {
       yprice: yValue,
       contentCreator
     };
+    console.log(temp)
     dispatch(updateFormData(temp));
     navigate("/complete-profile");
   };
