@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./components/profile.css";
 import { BACKEND_URL, formatFollowers, getCategory,s3Domain } from "./assets/Data";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FaInstagram, FaYoutube, FaInfoCircle } from "react-icons/fa";
-import { updateFormData } from "./redux/FormSlice";
 import { IoMdClose } from "react-icons/io";
-import { Button, Modal, Box, Alert } from "@mui/material";
+import { Button, Modal, Box } from "@mui/material";
 import { updateUserDetails } from "./redux/UserSlice";
 import AccountForClient from "./components/subcomponents/AccountForClient";
 
@@ -34,15 +33,12 @@ const Account = () => {
     gallery,
     profilePic,
     field,
-    region,
     iaccountID,
     ifollowers,
     iprice,
     yaccountID,
     yfollowers,
     yprice,
-    gender,
-    mobileNumber,
     contentCreator,
   } = userDetails;
 
@@ -341,8 +337,8 @@ const Account = () => {
                   </div>
                 </div>
                 <div className="profile-buttons-container"> 
-                  <button className="profile-buttons profile-edit-button" onClick={handleEditProfile}>Edit profile</button>
-                  <Link className="profile-buttons profile-edit-button"  to={'/user/orders'} >Orders</Link>
+                  <button className="profile-buttons profile-edit-button" onClick={()=>navigate('/complete-profile')}>Edit profile</button>
+                  <Link className="profile-buttons profile-edit-button" to={'/user/orders'} >Orders</Link>
                 </div>
             </div>
             <p className="profile-bio">{bio}</p>

@@ -1,6 +1,5 @@
 import { Route, BrowserRouter as Router, Routes} from "react-router-dom";
 import { Navbar } from "./Navbar";
-import  Pricing  from "./Pricing";
 import { HowToUse } from "./HowToUse.js";
 import { Home } from "./Home";
 import { Login } from "./Login.js";
@@ -20,6 +19,7 @@ import OrderDetails from "./components/OrderDetails.js";
 import { DisplayData } from "./DisplayData.js";
 import FAQ from "./components/FAQ.js";
 import SignUp from "./SignUp.js";
+import Page7 from "./components/multipage/Page7.js";
 function App() {
   const { isAuthenticated } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -55,6 +55,7 @@ function App() {
         <Route path='/influencer/search' Component={DisplayData}></Route>
         <Route path="/chat/:uniqueID" Component={ChatBox}></Route>
         <Route path="/complete-profile" Component={CompleteProfile} />
+        <Route path="/complete-profile/:step" Component={Page7} />
         <Route path="/user/orders" Component={Order} />
         <Route path="/user/orders/:orderID" Component={OrderDetails} />
         <Route path="/user/checkout" Component={Checkout} />

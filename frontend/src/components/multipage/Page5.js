@@ -6,8 +6,6 @@ import { setCurrentStep, updateFormData } from '../../redux/FormSlice';
 import FormHeader from '../subcomponents/FormHeader';
 import {OutlinedInput, InputAdornment} from '@mui/material'
 
-// const socialMedia = {0 : "Instagram", 1 : "Youtube", 2 : "Facebook", 3 : "Twitter"}
-
 const Page5 = () => {
     const {formData, currentStep} = useSelector(state => state.form);
     const {userDetails}=useSelector((state)=>state.user)
@@ -24,8 +22,7 @@ const Page5 = () => {
         }
         if(formData.yaccountID) {
             temp = {...temp, ...{yprice}};
-        }
-        
+        }        
         dispatch(updateFormData(temp));
         dispatch(setCurrentStep(currentStep+1));
     }
