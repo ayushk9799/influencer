@@ -11,8 +11,8 @@ router.post("/", async (req, res, next) => {
       next(new Error("user not found in database or try again"));
     } else {
       const data = req.body;
-      // console.log("data");
-      // console.log(data);
+       console.log("data");
+       console.log(data);
       for (let keys in data) {
         const value = data[keys];
         if (keys === "yprice") {
@@ -96,12 +96,15 @@ router.post("/update-price", async (req, res) => {
     const user = await User.findById(req.user._id);
     console.log("user", user);
     const { description, key, type, price } = req.body;
+    
     let data;
     if (type === "Instagram") {
+      console.log(key)
+      console.log(price)
       user.iprice[key] = { price, description };
       data = user.iprice;
     } else {
-      user.yprice[key] = { price: description };
+      user.yprice[key] = { price, description };
       data = user.yprice;
     }
     await user.save();

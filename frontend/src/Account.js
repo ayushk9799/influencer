@@ -7,6 +7,7 @@ import { FaInstagram, FaYoutube, FaInfoCircle } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import { Button, Modal, Box } from "@mui/material";
 import { updateUserDetails } from "./redux/UserSlice";
+import { updateFormData } from "./redux/FormSlice";
 import AccountForClient from "./components/subcomponents/AccountForClient";
 
 // this link is for test purpose
@@ -91,13 +92,10 @@ const Account = () => {
       gallery,
       profilePic,
       field,
-      region,
       iaccountID,
       ifollowers,
       iprice: iValue,
       yaccountID,
-      gender,
-      mobileNumber,
       yprice: yValue,
       contentCreator
     };

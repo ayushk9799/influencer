@@ -9,8 +9,8 @@ import {OutlinedInput, InputAdornment} from '@mui/material'
 const Page5 = () => {
     const {formData, currentStep} = useSelector(state => state.form);
     const {userDetails}=useSelector((state)=>state.user)
-    const [iprice, setIprice] = useState(formData?.iprice || {reels : {price:0}, story : {price:0}, photo : {price:0}}); // {video : 123, photo : 3232}
-    const [yprice, setYprice] = useState(formData?.yprice || {shorts : {price:0}, video : {price:0}});
+    const [iprice, setIprice] = useState(userDetails?.iprice || {reels : {price:0}, story : {price:0}, photo : {price:0}}); // {video : 123, photo : 3232}
+    const [yprice, setYprice] = useState(userDetails?.yprice || {shorts : {price:0}, video : {price:0}});
     const dispatch = useDispatch();
   console.log(formData)
     const handleSubmit = (e) => {
@@ -88,7 +88,7 @@ const Page5 = () => {
                             startAdornment={<InputAdornment position="start">$</InputAdornment>}
                             style={{width:'150px',height:'30px'}}
                             value={yprice.shorts?.price} 
-                            onChange={(e) => setYprice({...yprice, ...{shorts : e.target.value }})}
+                            onChange={(e) => setYprice({...yprice, ...{shorts :{price:e.target.value}  }})}
                             type='number'
                         />
                     </div>
@@ -100,7 +100,7 @@ const Page5 = () => {
                             startAdornment={<InputAdornment position="start">$</InputAdornment>}
                             style={{width:'150px',height:'30px'}}
                             value={yprice.video?.price} 
-                            onChange={(e) => setYprice({...yprice, ...{video : e.target.value }})}
+                            onChange={(e) => setYprice({...yprice, ...{video :{price:e.target.value}  }})}
                             type='number'
                         />
                     </div>

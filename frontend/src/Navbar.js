@@ -1,9 +1,11 @@
 import { useNavigateCustom } from "./CustomNavigate";
 import "./Navbar.css";
-import { useState } from "react";
+import { useState,useRef } from "react";
 // import {useLocation} from 'react-router-dom';
+import { logout } from "./redux/UserSlice";
+
 import { HorizontalNav } from "./HorizontalNav";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import { Button, Modal } from "@mui/material";
 import { FcGoogle } from "react-icons/fc";
 import { FaCheck, FaRegCheckCircle  } from "react-icons/fa";
@@ -23,9 +25,44 @@ export const Navbar = ({ details }) => {
   // const selectedBrandRef = useRef();
   // const selectedInfluencerRef = useRef();
   // const dispatch = useDispatch();
-  const navigate = useNavigateCustom();
   // const location = useLocation();
-  
+  const {isAuthenticated} =useSelector(state=>state.user);
+  const navigate=useNavigateCustom();
+   const dispatch=useDispatch();
+   const horizontalRef=useRef(null);
+  const handleAccountClick=()=>
+  {
+          navigate('/myAccount');
+          horizontalRef.current.style.display="none"
+
+  }
+  const handleOrdersClick=()=>
+  {
+    navigate('/user/orders');
+    horizontalRef.current.style.display="none"
+  }
+  const handleLoginOut=async()=>
+  {
+    
+    if(isAuthenticated)
+    {
+     
+          const response= await fetch('http://localhost:3000/auth/logout',{credentials:"include"});
+          console.log(response)
+          if(response.ok)
+          {
+            dispatch(logout());
+            navigate('/')
+
+          }
+    }
+    else{
+           
+    }
+    navigate('/');
+    horizontalRef.current.style.display="none"
+
+  }
 
   const handleSignIn = async () => {
     // Create authorization code flow URL
@@ -77,6 +114,8 @@ export const Navbar = ({ details }) => {
   // }
 
   const handleChange = () => {
+    console.log("menu")
+    console.log(menuButton)
     setMenuButton(!menuButton);
   };
   return (
@@ -151,7 +190,7 @@ export const Navbar = ({ details }) => {
               className="navDetailsClass"
               id="account"
             >
-              <div id="accountDetails"  onClick={() => navigate("/myAccount")}>
+              <div id="accountDetails"  onClick={handleChange}>
                 <img
                   src={`${userDetails.profilePic}`} referrerPolicy= 'no-referrer'
                 ></img>
@@ -183,7 +222,13 @@ export const Navbar = ({ details }) => {
           />
         </div>
       </div>
-      <HorizontalNav button={menuButton} />
+      {/* <HorizontalNav button={menuButton} /> */}
+
+     {menuButton?(<div id="horizontalcontainer" ref={horizontalRef}>
+          <div className="horizontaldetails" onClick={handleAccountClick}>Account</div>
+          <div className="horizontaldetails" onClick={handleOrdersClick}>Orders</div>
+         <div className="horizontaldetails" id={isAuthenticated?"logouth":"loginh"} onClick={handleLoginOut}>{isAuthenticated?"Log Out":"Log In"}</div>
+        </div>):(<></>)} 
     </div>
   );
 };

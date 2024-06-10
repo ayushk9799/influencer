@@ -64,6 +64,7 @@ router.get("/google/callback", async (req, res,next) => {
     }
     res.cookie("jwtaccesstoken", jwtaccesstoken, {
       maxAge: 6 * 30 * 24 * 60 * 60 * 1000,
+     
     });
     res.redirect(redirectRoute);
   } catch (error) {
@@ -76,8 +77,11 @@ router.get("/google/callback", async (req, res,next) => {
 router.get('/logout',async(req,res,next)=>
 {
       try{
+        console.log("logout")
         res.clearCookie('jwtaccesstoken');
-        res.redirect('http://localhost:3001')
+        // res.redirect('http://localhost:3001');
+
+        res.status(200).json({done:"done"})
       }
       catch(error)
       {
