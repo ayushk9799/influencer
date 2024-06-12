@@ -1,5 +1,7 @@
 import express from "express";
 import path from "path";
+import { config } from "dotenv";
+config({ path: "./config/config.env" });
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import connectDatabase from "./database.js";
@@ -8,7 +10,6 @@ import login from "./routes/Log.js";
 import UserRouter from "./routes/UserRouter.js";
 import cors from "cors";
 import http from "http";
-import { config } from "dotenv";
 import Razorpay from "razorpay";
 import { databaseChat } from "./controller/databaseChat.js";
 import { Server } from "socket.io";
@@ -18,16 +19,13 @@ import { User } from "./models/user.js";
 import searchRouter from "./routes/searchRouter.js";
 import AddData from "./routes/AddData.js";
 import ChatRooms from "./models/chatroom.js";
-
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-config({ path: "./config/config.env" });
 
 export const instance = new Razorpay({
   key_id: process.env.RAZORPAY_API_KEY,
   key_secret: process.env.RAZORPAY_APT_SECRET,
 });
-
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

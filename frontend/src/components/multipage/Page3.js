@@ -91,7 +91,11 @@ const Page3 = () => {
 
           if (status === 200)
             dispatch(updateFormData({ profilePic: `${s3Domain}/${keys[0]}` }));
+            else{
+              console.log(status)
+            }
         }
+       
 
         if (coverImages.length > 0) {
           const coverArray = [...localGallery];
