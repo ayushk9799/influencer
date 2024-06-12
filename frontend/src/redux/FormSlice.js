@@ -14,7 +14,7 @@ export const createAccount = createAsyncThunk(
   "form/update-form",
   async (payload, { getState, dispatch }) => {
     const { formData } = getState().form;
-    const {data} = await axios.post(`${BACKEND_URL}/addData`, formData, {
+    const {data} = await axios.post(`${BACKEND_URL}/api/addData`, formData, {
       withCredentials: true,
     });
     dispatch(updateUserDetails(data.data));

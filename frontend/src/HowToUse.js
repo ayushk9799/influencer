@@ -1,7 +1,3 @@
-export const HowToUse=()=>
-{ 
-    return <div>
-
-        how to use
-    </div>
-}
+export const HowToUse = () => {
+  return <div>how to use</div>;
+};

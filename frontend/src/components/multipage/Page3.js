@@ -61,11 +61,10 @@ const Page3 = () => {
     if (deletedKeys.length > 0) {
       try {
         const { data, status } = await axios.get(
-          `http://localhost:3000/user/delete?delete=${deletedKeys.join(",")}`,
+          `${BACKEND_URL}/api/user/delete?delete=${deletedKeys.join(",")}`,
           { withCredentials: true }
         );
         if (status === 200) {
-          console.log(localGallery)
           dispatch(updateFormData({ gallery: localGallery }));
         }
       } catch (error) {}
@@ -73,7 +72,7 @@ const Page3 = () => {
 
     try {
       const { data, status } = await axios.get(
-        `http://localhost:3000/user/presigned?total=${
+        `${BACKEND_URL}/api/user/presigned?total=${
           profileImage ? coverImages.length + 1 : coverImages.length
         }`,
         {

@@ -6,7 +6,7 @@ export const authenticationCheckSocket = async (socket, next) => {
     //
     const cookies = cookie.parse(socket.request.headers.cookie);
     const access_token = cookies.jwtaccesstoken;
-  console.log("authentication connecting")
+
     if (access_token) {
       try {
         const d = jwt.verify(access_token, "influencerChataccess");

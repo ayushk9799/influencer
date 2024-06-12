@@ -2,7 +2,7 @@ import React from "react";
 
 export const SendSomeData = () => {
   const handleClick = async () => {
-    const response = await fetch("http://localhost:3000/addData", {
+    const response = await fetch(`${BACKEND_URL}/api/addData`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
+import { BACKEND_URL } from "./assets/Data.js";
+
 const CLIENT_ID =
   "708505773923-9fuh2eqg0lr8sgl86p7dsuh2v0pjuslt.apps.googleusercontent.com"; // Replace with your Google Cloud Platform project's client ID
-const REDIRECT_URI = "http://localhost:3000/auth/google/callback";
+const REDIRECT_URI = `${BACKEND_URL}/api/auth/google/callback`;
 
 export const Login = () => {
-  
-
-
   const handleSignIn = async () => {
     // Create authorization code flow URL
     const authorizationUrl = new URL(

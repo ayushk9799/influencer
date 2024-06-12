@@ -109,74 +109,75 @@ export const formatFollowers = (value) => {
 
 export const FaqArrayForInfluencer = [
     {
-        question : 'How does EazzyCollab works?',
-        answer : 'Create your personal page and list your services for Instagram, and YouTube. Then, share your custom link in your bio and social media. Brands can now discover you and purchase your services, and you can easily manage brand deals and get paid for your work directly through the platform.'
+        question: 'How does EazzyCollab operate?',
+        answer: 'Think of it as opening your own little shop on Instagram and YouTube. Share your special link in your bio and social media. Brands will come knocking, ready to buy your amazing services, and you’ll handle everything like a boss and get paid through our platform.'
     },
     {
-        question : 'How do I get paid?',
-        answer : 'Payments are made directly through our website. We use Dots to pay you out. Once you complete an order, you will be able to choose from over 5 methods including PayPal, CashApp or Venmo to receive your money.'
+        question: 'How do I receive payments?',
+        answer: 'We’ve got you covered! Payments go through our site using something cool called RazorPay. Finish the work , get paid , relax'
     },
     {
-        question : 'How much does it cost?',
-        answer : 'There is no up-front cost. We take a 15% transaction fee when you make a sale.'
+        question: 'What are the costs involved?',
+        answer: 'Absolutely nothing upfront! We only take a 15% cut when you make a sale. '
     },
     {
-        question : 'Is my payment guaranteed?',
-        answer : 'Yes, we collect the payment from the buyer and hold it until the order is complete. This ensures that both sides are protected during every transaction.'
+        question: 'Is my payment secure?',
+        answer: 'You bet! We hold onto the payment from the buyer until you’ve done your thing. This way, everyone’s happy and no one’s getting scammed.'
     },
     {
-        question : 'Can I decline orders?',
-        answer : 'Yes, you are able to accept or decline an order. This gives you the freedom to only work with brands that align with you.'
+        question: 'Can I decline orders?',
+        answer: 'Totally! You’re the boss here. You can accept or decline orders as you see fit. Only work with brands that make you go “heck yes!”'
     },
     {
-        question : 'What platforms does EassyCollab support?',
-        answer : 'Currently you can list your services for Instagram and Youtube.'
+        question: 'Where can I showcase my services?',
+        answer: 'Right now, we’re all about Instagram and YouTube. So go ahead, show the world what you’ve got on these platforms!'
     },
     {
-        question : 'Are you an agency?',
-        answer : 'No, we are not an agency. We are a platform for you to advertise your services, and manage your own brand deals.'
+        question: 'Is EazzyCollab an agency?',
+        answer: 'Nope! Agencies are boring. We’re more like your backstage crew, giving you the platform to showcase your services and manage your own brand deals.'
     },
     {
-        question : 'Are there binding contracts?',
-        answer : 'No, we do not ask you to sign any contracts. We are a self-serve platform, you are free to manage your own deals without our involvement. We simply provide the platform for you to advertise your services to brands.'
+        question: 'Are there any binding contracts?',
+        answer: 'No way! There are no binding contracts here. You’re free to manage your own deals without us meddling. We just provide the stage for you to shine.'
     },
-]
+];
+
 
 export const FaqArrayForBrands = [
     {
-        question : 'How does EazzyCollab work?',
-        answer : 'Start by searching through thousands of vetted Instagram, TikTok, and YouTube influencers. Once you find the influencers you want to work with, safely purchase their services through Collabstr. We hold your payment until the work is completed. Once the work is completed, receive your high-quality content from the influencers directly through the platform.'
+        question: 'How does EazzyCollab work?',
+        answer: 'EazzyCollab enables brands to discover and collaborate with influencers on Instagram, TikTok, and YouTube. Brands can search through a curated selection of influencers, securely purchase their services, and receive high-quality content directly through the platform.'
     },
     {
-        question : 'What is EazzyCollab?',
-        answer : 'Collabstr is a marketplace to find and hire influencers on Instagram, TikTok, and YouTube. You can easily search through thousands of content creators and pay them directly through Collabstr.'
+        question: 'What is EazzyCollab?',
+        answer: 'EazzyCollab is a marketplace connecting brands with influencers. It provides a platform for brands to find, vet, and collaborate with influencers across various social media platforms such as Instagram, TikTok, and YouTube.'
     },
     {
-        question : 'How are influencers vetted before joining Collabstr?',
-        answer : 'We verify the identity of each influencer that is listed on the platform. We also do a full audit of their social media to look for signs of fake followers & engagement. We also take into consideration their previous brand deals.'
+        question: 'How are influencers vetted before joining EazzyCollab?',
+        answer: 'Each influencer listed on EazzyCollab undergoes a thorough vetting process. This includes identity verification and a comprehensive audit of their social media presence to ensure authenticity and engagement.'
     },
     {
-        question : 'How does shipping work?',
-        answer : 'Once you place an order, the influencer will send you their shipping info through the chat. You can then use your preferred shipping carrier to send them the product.'
+        question: 'How to ship something to the creator?',
+        answer: 'You chat with the infuencer and decide '
     },
     {
-        question : 'How do I send custom offers?',
-        answer : `If you have a request that doesn't fit an influencers existing packages you can send them a custom offer. To do this, click the "Send custom offer" button on the influencers profile and follow the steps.`
+        question: 'How do I send custom offers?',
+        answer: "If you have a specific requirements that don't fit existing packages, they can send custom offers to influencers. This feature allows brands to tailor collaborations according to their unique needs."
     },
     {
-        question : 'How long does an influencer have to accept my order?',
-        answer : 'Influencers are given 72 hours to accept new orders before they automatically expire.'
+        question: 'How long does an influencer have to accept my order?',
+        answer: 'Influencers have 48 hours to accept new orders before they expire. This ensures timely response and allows brands to proceed with collaborations efficiently.'
     },
     {
-        question : 'What if an influencer declines my order?',
-        answer : 'We do not charge you until an influencer accepts your order. So if your order gets declined no action is required from you.'
+        question: 'What if an influencer declines my order?',
+        answer: 'Brands are not charged until an influencer accepts their order. If an order is declined or remains unanswered for 48 hours, no action is required from the brand, and any payment is fully refunded.'
     },
     {
-        question : 'How do I know I will receive the work I paid for?',
-        answer : 'Collabstr holds your money until the work is completed and approved by you. You will have up to 48 hours once the work has been submitted to ask for a revision or open a dispute with Collabstr.'
+        question: 'How do I know I will receive the work I paid for?',
+        answer: 'EazzyCollab holds payments until the work is completed and approved by the brand. Brands have up to 48 hours after the work is submitted to request revisions or raise any concerns.'
     },
     {
-        question : 'What types of payment do you accept?',
-        answer : 'We use Stripe as our payment processor, this allows us to accept all major credit & debit cards.'
+        question: 'What types of payment do you accept?',
+        answer: 'EazzyCollab utilizes RazorPay as its payment processor, allowing brands to pay using major credit and debit cards, as well as popular UPI methods.'
     },
-]
+];

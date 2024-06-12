@@ -7,14 +7,16 @@ import {
   getOrders,
   getOrderDetails,
   orderEventController,
-  setfavourite,removefavourite,getFavourites
+  setfavourite,
+  removefavourite,
+  getFavourites,
 } from "../controller/userController.js";
 import multer from "multer";
 import { deleteS3, presignedUrl } from "../s3.js";
 
 const router = express.Router();
 
-router.get("/getMyData", getMyData); 
+router.get("/getMyData", getMyData);
 
 router.get("/payment/get-key", getPaymentKey);
 
@@ -27,9 +29,9 @@ router.get("/orders", getOrders);
 router.get("/orders/:orderID", getOrderDetails);
 
 router.post("/order/order-events/:orderID", orderEventController);
-router.get('/favourite/create/:id',setfavourite)
-router.get('/favourite/remove/:id',removefavourite)
-router.get('/favourite/get',getFavourites)
+router.get("/favourite/create/:id", setfavourite);
+router.get("/favourite/remove/:id", removefavourite);
+router.get("/favourite/get", getFavourites);
 router.get("/presigned", async (req, res) => {
   const totalfiles = req.query.total;
 
@@ -37,7 +39,6 @@ router.get("/presigned", async (req, res) => {
     const { keys, urls } = await presignedUrl(totalfiles);
     res.status(200).json({ keys: keys, urls: urls });
   } catch (error) {
-    console.log(error);
     res.status(400).json({ error: "error occured" });
   }
 });
@@ -52,5 +53,18 @@ router.get("/delete", async (req, res) => {
   else {
     res.status(400).json({ deleteStatus: false });
   }
+});
+router.use((req, res, next) => {
+  // If no route matched in UserRouter
+  console.log("use")
+  if (!req.route) {
+    return next();
+  }
+  // If a route matched but sent a 404, also pass to next
+  if (res.statusCode === 404) {
+    return next();
+  }
+  // Otherwise, send the response from UserRouter
+  next('route');
 });
 export default router;

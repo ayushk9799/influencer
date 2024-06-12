@@ -22,12 +22,12 @@ const Checkout = () => {
   const handlePay = async () => {
     try {
       // fetchig razorpay key
-      const response = await fetch(`${BACKEND_URL}/user/payment/get-key`, {
+      const response = await fetch(`${BACKEND_URL}/api/user/payment/get-key`, {
         credentials: "include",
       });
       const { key } = response.json();
       //creating order
-      const response1 = await fetch(`${BACKEND_URL}/user/payment/checkout`, {
+      const response1 = await fetch(`${BACKEND_URL}/api/user/payment/checkout`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -40,7 +40,7 @@ const Checkout = () => {
         }),
       });
       const { order } = await response1.json();
-      console.log("order", order);
+
       const options = {
         key,
         amount: order.amount,
@@ -49,7 +49,7 @@ const Checkout = () => {
         description: "Payment for influencer",
         image: "https://avatars.githubusercontent.com/u/98911997?v=4",
         order_id: order.id,
-        callback_url: `${BACKEND_URL}/user/payment/payment-verification`,
+        callback_url: `${BACKEND_URL}/api/user/payment/payment-verification`,
         prefill: {
           name: "Rajiv Ranjan",
           email: "rajivranjan0013@gamil.com",
@@ -64,14 +64,12 @@ const Checkout = () => {
       };
       const razor = new window.Razorpay(options);
       razor.open();
-    } catch (err) {
-      console.log("error", err);
-    }
+    } catch (err) {}
   };
   return (
     <div className="checkout-container-predefined">
       <div className="sub-checkout">
-        <div style={{width : '100%'}}>
+        <div style={{ width: "100%" }}>
           <h4>Place offer</h4>
           <p>
             Your payment will be held for 48 hours. If Influencer declines the
@@ -94,9 +92,27 @@ const Checkout = () => {
                   {field?.length !== 0 &&
                     field.map((val) => <div key={val}>{getCategory(val)}</div>)}
                 </div>
-                <div className='field-container'>
-                  {iaccountID && <a target='_blank' href={`https://www.instagram.com/${iaccountID}`} className='field-element'><FaInstagram size={18} />{formatFollowers(ifollowers)}</a>}
-                  {yaccountID && <a target='_blank' href={`https://www.youtube.com/@${iaccountID}`} className='field-element'><FaYoutube size={20} />{formatFollowers(yfollowers)}</a>}
+                <div className="field-container">
+                  {iaccountID && (
+                    <a
+                      target="_blank"
+                      href={`https://www.instagram.com/${iaccountID}`}
+                      className="field-element"
+                    >
+                      <FaInstagram size={18} />
+                      {formatFollowers(ifollowers)}
+                    </a>
+                  )}
+                  {yaccountID && (
+                    <a
+                      target="_blank"
+                      href={`https://www.youtube.com/@${iaccountID}`}
+                      className="field-element"
+                    >
+                      <FaYoutube size={20} />
+                      {formatFollowers(yfollowers)}
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
