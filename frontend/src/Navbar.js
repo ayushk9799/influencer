@@ -1,6 +1,6 @@
 import { useNavigateCustom } from "./CustomNavigate";
 import "./Navbar.css";
-import { useState,useRef } from "react";
+import { useState,useRef, useEffect } from "react";
 // import {useLocation} from 'react-router-dom';
 import { logout } from "./redux/UserSlice";
 
@@ -63,6 +63,17 @@ export const Navbar = ({ details }) => {
     horizontalRef.current.style.display="none"
 
   }
+
+  useEffect(() => {
+    if(userDetails?.email) {
+      const navbarDetails = document.getElementsByClassName('navDetailsClass');
+      if (navbarDetails.length > 0) {
+        Array.from(navbarDetails).forEach(element => {
+          element.style.justifyContent = 'end';
+        });
+      }
+    }
+  }, [userDetails])
 
   const handleSignIn = async () => {
     // Create authorization code flow URL
@@ -189,6 +200,7 @@ export const Navbar = ({ details }) => {
             <div
               className="navDetailsClass"
               id="account"
+
             >
               <div id="accountDetails"  onClick={handleChange}>
                 <img

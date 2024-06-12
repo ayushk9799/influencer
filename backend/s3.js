@@ -8,8 +8,8 @@ import {
   
   const s3Client = new S3Client({
     credentials: {
-      accessKeyId: 'AKIAVRUVSJHVE4EOT5UB',
-      secretAccessKey: '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'
+      accessKeyId: process.env.AWS_ACCESS_KEY,
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
     },
     region: 'ap-south-1'
   });

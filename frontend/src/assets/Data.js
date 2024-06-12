@@ -36,7 +36,10 @@ export const getCategory = (index) => {
         'Education',
         'Fitness',
         'Sports',
-        'Makeup',"Books"
+        'Makeup',
+        "Books",
+        "Travel",
+        "Food"
     ]
     if(index===-1)
     {

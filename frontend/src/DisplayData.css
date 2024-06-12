@@ -43,8 +43,9 @@
 .name {
   padding: 5px;
   border-radius: 5px;
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 600;
+  /* text-shadow: 3px 4px 7px rgba(0, 0, 0, 1); */
 }
 .detialsContainer {
   position: relative;
