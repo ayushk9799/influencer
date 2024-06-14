@@ -113,14 +113,7 @@ export const DisplayData = () => {
   return (
     <>
       <div id="typeOfDataDisplay">{typeOfDataDisplay}</div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          margin: "10px",
-        }}
-      >
+      <div id="display-main">
         <div
           className="grid-container"
           style={{ width: (data.length + 1) * 200 + "px" }}

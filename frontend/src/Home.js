@@ -1,3 +1,4 @@
+import HowDoesWork from "./components/home/HowDoesWork.js";
 import { DisplayData } from "./DisplayData.js";
 import "./Home.css";
 import { SearchFilter } from "./SearchFilter.js";
@@ -17,6 +18,7 @@ export const Home = () => {
       </div>
       <SearchFilter />
       <DisplayData/>
+      <HowDoesWork />
     </>
   );
 };
