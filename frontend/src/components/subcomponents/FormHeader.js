@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import "../multipage/page3.css"
+import "../multipage/Gallery.css"
 import {IoMdArrowBack} from 'react-icons/io'
 import {useDispatch, useSelector} from 'react-redux'
 import { setCurrentStep } from '../../redux/FormSlice'

@@ -20,7 +20,7 @@ import OrderDetails from "./components/OrderDetails.js";
 import { DisplayData } from "./DisplayData.js";
 import FAQ from "./components/FAQ.js";
 import SignUp from "./SignUp.js";
-import Page7 from "./components/multipage/Page7.js";
+import UserType from "./components/multipage/UserType.js";
 import { PrivateRoute } from "./PrivateRoute.jsx";
 import { BACKEND_URL } from "./assets/Data.js";
 function App() {
@@ -56,19 +56,18 @@ function App() {
           <Route path="/login" Component={Login}></Route>
         )}
         <Route path="/sign-up" Component={SignUp}></Route>
-        
+
         <Route path="/influencer/:userID" Component={Profile}></Route>
         <Route path="/influencer/search" Component={DisplayData}></Route>
         <Route path="/chat/:uniqueID" Component={ChatBox}></Route>
         <Route path="/complete-profile" Component={CompleteProfile} />
-        <Route path="/complete-profile/:step" Component={Page7} />
+        <Route path="/complete-profile/:step" Component={UserType} />
         <Route path="/user/orders" Component={Order} />
         <Route path="/user/orders/:orderID" Component={OrderDetails} />
         <Route path="/user/checkout" Component={Checkout} />
         <Route path="/custom-offer" Component={CustomOffer} />
         <Route path="/payment-success" Component={PaymentSuccess} />
         <Route path="/payment-failed" Component={PaymentFail} />
-        
 
         <Route path="/faq" Component={FAQ} />
       </Routes>

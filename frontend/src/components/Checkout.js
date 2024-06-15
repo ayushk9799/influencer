@@ -86,8 +86,8 @@ const Checkout = () => {
                   style={{ height: "100px", width: "100px" }}
                 />
               </div>
-              <div>
-                <p className="name">{name}</p>
+              <div className="detailsContainer">
+                <div className="name">{name}</div>
                 <div className="category-container">
                   {field?.length !== 0 &&
                     field.map((val) => <div key={val}>{getCategory(val)}</div>)}
@@ -129,7 +129,7 @@ const Checkout = () => {
                 <p>${amount}</p>
               </div>
               <div>
-                <p>Plateform fee</p>
+                <p>Platform fee</p>
                 <p>$0.0</p>
               </div>
               <div style={{ fontWeight: "bold" }}>

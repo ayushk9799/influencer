@@ -110,6 +110,9 @@ export const SearchFilter = () => {
       case 0:
         answer = 0;
         break;
+        case '1K':
+          answer=1000;
+          break;
       case "10K":
         answer = 10000;
         break;
@@ -136,6 +139,8 @@ export const SearchFilter = () => {
   const handleFollowerRangechange = (value) => {
     query.current.fmax = convertToNumber(value[1]);
     query.current.fmin = convertToNumber(value[0]);
+    console.log(value[0]);
+    console.log(value[1])
     setFollowerRange(value);
     setFollowerVisibilty(true);
   };
