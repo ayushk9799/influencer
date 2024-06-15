@@ -23,6 +23,8 @@ import SignUp from "./SignUp.js";
 import UserType from "./components/multipage/UserType.js";
 import { PrivateRoute } from "./PrivateRoute.jsx";
 import { BACKEND_URL } from "./assets/Data.js";
+import Footer from "./Footer.js";
+
 function App() {
   const { isAuthenticated } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -40,7 +42,7 @@ function App() {
     } finally {
     }
   };
-  useEffect(() => {
+  useEffect(() => { 
     getData();
   }, []);
 
@@ -57,6 +59,7 @@ function App() {
         )}
         <Route path="/sign-up" Component={SignUp}></Route>
 
+
         <Route path="/influencer/:userID" Component={Profile}></Route>
         <Route path="/influencer/search" Component={DisplayData}></Route>
         <Route path="/chat/:uniqueID" Component={ChatBox}></Route>
@@ -71,6 +74,7 @@ function App() {
 
         <Route path="/faq" Component={FAQ} />
       </Routes>
+      <Footer />
     </Router>
   );
 }
