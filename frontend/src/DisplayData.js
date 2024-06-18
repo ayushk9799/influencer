@@ -15,31 +15,30 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 export const DisplayData = () => {
   const navigate = useNavigateCustom();
-  const {userDetails}=useSelector((state)=>state.user)
-console.log(userDetails)
+  const { userDetails } = useSelector((state) => state.user);
+
   const divRef = useRef(null);
   const [data, setData] = useState([]);
-   const [favourite,setfavourite]=useState({})
+  const [favourite, setfavourite] = useState({});
   const [typeOfDataDisplay, settypeofDataDisplay] = useState();
-  const location=useLocation();
- const query=location?.state?.query;
-console.log(query)
-  useEffect(()=>
-  {
-    let object={};
-    userDetails?.favourites?.map((favourite)=>object[favourite]=true);
-    setfavourite((prev)=>({...prev,...object}))
-  },[userDetails])
+  const location = useLocation();
+  const query = location?.state?.query;
+
+  useEffect(() => {
+    let object = {};
+    userDetails?.favourites?.map((favourite) => (object[favourite] = true));
+    setfavourite((prev) => ({ ...prev, ...object }));
+  }, [userDetails]);
   const getData = async () => {
     if (query) {
       let categories = getCategory(-1);
-      let url = `${BACKEND_URL}/getInfluencers/search/?`;
+      let url = `${BACKEND_URL}/api/getInfluencers/search/?`;
       if (query.fmax !== undefined) url += `&fmax=${query.fmax}`;
       if (query.fmin !== undefined) url += `&fmin=${query.fmin}`;
       if (query.region !== undefined) url += `&region=${query.region}`;
       if (query.platform !== undefined) {
         let platform = query.platform;
-        console.log(platform)
+
         if (query.platform === "All") {
           platform = ["Instagram", "YouTube"];
         }
@@ -48,34 +47,30 @@ console.log(query)
       if (query.field !== undefined) {
         let indexedFields = [];
         for (let value of query.field) {
-          for (let i=0 ;i<categories.length; i++) {
-            if (categories[i]===value) {
+          for (let i = 0; i < categories.length; i++) {
+            if (categories[i] === value) {
               indexedFields.push(i);
             }
           }
         }
-        console.log(indexedFields);
+
         url += `&field=${indexedFields}`;
       }
       try {
-        console.log(query)
-        console.log(url)
         const response = await fetch(url);
         if (response.ok) {
           let data = await response.json();
-          console.log(data);
+
           setData(data.data);
-          settypeofDataDisplay("search result for your query");
+          settypeofDataDisplay("Search result for your query");
         } else {
           throw new Error("error in getting data");
         }
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     } else {
       try {
         const response = await fetch(
-          `${BACKEND_URL}/getInfluencers/featured/platform/instagram`
+          `${BACKEND_URL}/api/getInfluencers/featured/platform/instagram`
         );
         if (response.ok) {
           let data = await response.json();
@@ -84,61 +79,41 @@ console.log(query)
         } else {
           throw new Error("erro in getting data");
         }
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     }
   };
   useEffect(() => {
     getData();
   }, [query]);
 
- 
-const handleFavouriteDatabase=async(id,conditions)=>
-{
+  const handleFavouriteDatabase = async (id, conditions) => {
+    let url;
+    if (conditions) {
+      url = `${BACKEND_URL}/api/user/favourite/create/${id}`;
+    } else {
+      url = `${BACKEND_URL}/api/user/favourite/remove/${id}`;
+    }
+    try {
+      await fetch(url, { credentials: "include" });
+    } catch (error) {}
+  };
+  const handleFavourite = async (event, id) => {
+    event.preventDefault();
+    event.stopPropagation();
 
-let url;
-  if(conditions){
+    setfavourite((previouState) => ({ ...previouState, [id]: !favourite[id] }));
 
-url=`${BACKEND_URL}/user/favourite/create/${id}`;
-  }
-  else{
-    url=`${BACKEND_URL}/user/favourite/remove/${id}`
-  }
-  try{
-    await fetch(url,{credentials:"include"})
+    await handleFavouriteDatabase(id, !favourite[id]);
+  };
 
-  }
-  catch(error)
-  {
-    console.log(error)
-  }
-}
-const handleFavourite=async(event,id)=>
-{
-  event.preventDefault();
-  event.stopPropagation();
-  
-setfavourite((previouState)=>({...previouState,[id]:!favourite[id]}));
-
-await handleFavouriteDatabase(id,!favourite[id]);
-}
-console.log(favourite)
-  const handleInfluncerClick = (event,item) => {
+  const handleInfluncerClick = (event, item) => {
     event.preventDefault();
     navigate(`/influencer/${item.uniqueID}`, { state: { account: item } });
   };
   return (
     <>
       <div id="typeOfDataDisplay">{typeOfDataDisplay}</div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          margin: "10px",
-        }}
-      >
+      <div id="display-main">
         <div
           className="grid-container"
           style={{ width: (data.length + 1) * 200 + "px" }}
@@ -148,16 +123,29 @@ console.log(favourite)
               <div
                 key={index}
                 className="grid-item"
-                onClick={(event) => handleInfluncerClick(event,item)}
+                onClick={(event) => handleInfluncerClick(event, item)}
               >
-               <div className="heart" onClick={(event)=>handleFavourite(event,item._id)}> <AiFillHeart size={25} color={favourite[item._id]?"red":"white"}/></div>
+                <div
+                  className="heart"
+                  onClick={(event) => handleFavourite(event, item._id)}
+                >
+                  {" "}
+                  <AiFillHeart
+                    size={25}
+                    color={favourite[item._id] ? "red" : "white"}
+                  />
+                </div>
                 <div className="nameRegionImage">
-                  <div style={{ width: "100%", height: "320px", overflow:'hidden' }} ref={divRef}>
+                  <div
+                    style={{
+                      width: "100%",
+                      height: "320px",
+                      overflow: "hidden",
+                    }}
+                    ref={divRef}
+                  >
                     {" "}
-                    <img
-                      src={item.profilePic}
-                      alt="Profile Pic"
-                    />
+                    <img src={item.profilePic} alt="Profile Pic" />
                   </div>
 
                   <div className="nameRegion">
@@ -201,10 +189,11 @@ console.log(favourite)
                             color: "black",
                             display: "flex", // Add this line
                             alignItems: "center", // Add this line
-                            gap : '2px'
+                            gap: "2px",
                           }}
                         >
-                          {iconsArr[0]} {formatFollowers(item.ifollowers)} Followers
+                          {iconsArr[0]} {formatFollowers(item.ifollowers)}{" "}
+                          Followers
                         </a>
                       </div>
                     ) : (
@@ -229,10 +218,11 @@ console.log(favourite)
                             color: "black",
                             display: "flex", // Add this line
                             alignItems: "center", // Add this line
-                            gap : '2px'
+                            gap: "2px",
                           }}
                         >
-                          {iconsArr[1]} {formatFollowers(item.yfollowers)} Subscriber
+                          {iconsArr[1]} {formatFollowers(item.yfollowers)}{" "}
+                          Subscriber
                         </a>
                       </div>
                     ) : (
@@ -241,7 +231,9 @@ console.log(favourite)
                   </div>
                   <div className="fieldContainer" style={{ width: "100%" }}>
                     {item.field.map((fieldIndex, index) => (
-                      <div className="fields" key={index}>{getCategory(fieldIndex)}</div>
+                      <div className="fields" key={index}>
+                        {getCategory(fieldIndex)}
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -251,4 +243,4 @@ console.log(favourite)
       </div>
     </>
   );
-}
+};

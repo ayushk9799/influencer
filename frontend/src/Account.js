@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import "./components/profile.css";
-import { BACKEND_URL, formatFollowers, getCategory,s3Domain } from "./assets/Data";
+import {
+  BACKEND_URL,
+  formatFollowers,
+  getCategory,
+  s3Domain,
+} from "./assets/Data";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FaInstagram, FaYoutube, FaInfoCircle } from "react-icons/fa";
@@ -78,13 +83,31 @@ const Account = () => {
     let iValue, yValue;
     if (iprice) {
       iValue = {
-        story:{ price:iprice.story?.price[0],description:iprice.story?.description},
-        photo: {price:iprice.photo?.price[0],description:iprice.photo?.description},
-        reels:{price: iprice.reels?.price,description:iprice.reels?.description}
+        story: {
+          price: iprice.story?.price[0],
+          description: iprice.story?.description,
+        },
+        photo: {
+          price: iprice.photo?.price[0],
+          description: iprice.photo?.description,
+        },
+        reels: {
+          price: iprice.reels?.price,
+          description: iprice.reels?.description,
+        },
       };
     }
     if (yprice) {
-      yValue = { shorts: {price:yprice.shorts?.price,description:yprice.shorts?.dwscription}, video: {price:yprice.video?.price,description:yprice.video?.description} };
+      yValue = {
+        shorts: {
+          price: yprice.shorts?.price,
+          description: yprice.shorts?.dwscription,
+        },
+        video: {
+          price: yprice.video?.price,
+          description: yprice.video?.description,
+        },
+      };
     }
     const temp = {
       name,
@@ -97,9 +120,9 @@ const Account = () => {
       iprice: iValue,
       yaccountID,
       yprice: yValue,
-      contentCreator
+      contentCreator,
     };
-    console.log(temp)
+
     dispatch(updateFormData(temp));
     navigate("/complete-profile");
   };
@@ -113,7 +136,7 @@ const Account = () => {
 
   const handleSubmitButton = async () => {
     try {
-      const response = await fetch(`${BACKEND_URL}/addData/update-price`, {
+      const response = await fetch(`${BACKEND_URL}/api/addData/update-price`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -131,9 +154,7 @@ const Account = () => {
         }
       }
       setOpenModal(false);
-    } catch (err) {
-      console.log("error", err);
-    }
+    } catch (err) {}
   };
 
   const priceItem = (data, type) => {
@@ -235,7 +256,7 @@ const Account = () => {
             </div>
           )}
           <div className="item-description">
-              <p>{description}</p>
+            <p>{description}</p>
           </div>
           <Button
             style={{ width: "100%", textTransform: "capitalize" }}
@@ -252,105 +273,213 @@ const Account = () => {
   };
 
   return (
-    <div className='profile-main'>
-        {contentCreator ? (
-          <div className='container' >
-            <Modal open={openModal} onClose={() => {setOpenModal(false)}} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
-              <Box sx={{ ...style, width: 400 }}>
-                  <div style={{display:'flex',justifyContent:'space-between', marginBottom : '0px'}}>
-                    <h2 id="child-modal-title">{`${modalData?.type} ${modalData?.key}`}</h2>
-                    <IoMdClose size={25} onClick={() => setOpenModal(false)} className="modal-close-button" />
+    <div className="profile-main">
+      {contentCreator ? (
+        <div className="container">
+          <Modal
+            open={openModal}
+            onClose={() => {
+              setOpenModal(false);
+            }}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={{ ...style, width: 400 }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginBottom: "0px",
+                }}
+              >
+                <h2 id="child-modal-title">{`${modalData?.type} ${modalData?.key}`}</h2>
+                <IoMdClose
+                  size={25}
+                  onClick={() => setOpenModal(false)}
+                  className="modal-close-button"
+                />
+              </div>
+              <p id="child-modal-description">
+                We suggest you to change time to time your collaboration fee.
+              </p>
+              {modalData?.key === "photo" || modalData?.key === "story" ? (
+                <div style={{ width: "100%", marginTop: "5px" }}>
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <h4>Price:</h4>
+                    <div className="multiple-inputs">
+                      <input
+                        type="Number"
+                        placeholder="Price"
+                        value={modalData.price[0]}
+                        onChange={(e) => {
+                          const newPrice = [...modalData.price]; // Create a copy of the price array
+                          newPrice[0] = Number(e.target.value); // Update the value in the copied array
+                          setModalData({ ...modalData, price: newPrice }); // Set the new modalData object with the updated data
+                        }}
+                      />
+                      <input
+                        type="Number"
+                        placeholder="Price"
+                        value={modalData.price[1]}
+                        onChange={(e) => {
+                          const newPrice = [...modalData.price];
+                          newPrice[1] = Number(e.target.value);
+                          setModalData({ ...modalData, price: newPrice });
+                        }}
+                      />
+                      <input
+                        type="Number"
+                        placeholder="Price"
+                        value={modalData.price[2]}
+                        onChange={(e) => {
+                          const newPrice = [...modalData.price];
+                          newPrice[2] = Number(e.target.value);
+                          setModalData({ ...modalData, price: newPrice });
+                        }}
+                      />
+                    </div>
                   </div>
-                  <p id="child-modal-description">We suggest you to change time to time your collaboration fee.</p>
-                  {modalData?.key === 'photo' || modalData?.key === 'story' ? (
-                    <div style={{width : '100%', marginTop : '5px'}}>
-                      <div style={{display : 'flex', justifyContent : 'space-between'}}>
-                        <h4>Price:</h4>
-                        <div className="multiple-inputs">
-                          <input type="Number" placeholder="Price" value={modalData.price[0]} onChange={(e) => {
-                            const newPrice = [...modalData.price]; // Create a copy of the price array
-                            newPrice[0] = Number(e.target.value); // Update the value in the copied array
-                            setModalData({ ...modalData, price: newPrice }); // Set the new modalData object with the updated data
-                          }} />
-                          <input type="Number" placeholder="Price" value={modalData.price[1]} onChange={(e) => {
-                            const newPrice = [...modalData.price];
-                            newPrice[1] = Number(e.target.value);
-                            setModalData({ ...modalData, price: newPrice });
-                          }} />
-                          <input type="Number" placeholder="Price" value={modalData.price[2]} onChange={(e) => {
-                            const newPrice = [...modalData.price];
-                            newPrice[2] = Number(e.target.value);
-                            setModalData({ ...modalData, price: newPrice });
-                          }} />
-                        </div>
-                      </div>
-                      <div style={{display : 'flex', justifyContent : 'space-between'}}>
-                        <h4>Quantity:</h4>
-                        <div className="multiple-inputs">
-                          <div placeholder="Price">1</div>
-                          <div placeholder="Price">2</div>
-                          <div placeholder="Price">3</div>
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    <div style={{display : 'flex', justifyContent : 'space-between', margin: '5px 0px', alignItems : 'center'}}>
-                      <h4>Price:</h4>
-                      <input value={modalData.price} onChange={(e) =>  {setModalData({...modalData, price : e.target.value})}} style={{width : '60px', height : '20px', textAlign : 'center'}} placeholder="Price" />
-                    </div>
-                  )}
-                  <h4>Description:</h4>
-                  <textarea value={description} onChange={(e) => {setDescription(e.target.value)}} rows={4} className="profile-modal-textarea" placeholder="eg: We wil try to cover your product" />
-                  <div style={{display : 'flex', justifyContent : 'center'}}><Button style={{width : '100px'}} variant="contained" onClick={handleSubmitButton}>Submit</Button></div>
-              </Box>
-            </Modal>
-            {/* cover */}
-            {getCoverImageComponents(gallery)}
-            <div className='cover-container-mobile' onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
-                <img src={`${s3Domain}/${gallery[coverIndexMobile]}`} />
-                <div className='cover-indicator'>{coverIndexMobile+1}/{gallery.length}</div>
-            </div>
-            {/* profile */}
-            <div className='profile-div' style={{justifyContent : 'space-between'}}>
-                <div style={{display : 'flex'}}>
-                  <div className='image-div'>
-                      <img  src={`${profilePic}`} alt='image' style={{height : '100px', width : '100px'}} />
-                  </div>
-                  
-                  <div className="profilenames">
-                    <p className='name'>{name}</p>
-                    <div className='category-container'>
-                        {
-                          field?.length!==0 && field.map((val) => (
-                              <div key={val}>
-                                  {getCategory(val)}
-                              </div>
-                          ))
-                        }
-                    </div>
-                    <div className='field-container'>
-                        {iaccountID && <a target='_blank' href={`https://www.instagram.com/${iaccountID}`} className='field-element'><FaInstagram size={18} />{formatFollowers(ifollowers)}</a>}
-                        {yaccountID && <a target='_blank' href={`https://www.youtube.com/@${iaccountID}`} className='field-element'><FaYoutube size={20} />{formatFollowers(yfollowers)}</a>}
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <h4>Quantity:</h4>
+                    <div className="multiple-inputs">
+                      <div placeholder="Price">1</div>
+                      <div placeholder="Price">2</div>
+                      <div placeholder="Price">3</div>
                     </div>
                   </div>
                 </div>
-                <div className="profile-buttons-container"> 
-                  <button className="profile-buttons profile-edit-button" onClick={()=>navigate('/complete-profile')}>Edit profile</button>
-                  <Link className="profile-buttons profile-edit-button" to={'/user/orders'} >Orders</Link>
+              ) : (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    margin: "5px 0px",
+                    alignItems: "center",
+                  }}
+                >
+                  <h4>Price:</h4>
+                  <input
+                    value={modalData.price}
+                    onChange={(e) => {
+                      setModalData({ ...modalData, price: e.target.value });
+                    }}
+                    style={{
+                      width: "60px",
+                      height: "20px",
+                      textAlign: "center",
+                    }}
+                    placeholder="Price"
+                  />
                 </div>
-            </div>
-            <p className="profile-bio">{bio}</p>
-            <div className='price-box'>
-                <div className="profile-packages">
-                  <p>Packages</p> 
-                  <FaInfoCircle />
-                </div>
-                <div className="price-items-container">
-                  {priceItem(iprice, 1)}
-                  {priceItem(yprice, 0)}
-                </div>
+              )}
+              <h4>Description:</h4>
+              <textarea
+                value={description}
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
+                rows={4}
+                className="profile-modal-textarea"
+                placeholder="eg: We wil try to cover your product"
+              />
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Button
+                  style={{ width: "100px" }}
+                  variant="contained"
+                  onClick={handleSubmitButton}
+                >
+                  Submit
+                </Button>
+              </div>
+            </Box>
+          </Modal>
+          {/* cover */}
+          {getCoverImageComponents(gallery)}
+          <div
+            className="cover-container-mobile"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
+            <img src={`${s3Domain}/${gallery[coverIndexMobile]}`} />
+            <div className="cover-indicator">
+              {coverIndexMobile + 1}/{gallery.length}
             </div>
           </div>
+          {/* profile */}
+          <div
+            className="profile-div"
+            style={{ justifyContent: "space-between" }}
+          >
+            <div style={{ display: "flex" }}>
+              <div className="image-div">
+                <img
+                  src={`${profilePic}`}
+                  alt="image"
+                  style={{ height: "100px", width: "100px" }}
+                />
+              </div>
+
+              <div className="profilenames">
+                <p className="name">{name}</p>
+                <div className="category-container">
+                  {field?.length !== 0 &&
+                    field.map((val) => <div key={val}>{getCategory(val)}</div>)}
+                </div>
+                <div className="field-container">
+                  {iaccountID && (
+                    <a
+                      target="_blank"
+                      href={`https://www.instagram.com/${iaccountID}`}
+                      className="field-element"
+                    >
+                      <FaInstagram size={18} />
+                      {formatFollowers(ifollowers)}
+                    </a>
+                  )}
+                  {yaccountID && (
+                    <a
+                      target="_blank"
+                      href={`https://www.youtube.com/@${iaccountID}`}
+                      className="field-element"
+                    >
+                      <FaYoutube size={20} />
+                      {formatFollowers(yfollowers)}
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="profile-buttons-container">
+              <button
+                className="profile-buttons profile-edit-button"
+                onClick={() => navigate("/complete-profile")}
+              >
+                Edit profile
+              </button>
+              <Link
+                className="profile-buttons profile-edit-button"
+                to={"/user/orders"}
+              >
+                Orders
+              </Link>
+            </div>
+          </div>
+          <p className="profile-bio">{bio}</p>
+          <div className="price-box">
+            <div className="profile-packages">
+              <p>Packages</p>
+              <FaInfoCircle />
+            </div>
+            <div className="price-items-container">
+              {priceItem(iprice, 1)}
+              {priceItem(yprice, 0)}
+            </div>
+          </div>
+        </div>
       ) : (
         <AccountForClient />
       )}

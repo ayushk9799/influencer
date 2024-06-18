@@ -129,7 +129,7 @@ UserSchema.pre("save", async function (next) {
 UserSchema.pre("save", function (next) {
   if (this.isModified("iprice") || this.isModified("yprice")) {
     const prices = [];
-    // console.log("mdoifie");
+    //
     // Collect all iprice values
 
     if (this.iprice) {
@@ -146,8 +146,8 @@ UserSchema.pre("save", function (next) {
 
     // Find the minimum price and set it
     if (prices.length > 0) {
-      // console.log(Math.min(...prices));
-      // console.log(prices);
+      //
+      //
       this.price = Math.min(...prices);
     }
   }

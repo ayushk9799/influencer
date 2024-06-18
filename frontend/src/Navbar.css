@@ -40,6 +40,12 @@
   align-items: center;
   /* background-color: rebeccapurple; */
 }
+.unauth
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .user-input-status {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -71,6 +77,12 @@
   cursor: pointer;
 }
 .navDetailsClass > span:hover {
+  text-decoration: underline;
+}
+.unauth > span {
+  cursor: pointer;
+}
+.unauth > span:hover {
   text-decoration: underline;
 }
 #account:hover {

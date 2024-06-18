@@ -1,7 +1,12 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./profile.css";
-import { BACKEND_URL, formatFollowers, getCategory, s3Domain } from "../assets/Data";
-import {  useLocation } from "react-router-dom";
+import {
+  BACKEND_URL,
+  formatFollowers,
+  getCategory,
+  s3Domain,
+} from "../assets/Data";
+import { useLocation } from "react-router-dom";
 import { FaInstagram, FaYoutube, FaInfoCircle } from "react-icons/fa";
 import { useNavigateCustom } from "../CustomNavigate";
 import { Button } from "@mui/material";
@@ -10,7 +15,10 @@ const Profile = () => {
   const location = useLocation();
   const [item, setItem] = useState(location.state?.account);
   const navigate = useNavigateCustom();
-  const [selectIndexInCard, setSelectIndexInCard] = useState({photo : 0, story : 0});
+  const [selectIndexInCard, setSelectIndexInCard] = useState({
+    photo: 0,
+    story: 0,
+  });
 
   // for swipe detection
   const [startX, setStartX] = useState(0);
@@ -20,13 +28,12 @@ const Profile = () => {
     const getInfluencersData = async () => {
       if (!item) {
         try {
-          const response = await fetch(`${BACKEND_URL}/influencers?uniqueID=${location.state?.uniqueID}`);
+          const response = await fetch(
+            `${BACKEND_URL}/api/influencers?uniqueID=${location.state?.uniqueID}`
+          );
           const { data } = await response.json();
           setItem(data);
-          console.log(data);
-        } catch (error) {
-          console.log(error);
-        }
+        } catch (error) {}
       }
     };
     getInfluencersData();
@@ -50,9 +57,7 @@ const Profile = () => {
     yfollowers,
     yprice,
   } = item;
- 
 
-  
   const handleTouchStart = (event) => {
     const touch = event.touches[0];
     setStartX(touch.pageX);
@@ -74,24 +79,29 @@ const Profile = () => {
   };
 
   const handleContinue = (index, type, key, price) => {
-      if(index === 4) {
-          navigate("/custom-offer", {state : {influencer : _id, profilePic, name}});
-      }else {
-        let amount, temp = 1;
-        if(key === 'story' || key === 'photo') {
-          temp = selectIndexInCard[key] + 1;
-          amount = price[selectIndexInCard[key]]
-        } else {
-          amount = price;
-        }
-        const orderSummary = {
-          accountType : type === 0 ? 'instagram' : 'youtube',
-          details : `${temp} ${type?'Youtube':'Instagram'} ${key}`,
-          orderType : 'main'
-        }
-          navigate('/user/checkout', {state : {influencer : item, amount, orderSummary}});
+    if (index === 4) {
+      navigate("/custom-offer", {
+        state: { influencer: _id, profilePic, name },
+      });
+    } else {
+      let amount,
+        temp = 1;
+      if (key === "story" || key === "photo") {
+        temp = selectIndexInCard[key] + 1;
+        amount = price[selectIndexInCard[key]];
+      } else {
+        amount = price;
       }
-  }
+      const orderSummary = {
+        accountType: type === 0 ? "instagram" : "youtube",
+        details: `${temp} ${type ? "Youtube" : "Instagram"} ${key}`,
+        orderType: "main",
+      };
+      navigate("/user/checkout", {
+        state: { influencer: item, amount, orderSummary },
+      });
+    }
+  };
 
   // type={0: 'Instagram', 1:'Youtube'}, data=iprice, yprice
   const priceItem = (data, type) => {
@@ -101,95 +111,199 @@ const Profile = () => {
     }
     for (const key in data) {
       const { price, description } = data[key];
-     if(price){
-      const element = <div className="price-item-card" key={key}>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            {!type ? <FaInstagram size={25} /> : <FaYoutube size={25} />}
-            <p style={{ fontSize: '20px' }}>{!type ? 'Instagram' : 'Youtube'} {key}</p>
-          </div>
-          {Array.isArray(price) ? (
-            <div style={{ fontSize: '24px', fontWeight: 'bold' }}>${price[selectIndexInCard[key]]}</div>
-          ) : (
-            <div style={{ fontSize: '24px', fontWeight: 'bold' }}>${price}</div>
-          )}
-        </div>
-        {Array.isArray(price) ? (
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <p style={{ fontSize: '18px', letterSpacing: '1px' }}>Quantity</p>
-            <div className="item-quantity">
-              <div onClick={() => setSelectIndexInCard({ ...selectIndexInCard, [key]: 0 })} style={selectIndexInCard[key] === 0 ? {backgroundColor : '#1976d2', color : 'white', fontWeight : 'bold'} : {}}>1</div>
-              <div onClick={() => setSelectIndexInCard({ ...selectIndexInCard, [key]: 1 })} style={selectIndexInCard[key] === 1 ? {backgroundColor : '#1976d2', color : 'white', fontWeight : 'bold'} : {}}>2</div>
-              <div onClick={() => setSelectIndexInCard({ ...selectIndexInCard, [key]: 2 })} style={selectIndexInCard[key] === 2 ? {backgroundColor : '#1976d2', color : 'white', fontWeight : 'bold'} : {}}>3</div>
+      if (price) {
+        const element = (
+          <div className="price-item-card" key={key}>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "5px" }}
+              >
+                {!type ? <FaInstagram size={25} /> : <FaYoutube size={25} />}
+                <p style={{ fontSize: "20px" }}>
+                  {!type ? "Instagram" : "Youtube"} {key}
+                </p>
+              </div>
+              {Array.isArray(price) ? (
+                <div style={{ fontSize: "24px", fontWeight: "bold" }}>
+                  ${price[selectIndexInCard[key]]}
+                </div>
+              ) : (
+                <div style={{ fontSize: "24px", fontWeight: "bold" }}>
+                  ${price}
+                </div>
+              )}
             </div>
+            {Array.isArray(price) ? (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <p style={{ fontSize: "18px", letterSpacing: "1px" }}>
+                  Quantity
+                </p>
+                <div className="item-quantity">
+                  <div
+                    onClick={() =>
+                      setSelectIndexInCard({ ...selectIndexInCard, [key]: 0 })
+                    }
+                    style={
+                      selectIndexInCard[key] === 0
+                        ? {
+                            backgroundColor: "#1976d2",
+                            color: "white",
+                            fontWeight: "bold",
+                          }
+                        : {}
+                    }
+                  >
+                    1
+                  </div>
+                  <div
+                    onClick={() =>
+                      setSelectIndexInCard({ ...selectIndexInCard, [key]: 1 })
+                    }
+                    style={
+                      selectIndexInCard[key] === 1
+                        ? {
+                            backgroundColor: "#1976d2",
+                            color: "white",
+                            fontWeight: "bold",
+                          }
+                        : {}
+                    }
+                  >
+                    2
+                  </div>
+                  <div
+                    onClick={() =>
+                      setSelectIndexInCard({ ...selectIndexInCard, [key]: 2 })
+                    }
+                    style={
+                      selectIndexInCard[key] === 2
+                        ? {
+                            backgroundColor: "#1976d2",
+                            color: "white",
+                            fontWeight: "bold",
+                          }
+                        : {}
+                    }
+                  >
+                    3
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <p style={{ fontSize: "18px", letterSpacing: "1px" }}>
+                  Duration
+                </p>
+                <div className="item-quantity">Upto 60sec</div>
+              </div>
+            )}
+            <div className="item-description">
+              <p>{description}</p>
+            </div>
+            <Button
+              style={{ width: "100%", textTransform: "capitalize" }}
+              onClick={() => handleContinue(1, type, key, price)}
+              variant="contained"
+            >
+              continue
+            </Button>
           </div>
-        ) : (
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <p style={{ fontSize: '18px', letterSpacing: '1px' }}>Duration</p>
-            <div className="item-quantity">Upto 60sec</div>
-          </div>
-        )}
-        <div className="item-description">
-          <p>{description}</p>
-        </div>
-        <Button style={{ width: '100%', textTransform: 'capitalize' }} onClick={() => handleContinue(1, type, key, price)} variant="contained">continue</Button>
-      </div>
-      elementValue.push(element);
-     }
-      
+        );
+        elementValue.push(element);
+      }
     }
-    return elementValue
-  }
-    
+    return elementValue;
+  };
+
   return (
-    <div className='main'>
-        {name && (
-          <div className='container' >
-            {/* cover */}
-            {getCoverImageComponents(gallery)}
-            <div className='cover-container-mobile' onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
-                <img src={`${s3Domain}/${gallery[coverIndexMobile]}`} alt="Covers" />
-                <div className='cover-indicator'>{coverIndexMobile+1}/{gallery.length}</div>
-            </div>
-            {/* profile */}
-            <div className='profile-div'>
-                <div className='image-div'>
-                    <img  src={profilePic} alt='profile Picture'  />
-                </div>
-                
-                <div className="profilenames">
-                    <div className='name'>{name}</div>
-                    <div className='category-container'>
-                        {
-                          field?.length!==0 && field.map((val) => (
-                              <div key={val}>
-                                  {getCategory(val)}
-                              </div>
-                          ))
-                        }
-                    </div>
-                    <div className='field-container'>
-                        {iaccountID && <a target='_blank' href={`https://www.instagram.com/${iaccountID}`} className='field-element'><FaInstagram size={18} />{formatFollowers(ifollowers)}</a>}
-                        {yaccountID && <a target='_blank' href={`https://www.youtube.com/@${iaccountID}`} className='field-element'><FaYoutube size={20} />{formatFollowers(yfollowers)}</a>}
-                    </div>
-                </div>
-            </div>
-            <div className="profile-bio">{bio}</div>
-            <div className='price-box'>
-                <div className="profile-packages">
-                  <p>Packages</p> 
-                  <FaInfoCircle />
-                </div>
-                <div className="price-items-container">
-                  {priceItem(iprice, 0)}
-                  {priceItem(yprice, 1)}
-                </div>
-            </div>
-            <div className="custom-offer">
-              <div>Do you want to send custom offer</div>
-              <Button style={{textTransform : 'capitalize', width:'100px'}} onClick={()=>handleContinue(4)} variant="contained">Send</Button>
+    <div className="profile-main">
+      {name && (
+        <div className="container">
+          {/* cover */}
+          {getCoverImageComponents(gallery)}
+          <div
+            className="cover-container-mobile"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
+            <img
+              src={`${s3Domain}/${gallery[coverIndexMobile]}`}
+              alt="Covers"
+            />
+            <div className="cover-indicator">
+              {coverIndexMobile + 1}/{gallery.length}
             </div>
           </div>
+          {/* profile */}
+          <div className="profile-div">
+            <div className="image-div">
+              <img src={profilePic} alt="profile Picture" />
+            </div>
+
+            <div className="profilenames">
+              <div className="name">{name}</div>
+              <div className="category-container">
+                {field?.length !== 0 &&
+                  field.map((val) => <div key={val}>{getCategory(val)}</div>)}
+              </div>
+              <div className="field-container">
+                {iaccountID && (
+                  <a
+                    target="_blank"
+                    href={`https://www.instagram.com/${iaccountID}`}
+                    className="field-element"
+                  >
+                    <FaInstagram size={18} />
+                    {formatFollowers(ifollowers)}
+                  </a>
+                )}
+                {yaccountID && (
+                  <a
+                    target="_blank"
+                    href={`https://www.youtube.com/@${iaccountID}`}
+                    className="field-element"
+                  >
+                    <FaYoutube size={20} />
+                    {formatFollowers(yfollowers)}
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
+          <div className="profile-bio">{bio}</div>
+          <div className="price-box">
+            <div className="profile-packages">
+              <p>Packages</p>
+              <FaInfoCircle />
+            </div>
+            <div className="price-items-container">
+              {priceItem(iprice, 0)}
+              {priceItem(yprice, 1)}
+            </div>
+          </div>
+          <div className="custom-offer">
+            <div>Do you want to send custom offer</div>
+            <Button
+              style={{ textTransform: "capitalize" }}
+              onClick={() => handleContinue(4)}
+              variant="contained"
+            >
+              Send
+            </Button>
+          </div>
+        </div>
       )}
     </div>
   );
@@ -250,6 +364,6 @@ const getCoverImageComponents = (coverImage) => {
       </div>
     );
   } else {
-    return <div ></div>;
+    return <div></div>;
   }
 };

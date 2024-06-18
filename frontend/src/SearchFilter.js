@@ -13,7 +13,7 @@ export const SearchFilter = () => {
   const countryRef = useRef(null);
   const followerRef = useRef(null);
   const DisplayDataRef = useRef(null);
-  const navigate=useNavigateCustom();
+  const navigate = useNavigateCustom();
   const [searchJsx, setsearchJsx] = useState(null);
   const [searchButton, setsearchButton] = useState(false);
   const query = useRef({});
@@ -50,7 +50,7 @@ export const SearchFilter = () => {
       setSelectedCountryOptions(option);
     }
   };
-  const handlecross = (index,event) => {
+  const handlecross = (index, event) => {
     event.stopPropagation();
     switch (index) {
       case 1:
@@ -78,14 +78,13 @@ export const SearchFilter = () => {
   const handleSearch = () => {
     // DisplayDataRef.current.getData();
     // setsearchButton(true);
-navigate('/influencer/search',{state:{query:query?.current}})
-
+    navigate("/influencer/search", { state: { query: query?.current } });
   };
   const handleResize = () => {
     if (window.innerWidth < 700) {
       setsearchJsx(<div>getData</div>);
     } else {
-      setsearchJsx(<FaSearch size={25}/>);
+      setsearchJsx(<FaSearch size={25} />);
     }
   };
 
@@ -111,6 +110,9 @@ navigate('/influencer/search',{state:{query:query?.current}})
       case 0:
         answer = 0;
         break;
+        case '1K':
+          answer=1000;
+          break;
       case "10K":
         answer = 10000;
         break;
@@ -135,10 +137,10 @@ navigate('/influencer/search',{state:{query:query?.current}})
       fieldref.current.style.display === "grid" ? "none" : "grid";
   };
   const handleFollowerRangechange = (value) => {
-    console.log(value);
-
     query.current.fmax = convertToNumber(value[1]);
     query.current.fmin = convertToNumber(value[0]);
+    console.log(value[0]);
+    console.log(value[1])
     setFollowerRange(value);
     setFollowerVisibilty(true);
   };
@@ -190,10 +192,13 @@ navigate('/influencer/search',{state:{query:query?.current}})
 
           <div className="dropdown" onClick={handleClickField}>
             <div className="dropbtn">
-              <div id="overflows" title={selectedfieldOptions.join(", ")}>  {!(selectedfieldOptions.length === 0)
-                ? selectedfieldOptions + " "
-                : "Field/Category"}</div>
-            
+              <div id="overflows" title={selectedfieldOptions.join(", ")}>
+                {" "}
+                {!(selectedfieldOptions.length === 0)
+                  ? selectedfieldOptions + " "
+                  : "Field/Category"}
+              </div>
+
               {!(selectedfieldOptions.length === 0) ? (
                 <div
                   className="cross"
@@ -311,7 +316,7 @@ navigate('/influencer/search',{state:{query:query?.current}})
             </div>
           </div>
           <div id="getData" ref={searchRef} onClick={handleSearch}>
-           {searchJsx}
+            {searchJsx}
           </div>
         </div>
       </div>

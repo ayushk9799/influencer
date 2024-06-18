@@ -4,15 +4,13 @@ const router = express.Router();
 
 router.post("/", async (req, res, next) => {
   try {
-    console.log("post");
     let user = await User.findById(req.user._id);
-   console.log(user)
+
     if (!user) {
       next(new Error("user not found in database or try again"));
     } else {
       const data = req.body;
-       console.log("data");
-       console.log(data);
+       console.log(data)
       for (let keys in data) {
         const value = data[keys];
         if (keys === "yprice") {
@@ -65,18 +63,15 @@ router.post("/", async (req, res, next) => {
               if (value.story.price?.length) {
                 user.iprice.story.price = value.photo.price;
               }
+            } else {
+              const temp = Number(value.story.price);
+              const arr = [temp * 1, temp * 2, temp * 3];
+
+              user.iprice.story.price = arr;
             }
-           
-          else{
-            const temp = Number(value.story.price);
-            const arr = [temp*1, temp*2, temp*3];
-            console.log(arr)
-            user.iprice.story.price = arr;
-          }
-          }
-          else{
-            user.iprice.story.price = [0,0,0]
-            user.iprice.story.description="hello"
+          } else {
+            user.iprice.story.price = [0, 0, 0];
+            user.iprice.story.description = "hello";
           }
         } else {
           user[keys] = data[keys];
@@ -86,7 +81,6 @@ router.post("/", async (req, res, next) => {
       return res.status(200).json({ message: "saved succesfully", data: temp });
     }
   } catch (error) {
-    console.log(error);
     res.status(404).json({ message: error.message });
   }
 });
@@ -94,13 +88,11 @@ router.post("/", async (req, res, next) => {
 router.post("/update-price", async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
-    console.log("user", user);
+
     const { description, key, type, price } = req.body;
-    
+
     let data;
     if (type === "Instagram") {
-      console.log(key)
-      console.log(price)
       user.iprice[key] = { price, description };
       data = user.iprice;
     } else {
@@ -110,7 +102,6 @@ router.post("/update-price", async (req, res) => {
     await user.save();
     return res.status(200).json({ message: "success", data });
   } catch (err) {
-    console.log(err);
     return res
       .status(500)
       .json({ message: "internal server error", error: err.message });

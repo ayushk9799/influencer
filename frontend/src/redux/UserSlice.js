@@ -4,11 +4,12 @@ import { BACKEND_URL } from "../assets/Data";
 const initialState = {
     isAuthenticated : false,
     userDetails : {},
-    orders : []
+    orders : [],
+    isLoading:true,
 }
 
 export const getUserData = createAsyncThunk('user/get-data', async () => {
-    const response = await fetch(`${BACKEND_URL}/user/getMyData`, {
+    const response = await fetch(`${BACKEND_URL}/api/user/getMyData`, {
         credentials: "include",
     });
     const { userDetails } = await response.json();
@@ -16,7 +17,7 @@ export const getUserData = createAsyncThunk('user/get-data', async () => {
 });
 
 export const getOrder = createAsyncThunk('user/get-orders', async () => {
-    const response = await fetch(`${BACKEND_URL}/user/orders`, {
+    const response = await fetch(`${BACKEND_URL}/api/user/orders`, {
         credentials: "include",
     });
     const { orders } = await response.json();
@@ -44,7 +45,10 @@ const UserSlice = createSlice({
         {
             state.isAuthenticated=false;
             state.userDetails={};
-        }
+        },
+        setLoading: (state, action) => {
+            state.isLoading = action.payload;
+          },
         
     },
     extraReducers : (builder) => {
@@ -59,6 +63,6 @@ const UserSlice = createSlice({
     }
 })
 
-export const {setUserData, updateUserDetails,logout} = UserSlice.actions;
+export const {setUserData, updateUserDetails,logout,setLoading} = UserSlice.actions;
 
 export default UserSlice.reducer;

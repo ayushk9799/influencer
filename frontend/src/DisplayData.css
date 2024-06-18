@@ -6,7 +6,15 @@
 }
 
 #typeOfDataDisplay {
-  margin: 15px 10px 0px;
+  margin: 15px 80px 0px;
+}
+
+#display-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 80px;
+  min-height: 82vh;
 }
 
 .grid-item {
@@ -21,6 +29,7 @@
   right: 10px;
   top: 10px;
 }
+
 .grid-item:hover {
   cursor: pointer;
 }
@@ -78,3 +87,21 @@
   padding: 3px;
   border-radius: 5px;
 }
+
+@media (max-width : 1100px) and (min-width : 800px) {
+  #typeOfDataDisplay {
+    margin: 15px 40px 0px;
+  }
+  #display-main {
+    padding: 10px 40px;
+  }
+}
+
+@media (max-width : 800px) {
+  #typeOfDataDisplay {
+    margin: 15px 10px 0px;
+  }
+  #display-main {
+    padding: 10px 10px;
+  }
+} 

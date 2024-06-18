@@ -17,7 +17,7 @@ const WorkingStep = () => {
                 </div>
                 <h5>step 1</h5>
                 <h3>Send collaboration Offer</h3>
-                <p>Send collaboration offer to influencer. They has 48 hour to accept your offer, otherwise amount will be refunded to your account</p>
+                <p>Send collaboration offer to influencer. They have 48 hour to accept your offer, otherwise amount will be refunded to your account</p>
             </div>
             <div className='arrow'>
                 <ImArrowRight  size={23} />
@@ -28,7 +28,7 @@ const WorkingStep = () => {
                 </div>
                 <h5>step 2</h5>
                 <h3>Chat with influencer</h3>
-                <p>Chat with influencer and arrage collaboration. Your fund are held securely until they complete your work.</p>
+                <p>Chat with influencer and arrange collaboration. Funds are released to the influencer only after your approval of the the work</p>
             </div>
             <div className='arrow'>
                 <ImArrowRight size={23} />
@@ -38,8 +38,8 @@ const WorkingStep = () => {
                     <CiStar size={25} color='#f8faf7' />
                 </div>
                 <h5>step 2</h5>
-                <h3>Recieve Content</h3>
-                <p>Recieve your content to review and approve. Onces you approved the payment will be released to them.</p>
+                <h3>Receive Content</h3>
+                <p>Receive your content, review and approve. On your approval the payment will be released to them.</p>
             </div>
         </div>
     </div>

@@ -1,79 +1,62 @@
 import { useNavigateCustom } from "./CustomNavigate";
 import "./Navbar.css";
-import { useState,useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 // import {useLocation} from 'react-router-dom';
 import { logout } from "./redux/UserSlice";
-
-import { HorizontalNav } from "./HorizontalNav";
-import { useSelector,useDispatch } from "react-redux";
+import "./HorizontalNav.css";
+import { useSelector, useDispatch } from "react-redux";
 import { Button, Modal } from "@mui/material";
 import { FcGoogle } from "react-icons/fc";
-import { FaCheck, FaRegCheckCircle  } from "react-icons/fa";
+import { FaCheck } from "react-icons/fa";
+import { BACKEND_URL } from "./assets/Data.js";
+
 // import { BACKEND_URL } from "./assets/Data";
 // import { updateUserDetails } from "./redux/UserSlice";
 const CLIENT_ID =
   "708505773923-9fuh2eqg0lr8sgl86p7dsuh2v0pjuslt.apps.googleusercontent.com"; // Replace with your Google Cloud Platform project's client ID
-const REDIRECT_URI = "http://localhost:3000/auth/google/callback";
+const REDIRECT_URI = `${BACKEND_URL}/api/auth/google/callback`;
 
 export const Navbar = ({ details }) => {
   const [menuButton, setMenuButton] = useState(false);
   const { userDetails } = useSelector((state) => state.user);
   const [modalOpen, setModalOpen] = useState(false);
-  const [buttonClicked, setButtonClicked] = useState('');
+  const [buttonClicked, setButtonClicked] = useState("");
   // const [modalAsk, setModalAsk] = useState(false);
   // const [typeOfUserSelect, setTypeOfUserSelect] = useState('');
   // const selectedBrandRef = useRef();
   // const selectedInfluencerRef = useRef();
   // const dispatch = useDispatch();
   // const location = useLocation();
-  const {isAuthenticated} =useSelector(state=>state.user);
-  const navigate=useNavigateCustom();
-   const dispatch=useDispatch();
-   const horizontalRef=useRef(null);
-  const handleAccountClick=()=>
-  {
-          navigate('/myAccount');
-          horizontalRef.current.style.display="none"
+  const { isAuthenticated } = useSelector((state) => state.user);
+  const navigate = useNavigateCustom();
+  const dispatch = useDispatch();
+  const horizontalRef = useRef(null);
+  const handleAccountClick = () => {
+    navigate("/myAccount");
+    horizontalRef.current.style.display = "none";
+    setMenuButton(!menuButton);
+  };
+  const handleOrdersClick = () => {
+    navigate("/user/orders");
+    horizontalRef.current.style.display = "none";
+    setMenuButton(!menuButton);
+  };
+  const handleLoginOut = async () => {
+    if (isAuthenticated) {
+      const response = await fetch(`${BACKEND_URL}/api/auth/logout`, {
+        credentials: "include",
+      });
 
-  }
-  const handleOrdersClick=()=>
-  {
-    navigate('/user/orders');
-    horizontalRef.current.style.display="none"
-  }
-  const handleLoginOut=async()=>
-  {
-    
-    if(isAuthenticated)
-    {
-     
-          const response= await fetch('http://localhost:3000/auth/logout',{credentials:"include"});
-          console.log(response)
-          if(response.ok)
-          {
-            dispatch(logout());
-            navigate('/')
-
-          }
-    }
-    else{
-           
-    }
-    navigate('/');
-    horizontalRef.current.style.display="none"
-
-  }
-
-  useEffect(() => {
-    if(userDetails?.email) {
-      const navbarDetails = document.getElementsByClassName('navDetailsClass');
-      if (navbarDetails.length > 0) {
-        Array.from(navbarDetails).forEach(element => {
-          element.style.justifyContent = 'end';
-        });
+      if (response.ok) {
+        dispatch(logout());
+        navigate("/");
       }
+    } else {
     }
-  }, [userDetails])
+    navigate("/");
+    horizontalRef.current.style.display = "none";
+    setMenuButton(!menuButton);
+  };
 
   const handleSignIn = async () => {
     // Create authorization code flow URL
@@ -120,43 +103,89 @@ export const Navbar = ({ details }) => {
   //     const {data} = await response.json();
   //     dispatch(updateUserDetails({contentCreator : data.contentCreator}));
   //   } catch (err) {
-  //     console.log('some problem');
+  //
   //   }
   // }
 
   const handleChange = () => {
-    console.log("menu")
-    console.log(menuButton)
     setMenuButton(!menuButton);
   };
   return (
     <div className="navbar-main-container">
-      <Modal open={modalOpen} onClose={()=>{setModalOpen(false);setButtonClicked('');}} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+      <Modal
+        open={modalOpen}
+        onClose={() => {
+          setModalOpen(false);
+          setButtonClicked("");
+        }}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
         <div className="modal-container-div modal-container-login">
           <div className="left-login-modal">
             <h3 className="offers">EazzyCollab offers</h3>
-            <div className="offers"><FaCheck/>Over 1000+ influencer</div>
-            <div className="offers"><FaCheck/>Over 50+ brands</div>
-            <div className="offers"><FaCheck/>Smooth payment</div>
+            <div className="offers">
+              <FaCheck />
+              Over 1000+ influencer
+            </div>
+            <div className="offers">
+              <FaCheck />
+              Over 50+ brands
+            </div>
+            <div className="offers">
+              <FaCheck />
+              Smooth payment
+            </div>
           </div>
           <div className="right-login-modal">
-            {buttonClicked === 'join' ? (
-              <div  id="modal-header">
+            {buttonClicked === "join" ? (
+              <div id="modal-header">
                 <h4>Create a new account</h4>
-                <p>Already have an account? <span onClick={() => {setButtonClicked('login')}} id="sign-in-button">Sign in</span></p>
+                <p>
+                  Already have an account?{" "}
+                  <span
+                    onClick={() => {
+                      setButtonClicked("login");
+                    }}
+                    id="sign-in-button"
+                  >
+                    Sign in
+                  </span>
+                </p>
               </div>
             ) : (
-              <div  id="modal-header">
+              <div id="modal-header">
                 <h4>Sign in to your account</h4>
-                <p>Don't have an account? <span onClick={() => {setButtonClicked('join')}} id="sign-in-button">Join</span></p>
+                <p>
+                  Don't have an account?{" "}
+                  <span
+                    onClick={() => {
+                      setButtonClicked("join");
+                    }}
+                    id="sign-in-button"
+                  >
+                    Join
+                  </span>
+                </p>
               </div>
             )}
             <div id="google-button" onClick={handleSignIn}>
-              <FcGoogle size={24}  />
+              <FcGoogle size={24} />
               <p>Contiue with google</p>
             </div>
             <div>
-              <p style={{fontSize:'12px', color:'#74767e',letterSpacing:'0.5px'}}>By joining, you agree to the EazzyCollab <a href="#">Terms of Service</a>. Please read our <a href="#">Privacy Policy</a> to learn how we use your personal data.</p>
+              <p
+                style={{
+                  fontSize: "12px",
+                  color: "#74767e",
+                  letterSpacing: "0.5px",
+                }}
+              >
+                By joining, you agree to the EazzyCollab{" "}
+                <a href="#">Terms of Service</a>. Please read our{" "}
+                <a href="#">Privacy Policy</a> to learn how we use your personal
+                data.
+              </p>
             </div>
           </div>
         </div>
@@ -193,31 +222,44 @@ export const Navbar = ({ details }) => {
           <div className="navDetailsClass">
             <span onClick={() => navigate("/")}>Home</span>
           </div>
-          <div className="navDetailsClass">
+          <div className={isAuthenticated ? "navDetailsClass" : "unauth"}>
             <span onClick={() => navigate("/how-to-use")}>Explore</span>
           </div>
           {userDetails?.email ? (
             <div
-              className="navDetailsClass"
+              className={isAuthenticated ? "navDetailsClass" : "unauth"}
               id="account"
 
             >
-              <div id="accountDetails"  onClick={handleChange}>
+              <div id="accountDetails" onClick={handleChange}>
                 <img
-                  src={`${userDetails.profilePic}`} referrerPolicy= 'no-referrer'
+                  src={`${userDetails.profilePic}`}
+                  referrerPolicy="no-referrer"
                 ></img>
               </div>
             </div>
           ) : (
             <div className="user-input-status">
               <div
-                className="navDetailsClass"
-                onClick={() => {setModalOpen(true);setButtonClicked('login')}}
+                className={isAuthenticated ? "navDetailsClass" : "unauth"}
+                onClick={() => {
+                  setModalOpen(true);
+                  setButtonClicked("login");
+                }}
                 id="login"
               >
                 Login
               </div>
-              <Button onClick={()=>{setModalOpen(true);setButtonClicked('join')}} id="join-button" variant="outlined">Join</Button>  
+              <Button
+                onClick={() => {
+                  setModalOpen(true);
+                  setButtonClicked("join");
+                }}
+                id="join-button"
+                variant="outlined"
+              >
+                Join
+              </Button>
             </div>
           )}
           {/* <div className='navDetailsClass' id="signup" onClick={()=>navigate('/signup')}>SignUp</div> */}
@@ -236,11 +278,25 @@ export const Navbar = ({ details }) => {
       </div>
       {/* <HorizontalNav button={menuButton} /> */}
 
-     {menuButton?(<div id="horizontalcontainer" ref={horizontalRef}>
-          <div className="horizontaldetails" onClick={handleAccountClick}>Account</div>
-          <div className="horizontaldetails" onClick={handleOrdersClick}>Orders</div>
-         <div className="horizontaldetails" id={isAuthenticated?"logouth":"loginh"} onClick={handleLoginOut}>{isAuthenticated?"Log Out":"Log In"}</div>
-        </div>):(<></>)} 
+      {menuButton ? (
+        <div id="horizontalcontainer" ref={horizontalRef}>
+          <div className="horizontaldetails" onClick={handleAccountClick}>
+            Account
+          </div>
+          <div className="horizontaldetails" onClick={handleOrdersClick}>
+            Orders
+          </div>
+          <div
+            className="horizontaldetails"
+            id={isAuthenticated ? "logouth" : "loginh"}
+            onClick={handleLoginOut}
+          >
+            {isAuthenticated ? "Log Out" : "Log In"}
+          </div>
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

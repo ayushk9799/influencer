@@ -3,6 +3,8 @@ import "./ChatBoxList.css";
 import { useSelector } from "react-redux";
 import { useNavigateCustom } from "./CustomNavigate";
 import { useLocation } from "react-router-dom";
+import { BACKEND_URL } from "./assets/Data.js";
+
 export const ChatBoxList = () => {
   const [chatList, setChatList] = useState([]);
   const { userDetails } = useSelector((state) => state.user);
@@ -19,11 +21,11 @@ export const ChatBoxList = () => {
   };
   useEffect(() => {
     const getAllChatsOfUser = async () => {
-      const response = await fetch("http://localhost:3000/getAllChats", {
+      const response = await fetch(`${BACKEND_URL}/api/getAllChats`, {
         credentials: "include",
       });
       const { chatsWith } = await response.json();
-      console.log(chatsWith);
+
       setChatList(chatsWith);
     };
     getAllChatsOfUser();
@@ -32,9 +34,9 @@ export const ChatBoxList = () => {
     const handleResize = () => {};
     handleResize();
     window.addEventListener("resize", handleResize);
-    return ()=>{
-      window.removeEventListener('resize',handleResize)
-    }
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
   return (
     <div id="chatboxlistcontainer">

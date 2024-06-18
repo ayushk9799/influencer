@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { MdAttachFile, MdClose } from "react-icons/md";
 import { s3Domain } from "./assets/Data";
 import { IoMdDownload } from "react-icons/io";
+import { BACKEND_URL } from "./assets/Data.js";
 
 import axios from "axios";
 export const ChatMessage = () => {
@@ -13,10 +14,10 @@ export const ChatMessage = () => {
   const socket = useRef(null);
   const { userDetails } = useSelector((state) => state.user);
   const you = userDetails._id;
-  console.log("chatting")
+
   const location = useLocation();
   const otherID = location.state?.account;
-   console.log(otherID)
+
   const [messageCurrentSend, setMessageSend] = useState("");
   const [messageLists, setMessageList] = useState([]);
   const textareaRef = useRef();
@@ -25,12 +26,12 @@ export const ChatMessage = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const handleFileSelect = async (event) => {
     const file = event.target.files[0];
-    console.log(file)
+
     setSelectedFile(file);
 
     try {
       const { data, status } = await axios.get(
-        "http://localhost:3000/user/presigned?total=1",
+        `${BACKEND_URL}/api/user/presigned?total=1`,
         {
           withCredentials: true,
         }
@@ -77,7 +78,7 @@ export const ChatMessage = () => {
     const chatContainer = chatHistoryRef.current;
     chatContainer.scrollTop =
       chatContainer.scrollHeight - chatContainer.clientHeight;
-    socket.current = io("http://localhost:3000", { withCredentials: true });
+    socket.current = io(`${BACKEND_URL}`, { withCredentials: true });
     initialHeight = Math.floor(
       textareaRef.current.getBoundingClientRect().height
     );
@@ -96,18 +97,18 @@ export const ChatMessage = () => {
 
     const getMessages = async () => {
       if (you !== otherID) {
-        const response = await fetch(`http://localhost:3000/chats/${otherID}`, {
+        const response = await fetch(`${BACKEND_URL}/api/chats/${otherID}`, {
           credentials: "include",
         });
         const { chats } = await response.json();
 
         if (chats) {
-          setMessageList([ ...chats]);
+          setMessageList([...chats]);
         }
       }
     };
     getMessages();
-  console.log('useedfetc')
+
     return () => {
       if (socket.current) {
         socket.current.disconnect();
@@ -223,21 +224,16 @@ export const ChatMessage = () => {
 
   const handleMesageInput = (event) => {
     if (textareaRef.current) {
-     console.log(textareaRef.current.clientHeight)
-      if(textareaRef.current.clientHeight<=200)
-      {
-   console.log("true")
+      if (textareaRef.current.clientHeight <= 200) {
         textareaRef.current.style.height = "auto";
         textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-     
+
         textareaRef.current.style.top = `${
           30 - textareaRef.current.scrollHeight
         }px`;
       }
       setMessageSend(event.target.value);
     }
-
-   
   };
 
   return (
@@ -248,8 +244,8 @@ export const ChatMessage = () => {
         position: "relative",
         display: "flex",
         flexDirection: "column",
-        width:"auto",
-        overflowY:"hidden"
+        width: "auto",
+        overflowY: "hidden",
       }}
     >
       <div
@@ -257,7 +253,7 @@ export const ChatMessage = () => {
         id="chathistory"
         style={{
           height: "100%",
-        //  border:"1px solid yellow",
+          //  border:"1px solid yellow",
           flexGrow: "1",
           overflowY: "scroll",
           overflowX: "hidden",
@@ -273,7 +269,7 @@ export const ChatMessage = () => {
                 padding: "5px 10px 5px 5px",
                 backgroundColor: message.sender === you ? "#add8e6" : "#90ee90",
                 borderRadius: "10px",
-               
+
                 marginLeft: message.sender === you ? "auto" : "10px",
                 marginRight: message.sender === otherID ? "auto" : "10px",
                 fontSize: "15px",
@@ -283,7 +279,6 @@ export const ChatMessage = () => {
                   message.sender === you ? "black" : "rgb(239, 239, 239)",
                 color: message.sender === otherID ? "black" : "white",
                 whiteSpace: "pre-wrap",
-               
               }}
               className="chatmessagedisplay"
             >
@@ -301,10 +296,7 @@ export const ChatMessage = () => {
           alignItems: "center",
         }}
       >
-        <div
-          id="chatBox"
-         
-        >
+        <div id="chatBox">
           {/* <div
             style={{
               display: "flex",
@@ -339,7 +331,7 @@ export const ChatMessage = () => {
               style={{
                 position: "absolute",
                 top: `${fileattachRef.current.offsetTop - 50}px`,
-                left: `${fileattachRef.current.offsetLeft+150}px`,
+                left: `${fileattachRef.current.offsetLeft + 150}px`,
                 transform: "translateX(-50%)",
                 backgroundColor: "white",
                 borderRadius: "5px",
@@ -377,7 +369,16 @@ export const ChatMessage = () => {
             className="textarea"
             ref={textareaRef}
           ></textarea>
-          <button onClick={handleSend} style={{backgroundColor:"black",color:"white",borderRadius:"3px"}}>Send</button>
+          <button
+            onClick={handleSend}
+            style={{
+              backgroundColor: "black",
+              color: "white",
+              borderRadius: "3px",
+            }}
+          >
+            Send
+          </button>
         </div>
       </div>
     </div>
