@@ -28,6 +28,7 @@ export const Navbar = ({ details }) => {
   // const dispatch = useDispatch();
   // const location = useLocation();
   const { isAuthenticated } = useSelector((state) => state.user);
+  console.log(isAuthenticated)
   const navigate = useNavigateCustom();
   const dispatch = useDispatch();
   const horizontalRef = useRef(null);

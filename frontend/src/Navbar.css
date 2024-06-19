@@ -36,14 +36,14 @@
 
 .navDetailsClass {
   display: flex;
-  justify-content:center;
+  justify-content:flex-end;
   align-items: center;
   /* background-color: rebeccapurple; */
 }
 .unauth
 {
   display: flex;
-  justify-content:flex-end;
+  justify-content:center;
   align-items: center;
 }
 .user-input-status {
