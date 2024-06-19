@@ -23,14 +23,14 @@ const HowDoesWork = () => {
                 <div className='hdw-child-item'>
                     <h2>2</h2>
                     <h3>Start collaboration</h3>
-                    <p>Onces you send offer to influencer if they accept your offer you can start collaboration. we will securely hold you money until work complete.</p>
+                    <p>Once you send offer to the influencer if they accept your offer you can start collaboration. We will securely hold your money until the work is completed.</p>
                 </div>
             </div>
             <div style={{ backgroundImage: `url(${img3})`}}>
                 <div className='hdw-child-item'>
                     <h2>3</h2>
                     <h3>Work Review</h3>
-                    <p>Onces you approve their work we will initiate payment to influencer</p>
+                    <p>Once you approve their work we will initiate payment to the influencer</p>
                 </div>
             </div>
         </div>

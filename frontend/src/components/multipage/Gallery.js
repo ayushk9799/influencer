@@ -87,6 +87,8 @@ const Gallery = () => {
           const { status } = await fetch(urls[0], {
             method: "PUT",
             body: profileImage,
+            headers: {
+              "Content-Type": "image/png"}
           });
 
           if (status === 200)
@@ -107,7 +109,7 @@ const Gallery = () => {
             if (urls[i] !== -1) {
               const { status } = await fetch(urls[i], {
                 method: "PUT",
-                body: coverImages[i],
+                body: coverImages[i-offset],
               });
               if (status === 200) {
                 coverArray.push(keys[i]);
