@@ -219,7 +219,7 @@ export const Navbar = ({ details }) => {
       <div id="navbarcontainer">
         <div id="nameandlogo">EazzyCollab</div>
         <div id="navbardetails">
-          <div className="navDetailsClass">
+          <div className={isAuthenticated ? "navDetailsClass" : "unauth"}>
             <span onClick={() => navigate("/")}>Home</span>
           </div>
           <div className={isAuthenticated ? "navDetailsClass" : "unauth"}>
