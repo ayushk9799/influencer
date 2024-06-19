@@ -4,7 +4,7 @@ import { HowToUse } from "./HowToUse.js";
 import { Home } from "./Home";
 import { Login } from "./Login.js";
 import Account from "./Account.js";
-
+import "./App.css"
 import { ChatBox } from "./ChatBox.js";
 import CompleteProfile from "./components/CompleteProfile";
 import Profile from "./components/Profile";
@@ -48,7 +48,7 @@ function App() {
 
   return (
     <Router>
-      <Navbar />
+    <Navbar />
       <Routes>
         <Route path="/" Component={Home}></Route>
         <Route path="/how-to-use" Component={HowToUse}></Route>

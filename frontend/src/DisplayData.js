@@ -62,7 +62,7 @@ export const DisplayData = () => {
           let data = await response.json();
 
           setData(data.data);
-          settypeofDataDisplay("search result for your query");
+          settypeofDataDisplay("Search result for your query");
         } else {
           throw new Error("error in getting data");
         }

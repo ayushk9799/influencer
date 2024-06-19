@@ -36,8 +36,9 @@
 
 .navDetailsClass {
   display: flex;
-  justify-content: end;
+  justify-content:center;
   align-items: center;
+  /* background-color: rebeccapurple; */
 }
 .unauth
 {

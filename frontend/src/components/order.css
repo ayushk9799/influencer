@@ -2,6 +2,7 @@
 .container-all-order {
     display: flex;
     justify-content: center;
+    min-height: 82vh;
 }
 
 .order-container1 {
