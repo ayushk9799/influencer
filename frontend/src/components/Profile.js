@@ -228,7 +228,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="main">
+    <div className="profile-main">
       {name && (
         <div className="container">
           {/* cover */}

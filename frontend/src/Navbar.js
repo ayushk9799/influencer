@@ -229,6 +229,7 @@ export const Navbar = ({ details }) => {
             <div
               className={isAuthenticated ? "navDetailsClass" : "unauth"}
               id="account"
+
             >
               <div id="accountDetails" onClick={handleChange}>
                 <img

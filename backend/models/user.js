@@ -87,7 +87,7 @@ const UserSchema = new Schema({
       description: String,
     },
     shorts: {
-      price: Number,
+      price: Number,  
       description: String,
     },
   },
