@@ -2,8 +2,6 @@ import {
   useEffect,
   useState,
   useRef,
-  forwardRef,
-  useImperativeHandle,
 } from "react";
 import "./DisplayData.css";
 import { BACKEND_URL, formatFollowers, getCategory } from "./assets/Data.js";
@@ -151,7 +149,7 @@ export const DisplayData = () => {
                   </div>
 
                   <div className="nameRegion">
-                    <div className="name">{item.name}</div>
+                    <div className="nameInfu">{item.name}</div>
                     <div style={{ fontSize: "10px", padding: "5px" }}>
                       {item.region}
                     </div>

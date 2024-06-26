@@ -28,7 +28,7 @@ export const Navbar = ({ details }) => {
   // const dispatch = useDispatch();
   // const location = useLocation();
   const { isAuthenticated } = useSelector((state) => state.user);
-  console.log(isAuthenticated)
+  // console.log(isAuthenticated)
   const navigate = useNavigateCustom();
   const dispatch = useDispatch();
   const horizontalRef = useRef(null);
@@ -224,7 +224,7 @@ export const Navbar = ({ details }) => {
             <span onClick={() => navigate("/")}>Home</span>
           </div>
           <div className={isAuthenticated ? "navDetailsClass" : "unauth"}>
-            <span onClick={() => navigate("/how-to-use")}>Explore</span>
+            <span onClick={() => navigate("/influencers")}>Explore</span>
           </div>
           {userDetails?.email ? (
             <div

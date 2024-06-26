@@ -29,7 +29,7 @@ const Footer = () => {
         </div>
         <div className="footer-bottom">
           <div id="footer-link-c">
-            <Link className="footer-link" to="#">EazzyCollab Privacy Policy</Link>
+            <Link className="footer-link" to="#">Privacy Policy</Link>
             <Link className="footer-link" to="#">Terms of Use</Link>
             <Link className="footer-link" to="/faq">FAQs</Link>
           </div>
