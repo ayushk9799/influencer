@@ -38,7 +38,7 @@ export default HomeFAQ;
  const faqArray = [
   {
     question: "What’s influencer marketing?",
-    answer: "It’s when brands team up with popular social media folks to promote their stuff. Think of it as getting a cool kid to tell everyone how awesome your product is!"
+    answer: "It’s when brands team up with popular social media creators to promote their stuff. Think of it as getting a cool kid to tell everyone how awesome your product is!"
 },
 {
     question: "How does influencer marketing work?",
