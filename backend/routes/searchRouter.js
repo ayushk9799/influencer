@@ -128,7 +128,7 @@ router.get("/featured/feed", async (req, res) => {
   const { type } = req.query;
   let data;
   if (type) {
-    data = feedCache.get("tranding");
+    data = feedCache.get("trending");
     if (!data) {
       data = await User.aggregate([
         {
@@ -148,7 +148,7 @@ router.get("/featured/feed", async (req, res) => {
           },
         },
       ]);
-      feedCache.set("tranding", data);
+      feedCache.set("trending", data);
     }
   } else {
     data = feedCache.get("feedData");

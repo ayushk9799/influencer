@@ -2,7 +2,7 @@
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
-    font-family: Roboto;
+    font-family: Inter;
 }
 
 
@@ -27,7 +27,25 @@
     text-align: center;
     font-size: 32px;
 }
+.detailedFaq{
 
+    display: inline-block;
+    outline: 0;
+    border: 0;
+    cursor: pointer;
+    background: #000000;
+    color: #FFFFFF;
+    border-radius: 8px;
+    padding: 10px 24px 10px;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1;
+    transition: transform 200ms,background 200ms;
+    :hover{
+        transform: translateY(-2px);
+    }
+    
+}
 #leverage {
     margin: 15px 0px;
 }

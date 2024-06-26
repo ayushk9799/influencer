@@ -21,7 +21,7 @@ const Featured = (props) => {
       try {
         let url = `${BACKEND_URL}/api/getInfluencers/featured/feed`;
         if(props.name) {
-            url += `?type=tranding`
+            url += `?type=trending`
         }
         const response = await fetch(url);
         if (response.ok) {
@@ -70,11 +70,11 @@ const Featured = (props) => {
     <div id="featured-container">
       <div className="featured-header">
         <div>
-          <h2>{props.name || "Features"}</h2>
+          <h2>{props.name || "Featured"}</h2>
           <p>
             {props.name
-              ? "Treanding instagram influencer"
-              : "Collab top influencers accross globe"}
+              ? "Trending instagram influencer"
+              : "Collab top influencers across globe"}
           </p>
         </div>
         <div

@@ -7,7 +7,7 @@ import { FaqArrayForBrands, FaqArrayForInfluencer } from '../assets/Data';
 
 const FAQ = () => {
   useEffect(()=> {
-    window.scrollTo(0,50);
+    window.scrollTo(0,0);
   }, []);
   return (
     <div style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'}} >
