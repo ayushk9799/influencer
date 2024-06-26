@@ -58,7 +58,7 @@ export const paymentCheckout = async (req, res) => {
 
     const option = {
       amount: Number(amount * 100),
-      currency: "INR",
+      currency: "USD",
       receipt: user._id,
       notes: {
         influencer: influencer,

@@ -1,3 +1,5 @@
+import Featured from "./components/home/Featured.js";
+import HomeFAQ from "./components/home/HomeFAQ.js";
 import HowDoesWork from "./components/home/HowDoesWork.js";
 import { DisplayData } from "./DisplayData.js";
 import "./Home.css";
@@ -17,8 +19,11 @@ export const Home = () => {
         </div>
       </div>
       <SearchFilter />
-      <DisplayData/>
+      <Featured />
+      <Featured name="Instagram" />
+      {/* <DisplayData/> */}
       <HowDoesWork />
+      <HomeFAQ />
     </>
   );
 };
