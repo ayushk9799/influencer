@@ -10,6 +10,7 @@ export const SearchFilter = () => {
   const dropDownRef = useRef(null);
   const fieldref = useRef(null);
   const searchRef = useRef(null);
+  console.log("search")
   const countryRef = useRef(null);
   const followerRef = useRef(null);
   const DisplayDataRef = useRef(null);
@@ -30,7 +31,6 @@ export const SearchFilter = () => {
     "UK",
     "Australia",
     "newZealnd",
-    // Add more field options here
   ];
   const [selectedCountryOptions, setSelectedCountryOptions] = useState([]);
   const [selectedfieldOptions, setselectedfieldOptions] = useState([]);
@@ -76,8 +76,7 @@ export const SearchFilter = () => {
     }
   };
   const handleSearch = () => {
-    // DisplayDataRef.current.getData();
-    // setsearchButton(true);
+    console.log(query?.current)
     navigate("/influencer/search", { state: { query: query?.current } });
   };
   const handleResize = () => {
@@ -227,42 +226,6 @@ export const SearchFilter = () => {
               ))}
             </div>
           </div>
-          {/* <div className="dropdown" onClick={handleClickCountry}>
-            <div className="dropbtn">
-              {!(selectedCountryOptions.length === 0)
-                ? selectedCountryOptions + " "
-                : "Country"}
-              {!(selectedCountryOptions.length === 0) ? (
-                <div
-                  className="cross"
-                  onClick={(event) => handlecross(3, event)}
-                >
-                  <RxCross1 size={20} />
-                </div>
-              ) : (
-                <></>
-              )}
-            </div>
-            <div
-              className="dropdown-content"
-              style={{ display: "none" }}
-              id="countryContainer"
-              ref={countryRef}
-            >
-              <div id="outer">
-                {CountryOptions.map((option, index) => (
-                  <div
-                    key={index}
-                    onClick={(event) => handleCountryChange(option, event)}
-                    className="countryClass"
-                  >
-                    {option}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div> */}
-
           <div className="dropdown" onClick={handleClickFollowers}>
             <div className="dropbtn">
               {followerVisibilty
@@ -320,11 +283,7 @@ export const SearchFilter = () => {
           </div>
         </div>
       </div>
-      {/* <DisplayData
-        query={query.current}
-        button={searchButton}
-        ref={DisplayDataRef}
-      ></DisplayData> */}
+      
     </>
   );
 };

@@ -22,15 +22,17 @@ export const DisplayData = () => {
   const [favourite, setfavourite] = useState({});
   const [typeOfDataDisplay, settypeofDataDisplay] = useState();
   const location = useLocation();
+  console.log("displau")
   const query = location?.state?.query;
-
+  console.log(query)
   useEffect(() => {
     let object = {};
     userDetails?.favourites?.map((favourite) => (object[favourite] = true));
     setfavourite((prev) => ({ ...prev, ...object }));
   }, [userDetails]);
   const getData = async () => {
-    if (query) {
+    if (query !==undefined && Object.keys(query).length !== 0 ) {
+      console.log(query)
       let categories = getCategory(-1);
       let url = `${BACKEND_URL}/api/getInfluencers/search/?`;
       if (query.fmax !== undefined) url += `&fmax=${query.fmax}`;

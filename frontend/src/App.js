@@ -24,6 +24,7 @@ import UserType from "./components/multipage/UserType.js";
 import { PrivateRoute } from "./PrivateRoute.jsx";
 import { BACKEND_URL } from "./assets/Data.js";
 import Footer from "./Footer.js";
+import { SearchFilter } from "./SearchFilter.js";
 
 function App() {
   const { isAuthenticated } = useSelector((state) => state.user);
@@ -61,7 +62,7 @@ function App() {
 
 
         <Route path="/influencer/:userID" Component={Profile}></Route>
-        <Route path="/influencer/search" Component={DisplayData}></Route>
+        <Route path="/influencer/search" element={<DisplayData/>}></Route>
         <Route path="/chat/:uniqueID" Component={ChatBox}></Route>
         <Route path="/complete-profile" Component={CompleteProfile} />
         <Route path="/complete-profile/:step" Component={UserType} />
