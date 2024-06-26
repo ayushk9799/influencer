@@ -25,6 +25,10 @@ const Profile = () => {
   const [coverIndexMobile, setCoverIndexMobile] = useState(0);
 
   useEffect(() => {
+    window.scrollTo(0,0);
+  }, [])
+
+  useEffect(() => {
     const getInfluencersData = async () => {
       if (!item) {
         try {

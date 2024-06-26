@@ -9,14 +9,14 @@ const HowDoesWork = () => {
     <div className='hdw-container'>
         <div className='hdw-header'>
             <h3>How EazzyCollab works</h3>
-            <p>EazzyCollab provides simple step wise solution for both influencer and brand.</p>
+            <p>EazzyCollab provides simple step wise solution for both brand and influencer.</p>
         </div>
         <div className='hdw-main'>
             <div style={{ backgroundImage: `url(${img1})`}}>
                 <div className='hdw-child-item'>
                     <h2>1</h2>
                     <h3>Search influencers</h3>
-                    <p>Search thousand of well known instgram influencers that match with your requirement</p>
+                    <p>Search thousand of well known instagram influencers that match with your requirement</p>
                 </div>
             </div>
             <div style={{ backgroundImage: `url(${img2})`}}>

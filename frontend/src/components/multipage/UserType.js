@@ -46,7 +46,7 @@ const UserType = () => {
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
+    <div className="who-container-body">
       <div className="ask-type-container modal-container-ask">
         <div
           style={{

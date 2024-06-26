@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { AccordionSummary, Accordion, AccordionDetails} from '@mui/material'
 import "./faq.css"
@@ -6,6 +6,9 @@ import { FaqArrayForBrands, FaqArrayForInfluencer } from '../assets/Data';
 
 
 const FAQ = () => {
+  useEffect(()=> {
+    window.scrollTo(0,50);
+  }, []);
   return (
     <div style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'}} >
       <div className='faq-container'>

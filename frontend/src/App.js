@@ -1,6 +1,5 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { Navbar } from "./Navbar";
-import { HowToUse } from "./HowToUse.js";
 import { Home } from "./Home";
 import { Login } from "./Login.js";
 import Account from "./Account.js";
@@ -19,11 +18,11 @@ import Order from "./components/Order.js";
 import OrderDetails from "./components/OrderDetails.js";
 import { DisplayData } from "./DisplayData.js";
 import FAQ from "./components/FAQ.js";
-import SignUp from "./SignUp.js";
 import UserType from "./components/multipage/UserType.js";
-import { PrivateRoute } from "./PrivateRoute.jsx";
 import { BACKEND_URL } from "./assets/Data.js";
 import Footer from "./Footer.js";
+import ScrollManager from "./ScrollManager.js";
+import Explore from "./Explore.js";
 
 function App() {
   const { isAuthenticated } = useSelector((state) => state.user);
@@ -46,20 +45,19 @@ function App() {
     getData();
   }, []);
 
+
   return (
     <Router>
-    <Navbar />
+      <ScrollRestoration />
+      <Navbar />
       <Routes>
         <Route path="/" Component={Home}></Route>
-        <Route path="/how-to-use" Component={HowToUse}></Route>
+        <Route path="/influencers" Component={Explore}></Route>
         {isAuthenticated ? (
           <Route path="/myAccount" Component={Account}></Route>
         ) : (
           <Route path="/login" Component={Login}></Route>
         )}
-        <Route path="/sign-up" Component={SignUp}></Route>
-
-
         <Route path="/influencer/:userID" Component={Profile}></Route>
         <Route path="/influencer/search" Component={DisplayData}></Route>
         <Route path="/chat/:uniqueID" Component={ChatBox}></Route>
@@ -80,3 +78,8 @@ function App() {
 }
 
 export default App;
+
+const ScrollRestoration = () => {
+  ScrollManager();
+  return null;
+};
