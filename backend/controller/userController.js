@@ -109,7 +109,7 @@ export const paymentVerification = async (req, res) => {
       await order.save();
     }
     // if payment is successfull or failed
-    return res.redirect(`http://localhost:3000/user/orders/${order._id}`);
+    return res.redirect(`${process.env.FRONTEND_URL}/user/orders/${order._id}`);
   } catch (err) {
     return res.status(404).json({ message: err.message });
   }
