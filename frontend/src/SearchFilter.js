@@ -10,7 +10,7 @@ export const SearchFilter = () => {
   const dropDownRef = useRef(null);
   const fieldref = useRef(null);
   const searchRef = useRef(null);
-  console.log("search")
+
   const countryRef = useRef(null);
   const followerRef = useRef(null);
   const DisplayDataRef = useRef(null);
@@ -76,7 +76,6 @@ export const SearchFilter = () => {
     }
   };
   const handleSearch = () => {
-    console.log(query?.current)
     navigate("/influencer/search", { state: { query: query?.current } });
   };
   const handleResize = () => {
@@ -109,9 +108,9 @@ export const SearchFilter = () => {
       case 0:
         answer = 0;
         break;
-        case '1K':
-          answer=1000;
-          break;
+      case "1K":
+        answer = 1000;
+        break;
       case "10K":
         answer = 10000;
         break;
@@ -138,8 +137,7 @@ export const SearchFilter = () => {
   const handleFollowerRangechange = (value) => {
     query.current.fmax = convertToNumber(value[1]);
     query.current.fmin = convertToNumber(value[0]);
-    console.log(value[0]);
-    console.log(value[1])
+
     setFollowerRange(value);
     setFollowerVisibilty(true);
   };
@@ -283,7 +281,6 @@ export const SearchFilter = () => {
           </div>
         </div>
       </div>
-      
     </>
   );
 };

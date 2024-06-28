@@ -3,10 +3,6 @@ import jwt from "jsonwebtoken";
 import { User } from "../models/user.js";
 export const authenticationCheck = async (req, res, next) => {
   try {
-    // res.setHeader("Access-Control-Allow-Origin", "http://localhost:3001");
-    // res.setHeader("Access-Control-Allow-Credentials", "true");
-
-    
     const cookies = cookie.parse(req.headers.cookie);
     const access_token = cookies?.jwtaccesstoken;
     if (access_token) {

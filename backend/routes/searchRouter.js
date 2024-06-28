@@ -7,7 +7,7 @@ const feedCache = new NodeCache({ stdTTL: 3600, checkperiod: 120 }); // Cache se
 router.get("/search", async (req, res) => {
   try {
     const { region, fmax, fmin, platform, field } = req.query;
-    console.log(req.query);
+
     let platforms = platform?.split(",");
 
     let query = {};
@@ -86,7 +86,7 @@ router.get("/search", async (req, res) => {
     if (field) {
       query.field = { $in: field.split(",") };
     }
-    console.log(query);
+
     const users = await User.find(query).select(
       "-email -mobileNumber -favourites -bankDetails -orders"
     );

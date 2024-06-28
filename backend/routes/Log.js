@@ -6,7 +6,7 @@ import { OAuth2Client } from "google-auth-library";
 const CLIENT_ID =
   "708505773923-9fuh2eqg0lr8sgl86p7dsuh2v0pjuslt.apps.googleusercontent.com";
 const CLIENT_SECRET = "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";
-const REDIRECT_URI = `${process.env.FRONTEND_URL}/api/auth/google/callback`;  // dont change th url to process.env ....works fine 
+const REDIRECT_URI = `https://eazzycollab.com/api/auth/google/callback`; // dont change th url to process.env ....works fine
 const oAuth2Client = new OAuth2Client(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
 
 router.get("/google", (req, res) => {
@@ -55,7 +55,7 @@ router.get("/google/callback", async (req, res, next) => {
         { _id: newUser._id },
         "influencerChataccess"
       );
-        
+
       redirectRoute = `${process.env.FRONTEND_URL}/complete-profile/1`;
     }
     res.cookie("jwtaccesstoken", jwtaccesstoken, {
@@ -63,7 +63,7 @@ router.get("/google/callback", async (req, res, next) => {
     });
     res.redirect(redirectRoute);
   } catch (error) {
-    // res.json({ error: error.message });
+
     next(error);
   }
 });
@@ -71,7 +71,6 @@ router.get("/google/callback", async (req, res, next) => {
 router.get("/logout", async (req, res, next) => {
   try {
     res.clearCookie("jwtaccesstoken");
-    // res.redirect('http://localhost:3001');
 
     res.status(200).json({ done: "done" });
   } catch (error) {

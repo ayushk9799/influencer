@@ -88,16 +88,15 @@ const Gallery = () => {
             method: "PUT",
             body: profileImage,
             headers: {
-              "Content-Type": "image/png"}
+              "Content-Type": "image/png",
+            },
           });
 
           if (status === 200)
             dispatch(updateFormData({ profilePic: `${s3Domain}/${keys[0]}` }));
-            else{
-              console.log(status)
-            }
+          else {
+          }
         }
-       
 
         if (coverImages.length > 0) {
           const coverArray = [...localGallery];
@@ -109,7 +108,7 @@ const Gallery = () => {
             if (urls[i] !== -1) {
               const { status } = await fetch(urls[i], {
                 method: "PUT",
-                body: coverImages[i-offset],
+                body: coverImages[i - offset],
               });
               if (status === 200) {
                 coverArray.push(keys[i]);

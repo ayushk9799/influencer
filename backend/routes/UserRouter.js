@@ -56,7 +56,7 @@ router.get("/delete", async (req, res) => {
 });
 router.use((req, res, next) => {
   // If no route matched in UserRouter
-  console.log("use")
+
   if (!req.route) {
     return next();
   }
@@ -65,6 +65,6 @@ router.use((req, res, next) => {
     return next();
   }
   // Otherwise, send the response from UserRouter
-  next('route');
+  next("route");
 });
 export default router;

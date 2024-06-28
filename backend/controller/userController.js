@@ -179,7 +179,7 @@ export const getOrderDetails = async (req, res) => {
           return res.status(404).json({ message: "Order id not exist" });
         }
       }
-      console.log(order)
+
       return res.status(200).json({ order });
     } else {
       return res.status(404).json({ message: "orderID not exist" });
@@ -218,12 +218,10 @@ export const orderEventController = async (req, res) => {
         const temp = { status, date: new Date(), message };
         order.workAccepted = temp;
         const data = await order.save();
-        return res
-          .status(200)
-          .json({
-            orderStatus: data.orderStatus,
-            workAccepted: data.workAccepted,
-          });
+        return res.status(200).json({
+          orderStatus: data.orderStatus,
+          workAccepted: data.workAccepted,
+        });
       } else if (
         !user.contentCreator &&
         actionFor === "client" &&
@@ -232,12 +230,10 @@ export const orderEventController = async (req, res) => {
         const temp = { status, date: new Date(), message };
         order.workApproval = temp;
         const data = await order.save();
-        return res
-          .status(200)
-          .json({
-            orderStatus: data.orderStatus,
-            workApproval: data.workApproval,
-          });
+        return res.status(200).json({
+          orderStatus: data.orderStatus,
+          workApproval: data.workApproval,
+        });
       } else {
         return res.status(404).json({ message: "Something went wrong" });
       }

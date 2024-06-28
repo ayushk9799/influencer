@@ -10,7 +10,7 @@ router.post("/", async (req, res, next) => {
       next(new Error("user not found in database or try again"));
     } else {
       const data = req.body;
-       console.log(data)
+
       for (let keys in data) {
         const value = data[keys];
         if (keys === "yprice") {

@@ -59,7 +59,6 @@ const OrderDetails = () => {
     });
     const { order } = await response.json();
     if (response.status === 200) {
-      console.log(order)
       setOrderDetails(order);
     } else {
       navigate("/user/orders", { replace: true });
@@ -69,9 +68,7 @@ const OrderDetails = () => {
 
   // get order data - direct refresh situation
   useEffect(() => {
-    
-      fetchOrderDetails();
-    
+    fetchOrderDetails();
   }, []);
 
   // order status bar animation

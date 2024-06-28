@@ -21,7 +21,6 @@ import AddData from "./routes/AddData.js";
 import ChatRooms from "./models/chatroom.js";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-
 export const instance = new Razorpay({
   key_id: process.env.RAZORPAY_API_KEY,
   key_secret: process.env.RAZORPAY_APT_SECRET,
@@ -86,7 +85,7 @@ io.on("connection", async (socket) => {
   } catch (error) {}
 });
 
-app.use(express.static(path.join(__dirname, '../frontend/build')));
+app.use(express.static(path.join(__dirname, "../frontend/build")));
 app.options("*", cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 
 app.use("/api/auth", login);
@@ -121,12 +120,9 @@ app.use((err, req, res, next) => {
 });
 
 app.use("/api/chats", authenticationCheck, ChatRouter);
-app.get('*',(req,res)=>
-{
-  console.log("hello")
-    res.sendFile(path.resolve(__dirname,"../frontend/build/index.html"));
-
-})
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../frontend/build/index.html"));
+});
 process.on("warning", (e) => console.warn(e.stack));
 
 server.listen(3000, () => {});
