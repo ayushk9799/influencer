@@ -19,18 +19,18 @@ const Footer = () => {
           </div>
           <div id="footer-social">
             <p>Connect with EazzyCollab</p>
-            <Link to={"#"}>
+            <Link to={"https://www.instagram.com/eazzycollab/"} target="_blank">
               <FaInstagram />
             </Link>
-            <Link to={"#"}>
+            <Link to={"https://x.com/EazzyCollab"} target="_blank">
               <FaTwitter />
             </Link>
           </div>
         </div>
         <div className="footer-bottom">
           <div id="footer-link-c">
-            <Link className="footer-link" to="#">Privacy Policy</Link>
-            <Link className="footer-link" to="#">Terms of Use</Link>
+            <a className="footer-link" href="/privacypolicy.html" target="_blank">Privacy Policy</a>
+            <Link className="footer-link" to="/terms.html" target="_blank">Terms of Use</Link>
             <Link className="footer-link" to="/faq">FAQs</Link>
           </div>
           <div>© EazzyCollab 2024</div>

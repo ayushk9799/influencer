@@ -71,42 +71,9 @@ export const Navbar = ({ details }) => {
     authorizationUrl.searchParams.set("access_type", "offline");
     authorizationUrl.searchParams.set("prompt", "consent");
 
-    // Redirect user to Google's authorization endpoint
     window.location.href = authorizationUrl.toString();
   };
 
-  // const handleTypeSelect = (type) => {
-  //   setTypeOfUserSelect(type);
-  //   if(type === 'brand') {
-  //     selectedInfluencerRef.current.style.boxShadow = 'none'
-  //     selectedInfluencerRef.current.style.border = '1px solid rgb(204, 201, 201)'
-  //     selectedBrandRef.current.style.boxShadow = 'rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px'
-  //     selectedBrandRef.current.style.border = '2px solid #1976d2'
-  //   } else {
-  //     selectedBrandRef.current.style.boxShadow = 'none'
-  //     selectedBrandRef.current.style.border = '1px solid rgb(204, 201, 201)'
-  //     selectedInfluencerRef.current.style.boxShadow = ' rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px';
-  //     selectedInfluencerRef.current.style.border = '2px solid #1976d2'
-  //   }
-  // }
-
-  // const handleSubmitType = async () => {
-  //   try {
-  //     const temp = {contentCreator : typeOfUserSelect==='brand' ? false : true}
-  //     const response = await fetch(`${BACKEND_URL}/addData`, {
-  //       method : 'POST',
-  //       credentials : 'include',
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body : JSON.stringify(temp)
-  //     });
-  //     const {data} = await response.json();
-  //     dispatch(updateUserDetails({contentCreator : data.contentCreator}));
-  //   } catch (err) {
-  //
-  //   }
-  // }
 
   const handleChange = () => {
     setMenuButton(!menuButton);
@@ -183,40 +150,15 @@ export const Navbar = ({ details }) => {
                 }}
               >
                 By joining, you agree to the EazzyCollab{" "}
-                <a href="#">Terms of Service</a>. Please read our{" "}
-                <a href="#">Privacy Policy</a> to learn how we use your personal
+                <a href="/privacypolicy.html" target="_blank">Terms of Service</a>. Please read our{" "}
+                <a href="/terms.html" target="_blank">Privacy Policy</a> to learn how we use your personal
                 data.
               </p>
             </div>
           </div>
         </div>
       </Modal>
-      {/* modal for asking who are your brand or influencer */}
-      {/* <Modal open={modalAsk}>
-        <div className="modal-container-div modal-container-ask">
-          <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:'5px'}}>
-            <FaRegCheckCircle size={22} color="green" />
-            <h3>Your account created successfully</h3>
-          </div>
-          <h4>Who are you?</h4>
-          <p>For what purpose you have join EazzyCollab</p>
-          <div className="who-container">
-            <div onClick={()=>handleTypeSelect('influencer')} ref={selectedInfluencerRef}>
-              <h5>Influencer</h5>
-              <img src={require('./assets/content.jpg')} />
-              <p style={{fontSize:'12px'}}>looking for brand</p>
-            </div>
-            <div onClick={()=> handleTypeSelect('brand')} ref={selectedBrandRef}>
-              <h5>Brand</h5>
-              <img src={require('./assets/brand.jpg')} />
-              <p style={{fontSize:'12px'}}>looking for content creator</p>
-            </div>
-          </div>
-          <div >
-            <Button disabled={typeOfUserSelect?.length===0} onClick={handleSubmitType} style={{width:'150px',textTransform:'capitalize',fontSize:'16px'}} variant="contained">Next</Button>
-          </div>
-        </div>
-      </Modal> */}
+     
       <div id="navbarcontainer">
         <div id="nameandlogo">EazzyCollab</div>
         <div id="navbardetails">
@@ -265,15 +207,35 @@ export const Navbar = ({ details }) => {
           {/* <div className='navDetailsClass' id="signup" onClick={()=>navigate('/signup')}>SignUp</div> */}
         </div>
         <div id="menu" onClick={handleChange}>
-          <svg
-            width="24px"
-            height="24px"
-            viewBox="0 0 24 24"
-            dangerouslySetInnerHTML={{
-              __html:
-                '<path fill="currentColor" d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" />',
-            }}
-          />
+          {
+            isAuthenticated? <div id="menubutton" >
+            <svg
+              width="24px"
+              height="24px"
+              viewBox="0 0 24 24"
+              dangerouslySetInnerHTML={{
+                __html:
+                  '<path fill="currentColor" d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" />',
+              }}
+            />
+            </div>:  <div id="loginsmallscreen" >
+          <div
+                className={isAuthenticated ? "navDetailsClass" : "unauth"}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  setModalOpen(true);
+                  setButtonClicked("login");
+                }}
+                id="login"
+
+              >
+                Login
+              </div>
+          </div>
+          }
+        
+         
+         
         </div>
       </div>
       {/* <HorizontalNav button={menuButton} /> */}

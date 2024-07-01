@@ -2,7 +2,7 @@
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
-    font-family: Inter;
+    
 }
 
 
@@ -13,7 +13,6 @@
     justify-content: center;
     font-size: 55px;
     font-weight: 800;
-    /* white-space: nowrap; */
 }
 
 #homeContainer {
@@ -55,7 +54,7 @@
         padding-top:15px;
     }
     #home {
-        font-size: 5.4vw;
+         font-size: 5.4vw; 
     }
     #leverage {
         font-size: 25px;

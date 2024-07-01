@@ -186,6 +186,11 @@
     margin-bottom: 8px;
   }
   .item-quantity {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -moz-flex;
+    display: -webkit-flex;
     display: flex;
     gap: 5px;
     > div {

@@ -16,8 +16,11 @@
   max-height: 360px;
   overflow-x: auto;
   scrollbar-width: none;
+  -ms-overflow-style: none;
 }
-
+#display-data-container::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}
 .f-grid-item {
   display: flex;
   flex-direction: column;
@@ -61,7 +64,11 @@
     overflow-x: auto;
     flex-wrap: nowrap;
     scrollbar-width: none;
+    -ms-overflow-style: none;  
     /* overflow: hidden; */
+  }
+  #display-data-container::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
   }
 }
 @media (max-width: 800px) {
@@ -72,5 +79,9 @@
     overflow-x: auto;
     flex-wrap: nowrap;
     scrollbar-width: none;
+    -ms-overflow-style: none; 
+  }
+  #display-data-container::-webkit-scrollbar {
+    display: none; 
   }
 }

@@ -156,7 +156,7 @@ const Checkout = () => {
             </div>
             <p style={{ fontSize: "14px", opacity: "0.8" }}>
               By completing your purchase you agree to these{" "}
-              <Link to={"#"}>Terms of Service</Link>.
+              <Link to="/terms.html" target="_blank">Terms of Service</Link>.
             </p>
             <Button
               variant="contained"

@@ -1,7 +1,10 @@
 .hdw-container {
     margin: 30px 80px;
 }
-
+.hdw-header{
+    margin-top: 20px;
+    
+}
 .hdw-main {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -21,6 +24,7 @@
 .hdw-header {
     >h3 {
         font-size: 30px;
+        padding:10px 0px 5px 0px;
     }
     >p {
         color: #808080;

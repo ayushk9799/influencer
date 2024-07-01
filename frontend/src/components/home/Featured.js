@@ -74,7 +74,7 @@ const Featured = (props) => {
           <p>
             {props.name
               ? "Trending instagram influencer"
-              : "Collab top influencers across globe"}
+              : "Top influencers across globe"}
           </p>
         </div>
         <div
@@ -152,6 +152,7 @@ const Featured = (props) => {
                           display: "flex", // Add this line
                           alignItems: "center", // Add this line
                           gap: "2px",
+                          fontFamily:"Roboto"
                         }}
                       >
                         {iconsArr[0]} {formatFollowers(item.ifollowers)}{" "}
