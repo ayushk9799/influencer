@@ -19,7 +19,17 @@ const Profile = () => {
     photo: 0,
     story: 0,
   });
+  const  getuniqueID=()=> {
+    let path = window.location.href;
+    path = path.replace(/\/+$/, '');
+    const parts = path.split('/').filter(Boolean);
+        if (parts.length === 0) {
+      return '';
+    }
+        let lastPart = parts[parts.length - 1];
 
+        return lastPart;
+  };
   // for swipe detection
   const [startX, setStartX] = useState(0);
   const [coverIndexMobile, setCoverIndexMobile] = useState(0);
@@ -33,7 +43,7 @@ const Profile = () => {
       if (!item) {
         try {
           const response = await fetch(
-            `${BACKEND_URL}/api/influencers?uniqueID=${location.state?.uniqueID}`
+            `${BACKEND_URL}/api/influencers?uniqueID=${location.state?.uniqueID?location.state?.uniqueID:getuniqueID()}`
           );
           const { data } = await response.json();
           setItem(data);
