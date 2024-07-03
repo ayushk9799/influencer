@@ -62,7 +62,7 @@ const Checkout = () => {
       razor.open();
     } catch (err) {}
   };
-  
+
   return (
     <div className="checkout-container-predefined">
       <div className="sub-checkout">
@@ -83,10 +83,9 @@ const Checkout = () => {
           <div id="checkout-details">
             <div>
               <h3 style={{ paddingTop: "10px", fontWeight: "300" }}>
-                Contact information
+                Contact information (email)
               </h3>
               <div id="checkout-email">
-                <p>Email</p>
                 <p>{userDetails?.email}</p>
               </div>
               <div>
@@ -156,12 +155,17 @@ const Checkout = () => {
             </div>
             <p style={{ fontSize: "14px", opacity: "0.8" }}>
               By completing your purchase you agree to these{" "}
-              <Link to="/terms.html" target="_blank">Terms of Service</Link>.
+              <Link to="/terms.html" target="_blank">
+                Terms of Service
+              </Link>
+              .
             </p>
             <Button
               variant="contained"
               className="checkout-button"
-              onClick={handlePay}
+              onClick={() => {
+                handlePay();
+              }}
             >
               Place Order
             </Button>

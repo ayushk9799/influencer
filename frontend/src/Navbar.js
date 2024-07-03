@@ -139,7 +139,7 @@ export const Navbar = ({ details }) => {
             )}
             <div id="google-button" onClick={handleSignIn}>
               <FcGoogle size={24} />
-              <p>Contiue with google</p>
+              <p>Continue with google</p>
             </div>
             <div>
               <p

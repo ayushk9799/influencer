@@ -7,6 +7,9 @@ import {
   s3Domain,
 } from "./assets/Data";
 import { Link, useNavigate } from "react-router-dom";
+import NewReleasesIcon from "@mui/icons-material/NewReleases";
+import VerifiedIcon from "@mui/icons-material/Verified";
+import Tooltip from "@mui/material/Tooltip";
 import { useDispatch, useSelector } from "react-redux";
 import { FaInstagram, FaYoutube, FaInfoCircle } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
@@ -46,6 +49,8 @@ const Account = () => {
     yfollowers,
     yprice,
     contentCreator,
+    iverification,
+    yverification,
   } = userDetails;
 
   const [selectIndexInCard, setSelectIndexInCard] = useState({
@@ -424,7 +429,9 @@ const Account = () => {
               </div>
 
               <div className="profilenames">
-                <p className="name">{name}</p>
+                <div className="name" style={{ display: "flex", gap: "4px" }}>
+                  <div>{name}</div>
+                </div>
                 <div className="category-container">
                   {field?.length !== 0 &&
                     field.map((val) => <div key={val}>{getCategory(val)}</div>)}
@@ -437,6 +444,19 @@ const Account = () => {
                       className="field-element"
                     >
                       <FaInstagram size={18} />
+                      <Tooltip
+                        title={
+                          iverification
+                            ? "Instagram Account Verified"
+                            : "Instagram Account Not Verified/Pending"
+                        }
+                      >
+                        {iverification ? (
+                          <VerifiedIcon style={{ color: "green" }} size={18} />
+                        ) : (
+                          <NewReleasesIcon style={{ color: "red" }} size={18} />
+                        )}
+                      </Tooltip>
                       {formatFollowers(ifollowers)}
                     </a>
                   )}
@@ -447,6 +467,19 @@ const Account = () => {
                       className="field-element"
                     >
                       <FaYoutube size={20} />
+                      <Tooltip
+                        title={
+                          yverification
+                            ? "YouTube Account Verified"
+                            : "YouTube Account Not Verified/Pending"
+                        }
+                      >
+                        {yverification ? (
+                          <VerifiedIcon style={{ color: "green" }} size={18} />
+                        ) : (
+                          <NewReleasesIcon style={{ color: "red" }} size={18} />
+                        )}
+                      </Tooltip>
                       {formatFollowers(yfollowers)}
                     </a>
                   )}
