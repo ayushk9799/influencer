@@ -1,6 +1,7 @@
 import { Order } from "../models/order.js";
 import { User } from "../models/user.js";
 import { instance } from "../server.js";
+import { sendOrderReceivedEmail,sendAdminOrderDetails } from "../email.js";
 import crypto from "crypto";
 
 export const getMyData = async (req, res) => {
@@ -88,7 +89,9 @@ export const paymentVerification = async (req, res) => {
       .digest("hex");
     const isAuthentic = expectedSignature === razorpay_signature;
     // database update
-    const order = await Order.findOne({ orderID: razorpay_order_id });
+    const order = await Order.findOne({ orderID: razorpay_order_id })
+    .populate({path: "influencer", select: "email"})
+    .populate({path: "buyer", select: "email"});    
     if (isAuthentic) {
       if (order) {
         const influecerData = await User.findById(order.influencer);
@@ -98,8 +101,10 @@ export const paymentVerification = async (req, res) => {
         };
         order.buyerPaymentStatus = "success";
         influecerData.orders.unshift(order._id);
-        await order.save();
+        await order.save(); 
         await influecerData.save();
+        await sendOrderReceivedEmail(order?.influencer?.email,order?.amount);
+        await sendAdminOrderDetails(order?.influencer?.email,order?.buyer?.email,order?.amount)
       } else {
         return res.status(404).json({ message: "order not created" });
       }
@@ -108,7 +113,7 @@ export const paymentVerification = async (req, res) => {
       order.buyerPaymentStatus = "failed";
       await order.save();
     }
-    // if payment is successfull or failed
+   
     return res.redirect(`${process.env.FRONTEND_URL}/user/orders/${order._id}`);
   } catch (err) {
     return res.status(404).json({ message: err.message });

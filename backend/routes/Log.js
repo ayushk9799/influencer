@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import { User } from "../models/user.js";
 const router = express.Router();
 import { OAuth2Client } from "google-auth-library";
+import { createAccount ,AccountCreationNotificationAdmin} from "../email.js";
 const CLIENT_ID =
   "708505773923-9fuh2eqg0lr8sgl86p7dsuh2v0pjuslt.apps.googleusercontent.com";
 const CLIENT_SECRET = "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";
@@ -50,7 +51,8 @@ router.get("/google/callback", async (req, res, next) => {
         profilePic: payload.picture,
       });
       await newUser.save();
-
+      await createAccount(payload.email, payload.name); // sending email to the jkoined user
+      await AccountCreationNotificationAdmin(payload.email); //sending email to the director of thousand ways ..rajiv excluded email is also semnt of the user
       jwtaccesstoken = await jwt.sign(
         { _id: newUser._id },
         "influencerChataccess"
@@ -63,7 +65,6 @@ router.get("/google/callback", async (req, res, next) => {
     });
     res.redirect(redirectRoute);
   } catch (error) {
-
     next(error);
   }
 });

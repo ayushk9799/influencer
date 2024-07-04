@@ -14,7 +14,7 @@ const Checkout = () => {
   const { influencer, amount, orderSummary } = checkoutData;
   const handlePay = async () => {
     try {
-      // fetchig razorpay key
+     
       const response = await fetch(`${BACKEND_URL}/api/user/payment/get-key`, {
         credentials: "include",
       });
@@ -36,31 +36,40 @@ const Checkout = () => {
         }
       );
       const { order } = await response1.json();
+if(order)
+  {
+    const options = {
+      key,
+      amount: order.amount,
+      currency: "USD",
+      name: "EazzyCollab",
+      description: "Payment for influencer",
+      image: "https://signedayush.s3.ap-south-1.amazonaws.com/8ec68f26-3beb-4b9d-ab37-eca90ddf7f95",
+      order_id: order.id,
+      callback_url: `${BACKEND_URL}/api/user/payment/payment-verification`,
+      prefill: {
+        name: userDetails?.name,
+        email: userDetails?.email,
+        contact: "2302930293",
+      },
+      notes: {
+        address: "gaya",
+      },
+      theme: {
+        color: "#1976d2",
+      },
+    };
+    const razor = new window.Razorpay(options);
+    razor.open();
 
-      const options = {
-        key,
-        amount: order.amount,
-        currency: "USD",
-        name: "EazzyCollab",
-        description: "Payment for influencer",
-        image: "https://avatars.githubusercontent.com/u/98911997?v=4",
-        order_id: order.id,
-        callback_url: `${BACKEND_URL}/api/user/payment/payment-verification`,
-        prefill: {
-          name: userDetails?.name,
-          email: userDetails?.email,
-          contact: "2302930293",
-        },
-        notes: {
-          address: "gaya",
-        },
-        theme: {
-          color: "#1976d2",
-        },
-      };
-      const razor = new window.Razorpay(options);
-      razor.open();
-    } catch (err) {}
+  }
+  else{
+    throw new Error("erro hapepend forrcefully")
+  }
+     
+    } catch (err) {
+      
+    }
   };
 
   return (

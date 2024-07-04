@@ -41,19 +41,19 @@ const CustomOffer = () => {
             <option value={"youtube"}>Youtube</option>
           </select>
           <input
-            placeholder="Summarize your colaboration eg: 1 Instagram post"
+            placeholder="Summarize your collaboration eg: 1 Instagram post"
             value={details}
             onChange={(e) => setDetails(e.target.value)}
           />
           <textarea
             value={summary}
             onChange={(e) => setSummary(e.target.value)}
-            placeholder="Eloboarate your colaboration. What the influencer expected to deliver? Eg. 1 Instagram Post to your audiencer"
+            placeholder="Elaborate your collaboration. What the influencer is expected to deliver? Eg. 1 Instagram Post to your audience"
           />
           <input
             value={offerPrice}
             onChange={(e) => setOfferPrice(e.target.value)}
-            placeholder="Colaboration Price (USD)"
+            placeholder="Collaboration Offer Price (USD)"
             type="number"
           />
           <Button

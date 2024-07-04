@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./featured.css";
 import {
   BACKEND_URL,
@@ -13,20 +13,27 @@ import { useSelector } from "react-redux";
 
 const Featured = (props) => {
   const [feedData, setFeedData] = useState([]);
+  const feedDataRef=useRef([]);
   const navigate = useNavigateCustom();
   const [favourite, setfavourite] = useState({});
   const { userDetails } = useSelector((state) => state.user);
+  console.log(feedData.length)
   useEffect(() => {
     const getData = async () => {
+      if (feedDataRef.current?.length > 0) {
+        setFeedData(feedDataRef.current); // Use the persisted data
+        return;
+      }
       try {
         let url = `${BACKEND_URL}/api/getInfluencers/featured/feed`;
-        if(props.name) {
-            url += `?type=trending`
+        if (props.name) {
+          url += `?type=trending`;
         }
         const response = await fetch(url);
         if (response.ok) {
           let data = await response.json();
           setFeedData(data.data);
+          feedDataRef.current = data.data;
         } else {
           throw new Error("erro in getting data");
         }
@@ -152,7 +159,7 @@ const Featured = (props) => {
                           display: "flex", // Add this line
                           alignItems: "center", // Add this line
                           gap: "2px",
-                          fontFamily:"Roboto"
+                          fontFamily: "Roboto",
                         }}
                       >
                         {iconsArr[0]} {formatFollowers(item.ifollowers)}{" "}

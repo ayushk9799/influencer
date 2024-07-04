@@ -9,9 +9,6 @@ import { Button, Modal } from "@mui/material";
 import { FcGoogle } from "react-icons/fc";
 import { FaCheck } from "react-icons/fa";
 import { BACKEND_URL } from "./assets/Data.js";
-
-// import { BACKEND_URL } from "./assets/Data";
-// import { updateUserDetails } from "./redux/UserSlice";
 const CLIENT_ID =
   "708505773923-9fuh2eqg0lr8sgl86p7dsuh2v0pjuslt.apps.googleusercontent.com"; // Replace with your Google Cloud Platform project's client ID
 const REDIRECT_URI = `${BACKEND_URL}/api/auth/google/callback`;
@@ -21,12 +18,7 @@ export const Navbar = ({ details }) => {
   const { userDetails } = useSelector((state) => state.user);
   const [modalOpen, setModalOpen] = useState(false);
   const [buttonClicked, setButtonClicked] = useState("");
-  // const [modalAsk, setModalAsk] = useState(false);
-  // const [typeOfUserSelect, setTypeOfUserSelect] = useState('');
-  // const selectedBrandRef = useRef();
-  // const selectedInfluencerRef = useRef();
-  // const dispatch = useDispatch();
-  // const location = useLocation();
+ 
   const { isAuthenticated } = useSelector((state) => state.user);
   //
   const navigate = useNavigateCustom();
@@ -160,7 +152,7 @@ export const Navbar = ({ details }) => {
       </Modal>
      
       <div id="navbarcontainer">
-        <div id="nameandlogo">EazzyCollab</div>
+        <div id="nameandlogo" onClick={()=>navigate("/")}>EazzyCollab</div>
         <div id="navbardetails">
           <div className={isAuthenticated ? "navDetailsClass" : "unauth"}>
             <span onClick={() => navigate("/")}>Home</span>
@@ -238,7 +230,6 @@ export const Navbar = ({ details }) => {
          
         </div>
       </div>
-      {/* <HorizontalNav button={menuButton} /> */}
 
       {menuButton ? (
         <div id="horizontalcontainer" ref={horizontalRef}>
