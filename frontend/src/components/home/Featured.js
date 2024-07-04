@@ -13,11 +13,11 @@ import { useSelector } from "react-redux";
 
 const Featured = (props) => {
   const [feedData, setFeedData] = useState([]);
-  const feedDataRef=useRef([]);
+  const feedDataRef = useRef([]);
   const navigate = useNavigateCustom();
   const [favourite, setfavourite] = useState({});
   const { userDetails } = useSelector((state) => state.user);
-  console.log(feedData.length)
+
   useEffect(() => {
     const getData = async () => {
       if (feedDataRef.current?.length > 0) {

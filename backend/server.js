@@ -121,7 +121,6 @@ app.use((err, req, res, next) => {
 
 app.use("/api/chats", authenticationCheck, ChatRouter);
 app.get("*", (req, res) => {
-  console.log("hello")
   res.sendFile(path.resolve(__dirname, "../frontend/build/index.html"));
 });
 process.on("warning", (e) => console.warn(e.stack));
