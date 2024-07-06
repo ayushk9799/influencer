@@ -77,7 +77,7 @@ const Featured = (props) => {
     <div id="featured-container">
       <div className="featured-header">
         <div>
-          <h2>{props.name || "Featured"}</h2>
+          <h2 style={{fontSize:"20px"}}>{props.name || "Featured"}</h2>
           <p>
             {props.name
               ? "Trending instagram influencer"

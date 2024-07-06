@@ -9,8 +9,13 @@ export const Home = () => {
   return (
     <>
       <div id="homeContainer">
-        <div id="home">Your Product + Their Audience = Magic!!</div>
-
+      <div id="home">
+          <div className="grid-item nowrap">Your Product</div>
+          <div className="grid-item">+</div>
+          <div className="grid-item nowrap">Their Audience</div>
+          <div className="grid-item">=</div>
+          <div className="grid-item">Magic!!</div>
+        </div>
         <div id="subheading">
           <p id="leverage">
             Leverage the audience and reach of content creators to boost your

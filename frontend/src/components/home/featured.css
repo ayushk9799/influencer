@@ -60,6 +60,7 @@
     margin: 15px 40px 0px;
     overflow: hidden;
   }
+ 
   #display-data-container {
     overflow-x: auto;
     flex-wrap: nowrap;
@@ -85,3 +86,14 @@
     display: none; 
   }
 }
+ @media (max-width:500px)
+ {
+  .f-item-image{
+    height: 250px;
+    min-height: 250px;
+  }
+  .f-grid-item{
+    min-height: initial;
+    min-width: 250px;
+  }
+ }
