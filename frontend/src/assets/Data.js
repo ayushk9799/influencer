@@ -7,7 +7,7 @@ export const socialMedia = {0 : "Instagram", 1 : "Youtube", 2 : "Facebook", 3 : 
  export const s3Domain = 'https://signedayush.s3.ap-south-1.amazonaws.com';
 // export const s3Domain = 'https://thousand-ways.s3.ap-south-1.amazonaws.com';
 
-export const BACKEND_URL = 'https://eazzycollab.com';
+export const BACKEND_URL = 'http://localhost:3000';
 
 
 export const getIcons = (index ) => {
@@ -51,6 +51,32 @@ export const getCategory = (index) => {
     }
    
 }
+
+// for comparing two object of display data url
+export function deepEqual(obj1, obj2) {
+    if (obj1 === obj2) {
+      return true;
+    }
+  
+    if (typeof obj1 !== 'object' || obj1 === null || typeof obj2 !== 'object' || obj2 === null) {
+      return false;
+    }
+  
+    let keys1 = Object.keys(obj1);
+    let keys2 = Object.keys(obj2);
+  
+    if (keys1.length !== keys2.length) {
+      return false;
+    }
+  
+    for (let key of keys1) {
+      if (!keys2.includes(key) || !deepEqual(obj1[key], obj2[key])) {
+        return false;
+      }
+    }
+  
+    return true;
+  }
 
 export const getFieldBaseUrl = (index) => {
     const socialMedia = {0 : "https://www.instagram.com", 1 : "https://www.youtube.com",}

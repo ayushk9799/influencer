@@ -120,56 +120,48 @@ router.get("/featured/platform/instagram", async (req, res) => {
       },
     },
   ]);
-  res.json({ data: data });
+  return res.json({ data: data });
 });
 
 // home screen feed data
 router.get("/featured/feed", async (req, res) => {
-  const { type } = req.query;
-  let data;
-  if (type) {
-    data = feedCache.get("trending");
-    if (!data) {
-      data = await User.aggregate([
-        {
-          $match: {
-            iaccountID: { $exists: true },
-            ifollowers: { $gte: 1000000 },
-          },
+  let data = feedCache.get("feed");
+  if (!data) {
+    let feed2 = await User.aggregate([
+      {
+        $match: {
+          iaccountID: { $exists: true },
+          ifollowers: { $gte: 1000000 },
         },
-        { $sample: { size: 5 } },
-        {
-          $project: {
-            email: 0,
-            mobileNumber: 0,
-            favourites: 0,
-            bankDetails: 0,
-            orders: 0,
-          },
+      },
+      { $sample: { size: 5 } },
+      {
+        $project: {
+          email: 0,
+          mobileNumber: 0,
+          favourites: 0,
+          bankDetails: 0,
+          orders: 0,
         },
-      ]);
-      feedCache.set("trending", data);
-    }
-  } else {
-    data = feedCache.get("feedData");
-    if (!data) {
-      data = await User.aggregate([
-        { $match: { iaccountID: { $exists: true } } },
-        { $sample: { size: 5 } },
-        {
-          $project: {
-            email: 0,
-            mobileNumber: 0,
-            favourites: 0,
-            bankDetails: 0,
-            orders: 0,
-          },
+      },
+    ]);
+    let feed1 = await User.aggregate([
+      { $match: { iaccountID: { $exists: true } } },
+      { $sample: { size: 5 } },
+      {
+        $project: {
+          email: 0,
+          mobileNumber: 0,
+          favourites: 0,
+          bankDetails: 0,
+          orders: 0,
         },
-      ]);
-      feedCache.set("feedData", data); // Store the fetched data in cache
-    }
+      },
+    ]);
+    data = { feed1, feed2 };
+    feedCache.set("feed", data);
   }
-  res.json({ data: data });
+  return res.json(data);
 });
 
 export default router;

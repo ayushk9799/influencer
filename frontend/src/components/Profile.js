@@ -9,7 +9,7 @@ import {
 import { useLocation } from "react-router-dom";
 import { FaInstagram, FaYoutube, FaInfoCircle } from "react-icons/fa";
 import { useNavigateCustom } from "../CustomNavigate";
-import { Button } from "@mui/material";
+import { Button, Skeleton } from "@mui/material";
 
 const Profile = () => {
   const location = useLocation();
@@ -54,9 +54,61 @@ const Profile = () => {
   }, [item, location.state?.uniqueID]);
 
   if (!item) {
-    return <div>Loading...</div>;
+    return <div className="profile-main">
+      <div className="container">
+        <div className="cover-container">
+          <Skeleton variant="rectangular" style={{height:'360px', width : '50%'}} animation="wave" />
+          <Skeleton variant="rectangular" style={{height:'360px', width : '50%'}} animation="wave" />
+        </div>
+        <div className="cover-container-mobile">
+          <Skeleton variant="rounded" style={{height:'100%', width : '100%'}} animation="wave" />
+        </div>
+        <div className="profile-div">
+          <Skeleton variant="circular" animation="wave" style={{height:'100px', width:'100px'}} />
+          <div className="profilenames" style={{marginLeft : '10px'}}>
+            <Skeleton variant="text" animation="wave" style={{height:'35px', width:'200px'}} />
+            <Skeleton variant="text" animation="wave" style={{height:'25px', width:'200px'}} />
+            <Skeleton variant="text" animation="wave" style={{height:'25px', width:'120px'}} />
+          </div>
+        </div>
+        <div className="bio">
+            <Skeleton variant="text" animation="wave" style={{height:'25px', width:'100%'}} />
+            <Skeleton variant="text" animation="wave" style={{height:'25px', width:'100%'}} />
+            <Skeleton variant="text" animation="wave" style={{height:'25px', width:'100%'}} />
+            <Skeleton variant="text" animation="wave" style={{height:'25px', width:'100%'}} />  
+        </div>
+        <div className="profile-packages">
+              <p>Packages</p>
+              <FaInfoCircle />
+            </div>
+        <div className="price-items-container">
+          {
+            [...Array(3)].map((_, index) => (
+              <div className="price-item-card" style={{height : '160px'}}>
+                <div style={{display : 'flex', justifyContent : 'space-between'}}>
+                <Skeleton variant="rounded" style={{height:'40px', width : '70%'}} animation="wave" />
+                <Skeleton variant="rounded" style={{height:'40px', width : '25%'}} animation="wave" />
+                </div>
+                <Skeleton variant="rounded" style={{height:'20px', width : '100%'}} animation="wave" />
+                <Skeleton variant="rounded" style={{height:'40px', width : '100%'}} animation="wave" />
+              </div>
+            ))
+          }
+        </div>
+        <div className="custom-offer">
+            <div>Do you want to send custom offer</div>
+            <Button
+              style={{ textTransform: "capitalize" }}
+              onClick={() => handleContinue(4)}
+              variant="contained"
+            >
+              Send
+            </Button>
+          </div>
+      </div>
+    </div>;
   }
-
+  
   const {
     _id,
     name,

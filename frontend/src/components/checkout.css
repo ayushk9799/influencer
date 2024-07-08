@@ -60,7 +60,7 @@
   .checkout-form {
     width: 100%;
     > textarea {
-      height: 85px;
+      height: 105px;
     }
   }
 }

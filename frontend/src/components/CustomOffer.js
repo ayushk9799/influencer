@@ -61,7 +61,7 @@ const CustomOffer = () => {
             style={{ width: "120px", textTransform: "capitalize" }}
             onClick={handleSubmit}
           >
-            Submit
+            Continue
           </Button>
         </div>
         <WorkingStep />

@@ -10,37 +10,49 @@ import { useNavigateCustom } from "../../CustomNavigate";
 import { FaDollarSign } from "react-icons/fa";
 import { AiFillHeart } from "react-icons/ai";
 import { useSelector } from "react-redux";
+import { Skeleton } from "@mui/material";
 
 const Featured = (props) => {
-  const [feedData, setFeedData] = useState([]);
-  const feedDataRef = useRef([]);
+  const {feed1, feed2} = useSelector(state => state.feed);
+  // const [feedData, setFeedData] = useState(props?.name ? feed2 : feed1);
+  const feedData = props?.name ? feed2 : feed1;
+  // const dispatch = useDispatch();
+  // const feedDataRef = useRef([]);
   const navigate = useNavigateCustom();
   const [favourite, setfavourite] = useState({});
   const { userDetails } = useSelector((state) => state.user);
 
-  useEffect(() => {
-    const getData = async () => {
-      if (feedDataRef.current?.length > 0) {
-        setFeedData(feedDataRef.current); // Use the persisted data
-        return;
-      }
-      try {
-        let url = `${BACKEND_URL}/api/getInfluencers/featured/feed`;
-        if (props.name) {
-          url += `?type=trending`;
-        }
-        const response = await fetch(url);
-        if (response.ok) {
-          let data = await response.json();
-          setFeedData(data.data);
-          feedDataRef.current = data.data;
-        } else {
-          throw new Error("erro in getting data");
-        }
-      } catch (error) {}
-    };
-    getData();
-  }, []);
+  // useEffect(() => {
+  //   if(feedData.length === 0) {
+  //     dispatch(getFeedData());
+  //   }
+  // }, [])
+
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     if (feedDataRef.current?.length > 0) {
+  //       setFeedData(feedDataRef.current); // Use the persisted data
+  //       return;
+  //     }
+  //     try {
+  //       let url = `${BACKEND_URL}/api/getInfluencers/featured/feed`;
+  //       if (props.name) {
+  //         url += `?type=trending`;
+  //       }
+  //       const response = await fetch(url);
+  //       if (response.ok) {
+  //         let data = await response.json();
+  //         setFeedData(data.data);
+  //         feedDataRef.current = data.data;
+  //       } else {
+  //         throw new Error("erro in getting data");
+  //       }
+  //     } catch (error) {}
+  //   };
+  //   getData();
+  // }, []);
+
+
 
   useEffect(() => {
     let object = {};
@@ -77,7 +89,7 @@ const Featured = (props) => {
     <div id="featured-container">
       <div className="featured-header">
         <div>
-          <h2 style={{fontSize:"20px"}}>{props.name || "Featured"}</h2>
+          <h2 style={{ fontSize: "20px" }}>{props.name || "Featured"}</h2>
           <p>
             {props.name
               ? "Trending instagram influencer"
@@ -93,8 +105,29 @@ const Featured = (props) => {
           <h4>See All</h4>
         </div>
       </div>
+
       <div id="display-data-container">
-        {feedData &&
+        {feedData.length === 0 ? (
+          [...Array(5)].map((_, index) => (
+            <div key={index} className="f-grid-item" style={{cursor : 'default'}}>
+              <Skeleton
+                variant="rounded"
+                style={{ height: "320px", width: "280px" }}
+                animation={"wave"}
+              />
+              <Skeleton
+                variant="text"
+                style={{ height: "20px", width: "100px" }}
+                animation={"wave"}
+              />
+              <Skeleton
+                variant="text"
+                style={{ height: "20px", width: "150px" }}
+                animation={"wave"}
+              />
+            </div>
+          ))
+        ) : (
           feedData.map((item, index) => (
             <div
               key={index}
@@ -119,7 +152,8 @@ const Featured = (props) => {
                     alt="Profile Pic"
                   />
                 </div>
-
+                <div id="name-region-container">
+                  
                 <div className="nameRegion">
                   <div className="nameInfu">{item.name}</div>
                   <div style={{ fontSize: "10px", padding: "5px" }}>
@@ -129,6 +163,7 @@ const Featured = (props) => {
                 <div className="pricing">
                   <FaDollarSign />
                   {item.price}
+                </div>
                 </div>
               </div>
 
@@ -179,7 +214,8 @@ const Featured = (props) => {
                 </div>
               </div>
             </div>
-          ))}
+          ))
+        )}
       </div>
     </div>
   );

@@ -8,9 +8,9 @@ import { ChatBox } from "./ChatBox.js";
 import CompleteProfile from "./components/CompleteProfile";
 import Profile from "./components/Profile";
 import Checkout from "./components/Checkout";
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserData, setLoading } from "./redux/UserSlice.js";
+import { getUserData } from "./redux/UserSlice.js";
 import CustomOffer from "./components/CustomOffer.js";
 import PaymentSuccess from "./components/Payment/PaymentSuccess.js";
 import PaymentFail from "./components/Payment/PaymentFail.js";
@@ -19,7 +19,6 @@ import OrderDetails from "./components/OrderDetails.js";
 import { DisplayData } from "./DisplayData.js";
 import FAQ from "./components/FAQ.js";
 import UserType from "./components/multipage/UserType.js";
-import { BACKEND_URL } from "./assets/Data.js";
 import Footer from "./Footer.js";
 import ScrollManager from "./ScrollManager.js";
 import Explore from "./Explore.js";
@@ -27,24 +26,10 @@ import Explore from "./Explore.js";
 function App() {
   const { isAuthenticated } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const getData = async () => {
-    try {
-      const response = await fetch(`${BACKEND_URL}/api/user/getMyData`, {
-        credentials: "include",
-      });
-      const { userDetails } = await response.json();
 
-      if (userDetails) {
-        dispatch(setUserData(userDetails));
-      }
-    } catch (err) {
-    } finally {
-    }
-  };
   useEffect(() => { 
-    getData();
+    dispatch(getUserData());
   }, []);
-
 
   return (
     <Router>

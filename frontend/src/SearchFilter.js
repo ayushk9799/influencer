@@ -80,7 +80,9 @@ export const SearchFilter = () => {
   };
   const handleResize = () => {
     if (window.innerWidth < 700) {
-      setsearchJsx(<div>getData</div>);
+      setsearchJsx(<div>
+        <FaSearch size={18} /><p style={{marginLeft : '5px'}}>Search</p>
+      </div>);
     } else {
       setsearchJsx(<FaSearch size={25} />);
     }

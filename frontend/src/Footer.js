@@ -19,20 +19,20 @@ const Footer = () => {
           </div>
           <div id="footer-social">
             <p>Connect with EazzyCollab</p>
-            <Link to={"https://www.instagram.com/eazzycollab/"} target="_blank">
+            <Link style={{color:'black'}} to={"https://www.instagram.com/eazzycollab/"} target="_blank">
               <FaInstagram />
             </Link>
-            <Link to={"https://x.com/EazzyCollab"} target="_blank">
+            <Link style={{color:'black'}} to={"https://x.com/EazzyCollab"} target="_blank">
               <FaTwitter />
             </Link>
           </div>
         </div>
         <div className="footer-bottom">
           <div id="footer-link-c">
+            <Link className="footer-link" to="/aboutus.html" target="_blank">About Us</Link>
+            <Link className="footer-link" to="/contact.html" target="_blank">Contact</Link>
             <a className="footer-link" href="/privacypolicy.html" target="_blank">Privacy Policy</a>
             <Link className="footer-link" to="/terms.html" target="_blank">Terms of Use</Link>
-            <Link className="footer-link" to="/contact.html" target="_blank">Contact</Link>
-            <Link className="footer-link" to="/aboutus.html" target="_blank">About Us</Link>
             <Link className="footer-link" to="/refund.html" target="_blank">Refund & Cancellation</Link>
           </div>
           
