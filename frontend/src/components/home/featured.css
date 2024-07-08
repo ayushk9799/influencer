@@ -1,5 +1,5 @@
 #featured-container {
-  margin: 30px 70px;
+  margin: 30px 60px;
   overflow: hidden;
   /* background-color: rebeccapurple; */
 }
@@ -19,6 +19,7 @@
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  
   /* background-color: aqua; */
 }
 #display-data-container::-webkit-scrollbar {
@@ -32,6 +33,7 @@
   min-height: 300px;
   border-radius: 5px;
   overflow: hidden;
+  
   &:hover {
     cursor: pointer;
   }
