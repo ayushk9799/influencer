@@ -1,4 +1,7 @@
 import nodemailer from 'nodemailer';
+import { config } from "dotenv";
+
+config({ path: "./config/config.env" });
 const transporter = nodemailer.createTransport({
   host: 'smtpout.secureserver.net',
   port: 587,

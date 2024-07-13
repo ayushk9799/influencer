@@ -3,6 +3,8 @@ import { Navbar } from "./Navbar";
 import { Home } from "./Home";
 import { Login } from "./Login.js";
 import Account from "./Account.js";
+import CampaignCard from "./Campaign.js";
+import DetailedCampaign from "./DetailedCampaign.js";
 import "./App.css"
 import { ChatBox } from "./ChatBox.js";
 import CompleteProfile from "./components/CompleteProfile";
@@ -56,6 +58,8 @@ function App() {
         <Route path="/payment-failed" Component={PaymentFail} />
 
         <Route path="/faq" Component={FAQ} />
+        <Route path ="/campaigns" Component={CampaignCard}/>
+        <Route path ="/campaigns/:campaignID" Component={DetailedCampaign}/>
       </Routes>
       <Footer />
     </Router>

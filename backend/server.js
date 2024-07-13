@@ -19,6 +19,7 @@ import { User } from "./models/user.js";
 import searchRouter from "./routes/searchRouter.js";
 import AddData from "./routes/AddData.js";
 import ChatRooms from "./models/chatroom.js";
+import Campaigns from './routes/Campaigns.js'
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export const instance = new Razorpay({
@@ -118,7 +119,7 @@ app.get("/api/getAllChats", authenticationCheck, async (req, res, next) => {
 app.use((err, req, res, next) => {
   res.status(500).json({ error: err.message });
 });
-
+app.use("/api/campaigns",Campaigns)
 app.use("/api/chats", authenticationCheck, ChatRouter);
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "../frontend/build/index.html"));
