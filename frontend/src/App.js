@@ -5,6 +5,7 @@ import { Login } from "./Login.js";
 import Account from "./Account.js";
 import CampaignCard from "./Campaign.js";
 import DetailedCampaign from "./DetailedCampaign.js";
+import {CampaignForm} from "./CampaignForm.js";
 import "./App.css"
 import { ChatBox } from "./ChatBox.js";
 import CompleteProfile from "./components/CompleteProfile";
@@ -24,6 +25,8 @@ import UserType from "./components/multipage/UserType.js";
 import Footer from "./Footer.js";
 import ScrollManager from "./ScrollManager.js";
 import Explore from "./Explore.js";
+import { CampaignNav } from "./CampaignNav.js";
+import MyCampaign from "./MyCampaign.js";
 
 function App() {
   const { isAuthenticated } = useSelector((state) => state.user);
@@ -58,8 +61,11 @@ function App() {
         <Route path="/payment-failed" Component={PaymentFail} />
 
         <Route path="/faq" Component={FAQ} />
-        <Route path ="/campaigns" Component={CampaignCard}/>
+        <Route path ="/campaignFeed" element={<><CampaignNav/><CampaignCard/></>}/>
         <Route path ="/campaigns/:campaignID" Component={DetailedCampaign}/>
+        <Route path="/createCampaign" element={<><CampaignNav/><CampaignForm/></>}/>
+        <Route path="/myCampaigns" element={<><CampaignNav/><MyCampaign/></>}/>
+
       </Routes>
       <Footer />
     </Router>

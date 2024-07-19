@@ -20,16 +20,11 @@ export const Home = () => {
     <>
       <div id="homeContainer">
       <div id="home">
-          <div className="grid-item nowrap">Your Product</div>
-          <div className="grid-item">+</div>
-          <div className="grid-item nowrap">Their Audience</div>
-          <div className="grid-item">=</div>
-          <div className="grid-item">Magic!!</div>
+         Making collaborations Easy
         </div>
         <div id="subheading">
           <p id="leverage">
-            Leverage the audience and reach of content creators to boost your
-            product.
+          Find, Chat, Hire, and Pay Influencers from <span className="instaheading">Instagram</span> and YouTube - All in One Place
           </p>
         </div>
       </div>

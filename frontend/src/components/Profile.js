@@ -304,12 +304,12 @@ const Profile = () => {
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
-            <img
+         {gallery && <img
               src={`${s3Domain}/${gallery[coverIndexMobile]}`}
               alt="Covers"
-            />
+            />}   
             <div className="cover-indicator">
-              {coverIndexMobile + 1}/{gallery.length}
+              {coverIndexMobile + 1}/{gallery?.length}
             </div>
           </div>
           {/* profile */}

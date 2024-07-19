@@ -15,22 +15,22 @@ const HowDoesWork = () => {
             <div style={{ backgroundImage: `url(${img1})`}}>
                 <div className='hdw-child-item'>
                     <h2>1</h2>
-                    <h3>Search influencers</h3>
-                    <p>Search thousand of well known instagram influencers that match with your requirement</p>
+                    <h3>Discover Your Perfect Match</h3>
+                    <p>Explore thousands of top Instagram influencers tailored to your brand's vision.</p>
                 </div>
             </div>
             <div style={{ backgroundImage: `url(${img2})`}}>
                 <div className='hdw-child-item'>
                     <h2>2</h2>
-                    <h3>Start collaboration</h3>
-                    <p>Once you send offer to the influencer if they accept your offer you can start collaboration. We will securely hold your money until the work is completed.</p>
+                    <h3>Spark the Collaboration</h3>
+                    <p>Send offers, kickstart projects, and relax. We'll safeguard your investment until the magic happens.</p>
                 </div>
             </div>
             <div style={{ backgroundImage: `url(${img3})`}}>
                 <div className='hdw-child-item'>
                     <h2>3</h2>
-                    <h3>Work Review</h3>
-                    <p>Once you approve their work we will initiate payment to the influencer</p>
+                    <h3>Approve</h3>
+                    <p>Love the content? Give the green light, and we'll handle the rest – including influencer payment.</p>
                 </div>
             </div>
         </div>

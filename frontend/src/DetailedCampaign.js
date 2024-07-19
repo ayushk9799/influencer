@@ -1,51 +1,69 @@
-import React from 'react';
-import './DetailedCampaign.css'
+import React from "react";
+import { useLocation } from "react-router-dom";
+import "./DetailedCampaign.css";
+import { s3Domain, formatFollowers } from "./assets/Data";
 const DetailedCampaign = () => {
+  const location = useLocation();
+
+  const campaign = location.state.account;
   return (
     <div>
-      <main className="container">
+      <main className="containercampaign">
         <div className="grid">
-          <div className="space-y-6">
-            <h1>Unleash Your Social Media Dominance</h1>
-            <p>
-              Supercharge your online presence with our cutting-edge social media campaign. Reach new heights and
-              captivate your target audience like never before.
-            </p>
-            <div className="grid-cols-2">
+          <div className="space-y-6 space-x-*">
+            <h1>{campaign.title}</h1>
+            <h2>Campaign Criteria</h2>
+            <div className="criteriagrid">
               <div className="bg-muted rounded-lg p-4 space-y-2">
                 <h3>Target Platform</h3>
-                <p className="text-muted-foreground">Instagram, TikTok, Twitter</p>
+                <p className="text-muted-foreground">
+                  {campaign.criteria.platform}
+                </p>
               </div>
               <div className="bg-muted rounded-lg p-4 space-y-2">
-                <h3>Funding Amount</h3>
-                <p className="text-muted-foreground">$50,000</p>
+                <h3>Amount</h3>
+                <p className="text-muted-foreground">${campaign.amount}</p>
               </div>
               <div className="bg-muted rounded-lg p-4 space-y-2">
                 <h3>Target Gender</h3>
-                <p className="text-muted-foreground">18-35 Female</p>
+                <p className="text-muted-foreground">
+                  {campaign.criteria.gender}
+                </p>
               </div>
               <div className="bg-muted rounded-lg p-4 space-y-2">
                 <h3>Follower Count</h3>
-                <p className="text-muted-foreground">10,000+</p>
+                <p className="text-muted-foreground">
+                  {formatFollowers(campaign.criteria.followerCount.min)}--
+                  {formatFollowers(campaign.criteria.followerCount.max)}
+                </p>
+              </div>
+            </div>
+            <div className="mt-12 space-y-8">
+              <h2>Campaign Description</h2>
+              <div className="campaigndescription">
+                <p>{campaign.description}</p>
               </div>
             </div>
           </div>
-          <div className="rounded-lg overflow-hidden">
-            <img
-              src="/placeholder.svg"
-              width="800"
-              height="450"
-              alt="Campaign Showcase"
-            />
-          </div>
-        </div>
-        <div className="mt-12 space-y-8">
-          <h2>Campaign Description</h2>
-          <div className="prose">
-            <p>
-              {}
-           
-            </p>
+          <div
+            className="imagescontainerCampaign"
+            style={{
+              display: "grid",
+              gridTemplateColumns: `repeat(${Math.min(
+                campaign?.images?.length,
+                2
+              )}, 1fr)`,
+              height: `${200 * Math.ceil(campaign.images.length / 2)}px`,
+              columnGap: "5px",
+              rowGap: "5px",
+            }}
+          >
+            {campaign?.images.map((image) => (
+              <img
+                src={`${s3Domain}/${image}`}
+                style={{ width: "100%", height: "100%" }}
+              />
+            ))}
           </div>
         </div>
       </main>

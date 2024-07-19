@@ -34,6 +34,12 @@ export const Navbar = ({ details }) => {
     horizontalRef.current.style.display = "none";
     setMenuButton(!menuButton);
   };
+  const handleCampaignClick=()=>
+    {
+      navigate("/campaignFeed");
+      horizontalRef.current.style.display = "none";
+      setMenuButton(!menuButton);
+    }
   const handleLoginOut = async () => {
     if (isAuthenticated) {
       const response = await fetch(`${BACKEND_URL}/api/auth/logout`, {
@@ -160,6 +166,9 @@ export const Navbar = ({ details }) => {
           <div className={isAuthenticated ? "navDetailsClass" : "unauth"}>
             <span onClick={() => navigate("/influencers")}>Explore</span>
           </div>
+          <div className={isAuthenticated ? "navDetailsClass" : "unauth"}>
+            <span onClick={() => navigate("/campaignFeed")}>Campaigns</span>
+          </div>
           {userDetails?.email ? (
             <div
               className={isAuthenticated ? "navDetailsClass" : "unauth"}
@@ -238,6 +247,9 @@ export const Navbar = ({ details }) => {
           </div>
           <div className="horizontaldetails" onClick={handleOrdersClick}>
             Orders
+          </div>
+          <div className="horizontaldetails" onClick={handleCampaignClick}>
+            Campaigns
           </div>
           <div
             className="horizontaldetails"

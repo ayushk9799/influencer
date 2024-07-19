@@ -119,7 +119,7 @@ app.get("/api/getAllChats", authenticationCheck, async (req, res, next) => {
 app.use((err, req, res, next) => {
   res.status(500).json({ error: err.message });
 });
-app.use("/api/campaigns",Campaigns)
+app.use("/api/campaigns",authenticationCheck,Campaigns)
 app.use("/api/chats", authenticationCheck, ChatRouter);
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "../frontend/build/index.html"));

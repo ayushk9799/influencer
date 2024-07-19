@@ -8,23 +8,17 @@ const campaignSchema = new Schema({
   },
   amount:{
     type:Number,
-    required:true
+    
   },
-  influencersRequired:{
-    type:Number
-  },
-  influencersRecruited:{
-    type:Number
-  },
+ 
   criteria: {
     followerCount: {
         min: {
           type: Number,
-          required: true
+        
         },
         max: {
           type: Number,
-          required: true
         }
       },
     gender: {
@@ -32,12 +26,12 @@ const campaignSchema = new Schema({
       enum: ['Male', 'Female', 'Any'], 
     },
     platform: {
-      type: String,
-      enum: ['Instagram', 'YouTube'], 
-      required: true
+      type: [String],
+      enum: ['Instagram', 'YouTube'],
+      default: ['Instagram', 'YouTube']
     },
     fields: [{
-      type:Number
+      type:String
     }]
   },
  
@@ -48,7 +42,7 @@ const campaignSchema = new Schema({
     type:String,
    },
    images:[{type:String}],
-   videos:[{type:String}]
+  
  
 }, {
   timestamps: true ,

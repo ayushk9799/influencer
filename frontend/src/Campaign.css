@@ -1,4 +1,5 @@
 /* .campaignfeed-container{
+
     display: grid;
   grid-template-columns:   repeat(auto-fit, minmax(100px, 1fr));
 
@@ -33,12 +34,26 @@
 .campaignDetails{
   
 } */
+
+.createcampaignbutton{
+  
+  background-color: black;
+  padding:5px;
+  margin: 5px;
+  width: max-content;
+  color: white;
+ cursor: pointer;
+  font-size: 20px;
+  border-radius: 5px;
+}
 .campaignfeed-container{
     display:grid;
     grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
-    row-gap: 10px;
+    gap: 10px;
     
 }
+
+
 .campaign-container {
     display: flex;
     flex-direction: column;
@@ -48,7 +63,7 @@
     background-color: #f3f4f6;
     border-radius: 0.5rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    width: max-content;
+    width: 100%;
     margin: 0 auto;
     cursor: pointer;
   }
