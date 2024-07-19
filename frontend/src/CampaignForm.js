@@ -13,7 +13,7 @@ export const CampaignForm = () => {
   const categoriesDb = getCategory(-1);
   const [Alerts, setAlert] = useState("");
   const [loader, setLoader] = useState(false);
-  const navigate=useNavigateCustom();
+  const navigate = useNavigateCustom();
   const [formData, setFormData] = useState({
     title: "",
     gender: "",
@@ -26,7 +26,6 @@ export const CampaignForm = () => {
     description: "",
   });
   const toggleCategory = (category) => {
-    console.log(category);
     const updatedFields = formData.fields.includes(category)
       ? formData.fields.filter((field) => field !== category)
       : [...formData.fields, category];
@@ -36,12 +35,9 @@ export const CampaignForm = () => {
       fields: updatedFields,
     }));
   };
-  console.log(formData.images)
 
   const handlechange = (event) => {
     const { name, value, checked } = event.target;
-    console.log(name);
-    console.log(value);
 
     setFormData((prevFormData) => {
       if (name === "platform") {
@@ -81,11 +77,10 @@ export const CampaignForm = () => {
         if (!formData.description) {
           error.push("DESCRIPTION");
         }
-        setAlert(`Please enter ${error.join(' , ')}`);
-        setTimeout(()=>
-        {
-              setAlert("");
-        },5000)
+        setAlert(`Please enter ${error.join(" , ")}`);
+        setTimeout(() => {
+          setAlert("");
+        }, 5000);
         return;
       }
       if (formData.images.length) {
@@ -108,7 +103,7 @@ export const CampaignForm = () => {
           }
         }
       }
-     
+
       const response = await fetch(`${BACKEND_URL}/api/campaigns`, {
         method: "POST",
         credentials: "include",
@@ -117,13 +112,11 @@ export const CampaignForm = () => {
         },
         body: JSON.stringify({ data: formData }),
       });
-       
-      if(response.status===201)
-        {
-          navigate('/myCampaigns')
-        }
+
+      if (response.status === 201) {
+        navigate("/myCampaigns");
+      }
     } catch (error) {
-      console.log(error);
     } finally {
       setLoader(false);
     }
@@ -147,12 +140,9 @@ export const CampaignForm = () => {
             transform: "translateX(-50%)",
             justifySelf: "center",
             zIndex: 1000,
-          
           }}
         >
-          <Alert  severity="error">
-            {Alerts}
-          </Alert>
+          <Alert severity="error">{Alerts}</Alert>
         </div>
       )}
       <h1>Create Campaign</h1>
