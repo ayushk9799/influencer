@@ -44,7 +44,7 @@ const Checkout = () => {
         const options = {
           key,
           amount: order.amount,
-          currency: "USD",
+          currency: "INR",
           name: "EazzyCollab",
           description: "Payment for influencer",
           image:
