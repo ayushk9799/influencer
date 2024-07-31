@@ -1,20 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { BACKEND_URL, formatFollowers, getCategory } from "../assets/Data";
+import { BACKEND_URL, formatFollowers, formatNumberIndian, getCategory } from "../assets/Data";
 import { Button, Tooltip, IconButton } from "@mui/material";
-// import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import WorkingStep from "./subcomponents/WorkingStep";
-import { useSelector } from "react-redux";
-import { FaYoutube, FaInstagram, FaQuestionCircle } from "react-icons/fa";
+import { useSelector, useDispatch } from "react-redux";
+import { FaQuestionCircle } from "react-icons/fa";
+import { getUSDValue } from "../redux/UserSlice";
+
+
 
 const Checkout = () => {
   const location = useLocation();
-  const { userDetails } = useSelector((state) => state.user);
+  const { userDetails, USD_Price } = useSelector((state) => state.user);
   const checkoutData = location?.state;
   const { influencer, amount, orderSummary } = checkoutData;
+  const [amountINR, setAmountINR] = useState();
+  const dispatch = useDispatch();
+
   const handlePay = async () => {
     try {
-     
       const response = await fetch(`${BACKEND_URL}/api/user/payment/get-key`, {
         credentials: "include",
       });
@@ -30,47 +34,50 @@ const Checkout = () => {
           },
           body: JSON.stringify({
             influencer: influencer._id,
-            amount,
+            amount : amountINR,
             orderSummary,
           }),
         }
       );
       const { order } = await response1.json();
-if(order)
-  {
-    const options = {
-      key,
-      amount: order.amount,
-      currency: "USD",
-      name: "EazzyCollab",
-      description: "Payment for influencer",
-      image: "https://signedayush.s3.ap-south-1.amazonaws.com/8ec68f26-3beb-4b9d-ab37-eca90ddf7f95",
-      order_id: order.id,
-      callback_url: `${BACKEND_URL}/api/user/payment/payment-verification`,
-      prefill: {
-        name: userDetails?.name,
-        email: userDetails?.email,
-        contact: "2302930293",
-      },
-      notes: {
-        address: "gaya",
-      },
-      theme: {
-        color: "#1976d2",
-      },
-    };
-    const razor = new window.Razorpay(options);
-    razor.open();
-
-  }
-  else{
-    throw new Error("erro hapepend forrcefully")
-  }
-     
-    } catch (err) {
-      
-    }
+      if (order) {
+        const options = {
+          key,
+          amount: order.amount,
+          currency: "USD",
+          name: "EazzyCollab",
+          description: "Payment for influencer",
+          image:
+            "https://signedayush.s3.ap-south-1.amazonaws.com/8ec68f26-3beb-4b9d-ab37-eca90ddf7f95",
+          order_id: order.id,
+          callback_url: `${BACKEND_URL}/api/user/payment/payment-verification`,
+          prefill: {
+            name: userDetails?.name,
+            email: userDetails?.email,
+            contact: "2302930293",
+          },
+          notes: {
+            address: "gaya",
+          },
+          theme: {
+            color: "#1976d2",
+          },
+        };
+        const razor = new window.Razorpay(options);
+        razor.open();
+      } else {
+        throw new Error("erro hapepend forrcefully");
+      }
+    } catch (err) {}
   };
+
+  useEffect(() => {
+    if(USD_Price && amount) {
+      setAmountINR(Math.round(USD_Price*amount))
+    } else {
+      dispatch(getUSDValue());
+    }
+  }, [USD_Price, amount]);
 
   return (
     <div className="checkout-container-predefined">
@@ -120,6 +127,9 @@ if(order)
                   </div>
                 </div>
               </div>
+              <div style={{border : '1px solid #b5b8ba', padding : '7px', textAlign : 'justify'}}>
+                <p><span style={{color : 'red'}}>Note :</span> Due to some technical reasons, we are unable to accept international payments at the moment. Therefore, we request you to pay in Indian currency. We are working to fix this issue in a few days.</p>
+              </div>
             </div>
           </div>
           <div className="checkout-summary">
@@ -128,6 +138,10 @@ if(order)
               <div>
                 <p>Subtotal</p>
                 <p>${amount}</p>
+              </div>
+              <div>
+                <p>1 USD Price</p>
+                <p>₹{Math.round(USD_Price*100)/100}</p>
               </div>
               <div>
                 <div
@@ -159,7 +173,7 @@ if(order)
               <div id="line"></div>
               <div style={{ fontWeight: "bold" }}>
                 <p>Total</p>
-                <p>${amount} USD</p>
+                <p>₹{formatNumberIndian(amountINR)} INR</p>
               </div>
             </div>
             <p style={{ fontSize: "14px", opacity: "0.8" }}>

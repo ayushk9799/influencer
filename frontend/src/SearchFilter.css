@@ -104,6 +104,8 @@
     border-radius: 5px;
     cursor:pointer;
     margin-bottom: 2px;
+    /* letter-spacing: 0.8px; */
+    font-family: Roboto;
 }
 .fieldClass:hover{
     background-color: rgb(173, 172, 172);

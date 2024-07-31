@@ -126,6 +126,17 @@ function getSuffix(day) {
     }
 }
 
+export function formatNumberIndian(num) {
+    if(!num) return;
+    const str = num.toString();
+    const lastThree = str.slice(-3);
+    const otherNumbers = str.slice(0, -3);
+  
+    const formattedNumber = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ',') + (otherNumbers ? ',' : '') + lastThree;
+  
+    return formattedNumber;
+  }
+
 export const formatFollowers = (value) => {
     if(!value) return "";
     if (value >= 1000000) {
