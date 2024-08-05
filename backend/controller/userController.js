@@ -68,7 +68,6 @@ export const paymentCheckout = async (req, res) => {
     };
     const order = await instance.orders.create(option);
 
-    console.log('order', order);
     // update database with order id
     const values = { buyer: user._id, orderID: order.id, ...data };
     const docs = await Order.create(values);
