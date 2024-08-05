@@ -90,7 +90,7 @@ app.use(express.static(path.join(__dirname, "../frontend/build")));
 app.options("*", cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 
 app.use("/api/auth", login);
-app.use("/api/user", authenticationCheck, UserRouter);
+app.use("/api/user",authenticationCheck,  UserRouter);
 app.use("/api/getInfluencers", searchRouter);
 app.use("/api/addData", authenticationCheck, AddData);
 

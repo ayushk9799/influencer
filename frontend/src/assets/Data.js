@@ -8,6 +8,7 @@ export const socialMedia = {0 : "Instagram", 1 : "Youtube", 2 : "Facebook", 3 : 
 // export const s3Domain = 'https://thousand-ways.s3.ap-south-1.amazonaws.com';
 
 export const BACKEND_URL = 'https://eazzycollab.com';
+// export const BACKEND_URL = 'http://localhost:3000';
 
 
 export const getIcons = (index ) => {

@@ -696,7 +696,7 @@ const OrderDetails = () => {
               </div>
               <div>
                 <p>TOTAL AMOUNT</p>
-                <p>${orderDetails?.amount}</p>
+                <p>₹{orderDetails?.amount}</p>
               </div>
             </div>
             <div className="order-summary-bottom">

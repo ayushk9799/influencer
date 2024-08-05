@@ -234,6 +234,7 @@
   }
   #nameandlogo {
     font-size: 20px;
+    cursor: pointer;
   }
   .modal-container-login {
     width: 90%;
