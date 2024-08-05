@@ -55,6 +55,7 @@ export const paymentCheckout = async (req, res) => {
   try {
     const data = req.body;
     const { amount, influencer } = data;
+    // console.log('user', req.user);
     const user = await User.findById(req.user._id);
 
     const option = {
@@ -66,14 +67,16 @@ export const paymentCheckout = async (req, res) => {
       },
     };
     const order = await instance.orders.create(option);
+
+    console.log('order', order);
     // update database with order id
     const values = { buyer: user._id, orderID: order.id, ...data };
     const docs = await Order.create(values);
     user.orders.unshift(docs._id);
-    await user.save();
+    await user.save();  
     return res.status(200).json({ order });
   } catch (err) {
-    return res.status(404).json({ message: "unable to create order" });
+    return res.status(404).json({ message: "unable to create order", error : err.message });
   }
 };
 
@@ -103,8 +106,8 @@ export const paymentVerification = async (req, res) => {
         influecerData.orders.unshift(order._id);
         await order.save(); 
         await influecerData.save();
-        await sendOrderReceivedEmail(order?.influencer?.email,order?.amount);
-        await sendAdminOrderDetails(order?.influencer?.email,order?.buyer?.email,order?.amount)
+        // await sendOrderReceivedEmail(order?.influencer?.email,order?.amount);
+        // await sendAdminOrderDetails(order?.influencer?.email,order?.buyer?.email,order?.amount)
       } else {
         return res.status(404).json({ message: "order not created" });
       }

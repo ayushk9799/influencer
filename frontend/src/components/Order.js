@@ -24,7 +24,7 @@ const Order = () => {
                         </div>
                         <div className='order-item-top-element'>
                             <p>TOTAL AMOUNT</p>
-                            <p>${value?.amount}</p>
+                            <p>₹{value?.amount}</p>
                         </div>
                        
                         <div className='order-ids'>
@@ -44,7 +44,11 @@ const Order = () => {
                         </div>
                         <div className='order-item-button'>
                             <Link to={`/user/orders/${value._id}`} className='profile-buttons' state={{orderDetails : value}}>View order details</Link>
-                            <Link className='profile-buttons' to={"#"}>Chat with influencer</Link>
+                            <Link className='profile-buttons' to={`/chat/${value.uniqueID}`}>Chat with influencer</Link>
+                        </div>
+                        <div className='order-item-button-mobile'>
+                            <Link to={`/user/orders/${value._id}`} className='profile-buttons' state={{orderDetails : value}}>View</Link>
+                            <Link className='profile-buttons' to={`/chat/${value.uniqueID}`}>Chat</Link>
                         </div>
                     </div>
                 </div>

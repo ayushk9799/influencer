@@ -8,6 +8,7 @@ const CLIENT_ID =
   "708505773923-9fuh2eqg0lr8sgl86p7dsuh2v0pjuslt.apps.googleusercontent.com";
 const CLIENT_SECRET = "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";
 const REDIRECT_URI = `https://eazzycollab.com/api/auth/google/callback`; // dont change th url to process.env ....works fine
+// const REDIRECT_URI = `http://localhost:3000/api/auth/google/callback`; // dont change th url to process.env ....works fine
 const oAuth2Client = new OAuth2Client(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
 
 router.get("/google", (req, res) => {
